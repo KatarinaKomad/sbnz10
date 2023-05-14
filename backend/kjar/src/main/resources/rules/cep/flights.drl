@@ -1,0 +1,21 @@
+package cep;
+import  com.ftn.sbnz.model.FlightEvent;
+
+
+/*Implementirati pravilo koje će izvršiti redirekciju leta1 
+ukoliko postoji let2, 
+pri čemu je sletanje leta1 počelo u intervalu između 0-3 minuta posle sletanja let2 (let2 nije stigao da se skloni sapiste).
+*/
+rule "Redirect flight"
+    when
+        $f1: FlightEvent(redirected == false)
+        $f2: FlightEvent(
+            this != $f1,
+            redirected == false
+            /*id != $f1id,
+            this meets[3m] $f1,*/
+        )
+    then
+        modify($f1) {setRedirected(true);}
+        System.out.println("Redirect flight");
+end

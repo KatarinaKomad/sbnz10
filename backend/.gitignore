@@ -1,0 +1,5 @@
+backend/.mvn/
+backend/.vscode/
+backend/kjar/.mvn/
+backend/model/.mvn/
+backend/service/.mvn/

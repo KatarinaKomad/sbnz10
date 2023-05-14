@@ -1,0 +1,44 @@
+package cep;
+import  com.ftn.sbnz.model.WaveEvent;
+
+
+declare SinkAlarm
+    @role(event)
+    message: String
+end
+
+/*
+Ukoliko u RAMu postoje bar 3 nova talasa 
+cija visina prelazi visinu broda(4m)
+u roku od poslednjih 10m
+sinkAlarm
+*/
+/*rule "Sink alarm, at least 3 waves bigger than 4m, in last 10m"
+    when
+        $w1: WaveEvent(height > 4)
+        Number(intValue >= 3 - 1) from accumulate(
+            $w2: WaveEvent(
+                this != $w1, 
+                height>4,
+                this meets[10m] $w1
+            ),
+            count($w2)
+        )
+        not(SinkAlarm(message == "Sinked ship"))
+    then
+        insert(new SinkAlarm("Sinked ship"));
+        System.out.println("Sinked ship alarm activated");
+end*/
+
+rule "Sink alarm, at least 3 waves bigger than 4m, in last 10m"
+    when
+        Number(intValue >= 3) from accumulate(
+            $w2: WaveEvent(height>4)
+            over window: time(10m),
+            count($w2)
+        )
+        not(SinkAlarm(message == "Sinked ship"))
+    then
+        insert(new SinkAlarm("Sinked ship"));
+        System.out.println("Sinked ship alarm activated");
+end
