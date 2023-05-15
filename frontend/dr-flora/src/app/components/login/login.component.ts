@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { NgToastService } from 'ng-angular-popup';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,8 @@ export class LoginComponent{
 
   passwordHidden: boolean = true;
 
-  constructor(private _formBuilder: FormBuilder){
+  constructor(private _formBuilder: FormBuilder,
+              private toast: NgToastService){
 
   }
 
@@ -26,5 +28,23 @@ export class LoginComponent{
   changePasswordHidden() : void{
     this.passwordHidden = !this.passwordHidden;
   }
+
+  onSubmit() : void {
+    if (this.formFields.invalid) {
+      this.openError("Sva polja moraju biti popunjena","Nevalidan unos");
+    } 
+    else{
+      //beckend poziv
+    }
+   
+  }
+
+  openSuccess(message: string, title:string){
+    this.toast.success({detail: title,summary:message,  position:'tr', duration:3000})
+  }
+
+  openError(message: string, title:string){
+    this.toast.error({detail: title, summary:message, position:'tr', duration:3000})
+    }
 
 }

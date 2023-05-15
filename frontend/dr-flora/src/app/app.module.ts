@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/base/header/header.component';
 import { LottieModule } from "ngx-lottie";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {NgToastModule} from 'ng-angular-popup';
 
 
 //Export this function
@@ -24,6 +25,7 @@ export function playerFactory(): any {
     CommonModule,
     LottieModule.forRoot({ player: playerFactory }),
     BrowserAnimationsModule,
+    NgToastModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
