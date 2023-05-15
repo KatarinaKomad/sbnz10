@@ -1,12 +1,13 @@
 <div class="home-page-container">
-    <app-home-gif/>
+    <app-home-gif style="display: contents;"/>
     <div class="container">
         <p class="title">Dobrodošli</p>
         <p class="subtitle">Da zajedno sačuvamo zdravlje biljaka</p>
         <div class="buttons-container">
-            <button class="home-page-button" mat-raised-button>Prijavi se</button>
-            <button class="home-page-button" mat-raised-button>Registruj se</button>
+            <button class="home-page-button" (click)="onSignin()">Prijavi se</button>
+            <button class="home-page-button" >Registruj se</button>
         </div>
     </div>
+    <app-login style="position: absolute;" *ngIf="showSignin"/>
 </div>
 

@@ -1,0 +1,19 @@
+<div class="login-page">
+    <div class="sign-in-container">
+        <p class="login-title">Prijava na sistem</p>
+        <form [formGroup]="formFields" class="login-form">
+            <div class="input-container">
+                <p class="input-label">Korisničko ime:</p>
+                <input class="input-field" placeholder="pat@example.com" formControlName="email" required>
+                <!-- <mat-error *ngIf="this.formFields.controls['email'].hasError('required')">{{getErrorMessage()}}</mat-error> -->
+            </div>
+            <div class="input-container">
+                <p class="input-label">Lozinka:</p>
+                <input class="input-field" formControlName="password" required [type]='passwordHidden ? "password" : "text"'>
+                <a class="password-label" (click)="changePasswordHidden()">{{ passwordHidden ? 'Prikaži lozinku' : 'Sakrij lozinku'}}</a>
+                <!-- <mat-error *ngIf="this.formFields.controls['password'].hasError('required')">{{getErrorMessage()}}</mat-error> -->
+            </div>
+            <button class="submit-button">Prijavi se</button>
+        </form>
+    </div>
+</div>

@@ -1,23 +1,37 @@
 @import "constants";
 @import "mixin";
 
-::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
-    color: $error_color !important;
-  }
-  
-  ::ng-deep  .mat-form-field.mat-form-field-invalid .mat-form-field-label {
-    color: $error_color !important;
-  }
-  
-  ::ng-deep .mat-error {
-    color: $error_color !important;
-  }
-  
-  ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker {
-    color: $error_color !important;
-  }
 
-.mat-success {
-    background-color: green;
-    color: #fff;
+.title{
+  font-family: $font;
+  color: $dark_green;
+  font-size: 6vh;
+  font-weight: lighter;
+  margin-bottom: auto;
+}
+
+.input-field{
+  border: solid thin $middle_green;
+  border-radius: 10px;
+  background-color: transparent;
+  font-size: medium;
+  width: -webkit-fill-available;
+  padding: 2%;
+  height: 3vh;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  min-width: 200px;
+  min-height: 30px;
+  background-color: $background_color;
+}
+
+.input-field:focus{
+  border: solid 1px $light_orange;
+  outline: none;
+}
+
+.input-label{
+  color: $label_green;
+  font-weight: lighter;
+  font-size: 16px;
+  padding-left: 1%;
 }

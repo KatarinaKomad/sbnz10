@@ -10,6 +10,16 @@
     position: relative;
 }
 
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 .home-page-container{
   display: flex;
   justify-content: center;
@@ -22,9 +32,10 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 15%;
+  margin-top: 5%;
   justify-content: center;
-  width: 15vw;
+  width: 100%;
+  flex-wrap: wrap;
 }
 
 .home-page-button{
@@ -34,6 +45,15 @@
   
 }
 
+@keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
 .container{
   position: absolute;
   display: flex;
@@ -41,19 +61,20 @@
   flex-direction: column;
   justify-content: center;
   flex-wrap: wrap;
+  animation-duration: 5s; /* the duration of the animation */
+  animation-timing-function: ease-out; /* how the animation will behave */
+  animation-delay: 0s; /* how long to delay the animation from starting */
+  animation-iteration-count: 1; /* how many times the animation will play */
+  animation-name: slideInFromLeft, fadeInAnimation; /* the name of the animation we defined above */
 }
+
 
 .subtitle{
   font-family: $font;
   color: $middle_green;
-  font-size: 20px;
+  font-size: 2.5vh;
   font-style: oblique;
+  font-weight: lighter;
 }
 
-.title{
-  font-family: $font;
-  color: $dark_green;
-  font-size: 45px;
-  font-weight: lighter;
-  margin-bottom: auto;
-}
+

@@ -1,8 +1,12 @@
 @mixin greenButton {
     font-size: 18px;
-    background: $middle_green !important;
-    color: $dark_green !important;
+    background: $middle_green;
+    color: $dark_green;
     width: max-content;
     cursor: pointer;
-    min-width: 150px;
-  }
+    min-width: 60px;
+    padding: 2% 7%;
+    border-radius: 6px;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

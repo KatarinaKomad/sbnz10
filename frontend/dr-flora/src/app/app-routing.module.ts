@@ -5,7 +5,7 @@ import { HomepageGuard } from './guards/homepage.guard';
 
 const routes: Routes = [
   {
-    path: 'anon',
+    path: '',
     loadChildren: () => import('./modules/anonymous/anonymous.module').then(m => m.AnonymousModule),
     canActivate: [HomepageGuard]
   },
