@@ -1,0 +1,23 @@
+@import "constants";
+@import "mixin";
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+    color: $error_color !important;
+  }
+  
+  ::ng-deep  .mat-form-field.mat-form-field-invalid .mat-form-field-label {
+    color: $error_color !important;
+  }
+  
+  ::ng-deep .mat-error {
+    color: $error_color !important;
+  }
+  
+  ::ng-deep .mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker {
+    color: $error_color !important;
+  }
+
+.mat-success {
+    background-color: green;
+    color: #fff;
+}

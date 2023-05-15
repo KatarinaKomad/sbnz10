@@ -1,0 +1,59 @@
+@import 'src/app/style/styles';
+
+:host {  
+    height: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.home-page-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.buttons-container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-top: 15%;
+  justify-content: center;
+  width: 15vw;
+}
+
+.home-page-button{
+  margin: 5%;
+  font-family: $font;
+  @include greenButton();
+  
+}
+
+.container{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.subtitle{
+  font-family: $font;
+  color: $middle_green;
+  font-size: 20px;
+  font-style: oblique;
+}
+
+.title{
+  font-family: $font;
+  color: $dark_green;
+  font-size: 45px;
+  font-weight: lighter;
+  margin-bottom: auto;
+}
