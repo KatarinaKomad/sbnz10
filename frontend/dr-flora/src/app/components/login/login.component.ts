@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 
 @Component({
@@ -17,7 +18,8 @@ export class LoginComponent{
   passwordHidden: boolean = true;
 
   constructor(private _formBuilder: FormBuilder,
-              private toast: NgToastService){
+              private toast: NgToastService,
+              private router: Router){
 
   }
 
@@ -35,6 +37,7 @@ export class LoginComponent{
     } 
     else{
       //beckend poziv
+      this.router.navigateByUrl('/user')
     }
    
   }

@@ -8,10 +8,6 @@ const routes: Routes = [
       path: '',
       component: HomePageComponent
     },
-    {
-      path: 'signin',
-      component: LoginComponent
-    }
   ];
   
   @NgModule({

@@ -8,6 +8,8 @@ import { HeaderComponent } from './components/base/header/header.component';
 import { LottieModule } from "ngx-lottie";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgToastModule} from 'ng-angular-popup';
+import { AnonymousModule } from './modules/anonymous/anonymous.module';
+import { UserModule } from './modules/user/user.module';
 
 
 //Export this function
@@ -26,6 +28,7 @@ export function playerFactory(): any {
     LottieModule.forRoot({ player: playerFactory }),
     BrowserAnimationsModule,
     NgToastModule,
+    UserModule
   ],
   providers: [],
   bootstrap: [AppComponent]

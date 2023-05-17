@@ -1,0 +1,5 @@
+<div class="user-menu-container">
+    <div *ngFor="let option of menuOptionsRouting" class="menu-option">
+        <button class="option-button" (click)="changePage(option.optionRoute)">{{option.optionName}}</button>
+    </div>
+</div>
