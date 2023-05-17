@@ -1,14 +1,11 @@
 package com.ftn.sbnz.model;
 import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.ftn.sbnz.model.enums.FazaBiljke;
 
@@ -22,23 +19,18 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Bolest {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    
-    private String naziv;
+public class UnosSimptoma {
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Simptom> simptomi;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Preparat> jakiPreparati;
-
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Preparat> slabiPreparati;
-
     @Enumerated(EnumType.STRING)
-    private List<FazaBiljke> fazaJavljanja;
+    private FazaBiljke trenutnaFaza;
+
+    @OneToOne
+    private TipBiljke tip;
+
+    private Long idBiljke;
+
+
 }
