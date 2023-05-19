@@ -28,6 +28,6 @@ public class Simptom {
     @Enumerated(EnumType.STRING)
     private Lokacija lokacija;
 
-    @Enumerated(EnumType.STRING)
-    private Opis opis;
+    // @Enumerated(EnumType.STRING)
+    private String opis;
 }

@@ -1,0 +1,56 @@
+import com.ftn.sbnz.model.FinalnaDijagnoza;
+import com.ftn.sbnz.model.Preparat;
+import com.ftn.sbnz.model.Bolest;
+import com.ftn.sbnz.model.enums.FazaBiljke;
+import com.ftn.sbnz.model.enums.PotkategorijaPreparata;
+import com.ftn.sbnz.model.Preporuka;
+import java.time.LocalDate;
+import com.ftn.sbnz.model.Biljka;
+
+declare NeizlecenaBolestVoca
+    @role(event)
+    biljka: Biljka
+    bolest: Bolest
+    preparat: Preparat
+    fazaJavljanja: FazaBiljke
+end
+
+rule "Dijagnoza iste bolesti 2 ili vise puta kod iste biljke u istoj fazi u mesec dana -> aktivirati alarm NeizlecenaBolestVoca"
+    no-loop
+    when 
+        $dijagnoza: FinalnaDijagnoza($id: id, $bolest: bolest, $preparat: preporuceniPreparat, $biljka: biljka, $fazaBiljke: fazaBiljke, $datumJavljanja: datumPreporuke)
+        Number(intValue >= 2) from accumulate(
+            $d : FinalnaDijagnoza(this != $dijagnoza,
+                                          bolest.id == $bolest.id,
+                                          biljka.id == $biljka.id,
+                                          fazaBiljke == $fazaBiljke,
+                                          datumPreporuke.isAfter($datumJavljanja.minusMonths(1))),
+                                          count($d)
+        )
+        not (NeizlecenaBolestVoca(biljka == $biljka, bolest == $bolest, fazaJavljanja == $fazaBiljke))
+    then
+        System.out.println("Neizlecena bolest voca za " + $biljka.getId() + ", bolest " + $bolest.getNaziv());
+        insert(new NeizlecenaBolestVoca($biljka, $bolest, $preparat, $fazaBiljke));
+end
+
+rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju ne postoji jak preparat -> preporuciti duplu dozu preparata" 
+    no-loop
+    when 
+        $alarm: NeizlecenaBolestVoca($biljka: biljka, 
+                                    $bolest: bolest,  
+                                    bolest.jakiPreparati.size() == 0,
+                                    $fazaBiljke : fazaJavljanja, 
+                                    $preparat: preparat, 
+                                    preparat.potkategorija == PotkategorijaPreparata.SLAB
+                                    ) //dodati da se ovaj alarm sad desio, da se ne aktivira na neki raniji
+        
+        $dijagnoza : FinalnaDijagnoza(bolest.id == $bolest.id,
+                                    biljka.id == $biljka.id,
+                                    preporuceniPreparat.id == $preparat.id)
+        
+        $preporuka: Preporuka(bolest.id == $bolest.id,
+                              nazivPreparata == $preparat.naziv)
+        
+    then
+        modify($preporuka) {setPreporucenaDoza($preporuka.getPreporucenaDoza() * 2)}
+end

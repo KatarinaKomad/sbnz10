@@ -15,13 +15,17 @@ import com.ftn.sbnz.model.enums.FazaBiljke;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
 public class Bolest {
     
     @Id
@@ -40,5 +44,9 @@ public class Bolest {
     private List<Preparat> slabiPreparati;
 
     @Enumerated(EnumType.STRING)
-    private List<FazaBiljke> fazaJavljanja;
+    private FazaBiljke fazaJavljanja;
+
+    public String getNaziv(){
+        return naziv;
+    }
 }
