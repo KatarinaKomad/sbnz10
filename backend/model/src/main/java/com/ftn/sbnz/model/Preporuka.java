@@ -49,6 +49,18 @@ public class Preporuka {
     public void setPreporucenaDoza(Double doza){
         this.preporucenaDoza = doza;
     }
+
+    public void setNazivPreparata(String naziv){
+        this.nazivPreparata = naziv;
+    }
+
+    public void setPoruka(String poruka){
+        this.poruka = poruka;
+    }
+
+    public void setOpisPreparata(String opis){
+        this.opisPreparata = opis;
+    }
     
     
 }

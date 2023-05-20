@@ -11,6 +11,9 @@ import com.ftn.sbnz.model.Bolest;
 import com.ftn.sbnz.model.FinalnaDijagnoza;
 import com.ftn.sbnz.model.Preparat;
 import com.ftn.sbnz.model.Preporuka;
+import com.ftn.sbnz.respository.FinalnaDijagnozaRepositiry;
+import com.ftn.sbnz.respository.PreporukaRepository;
+
 import org.kie.api.runtime.rule.FactHandle;
 
 @Service
@@ -20,10 +23,16 @@ public class PreporukaService {
     private PreparatService preparatService;
 
     @Autowired
-    private KieSessionService kieSessionService;
+    private PreporukaRepository preporukaRepository;
+
+    @Autowired
+    KieSession kieSession;
 
     @Autowired
     private FinalnaDijagnozaService finalnaDijagnozaService;
+
+    @Autowired
+    private FinalnaDijagnozaRepositiry finalnaDijagnozaRepositiry;
     
     public Preporuka createSugggestion(Bolest bolest, Biljka biljka){
         Preporuka preporuka = new Preporuka();
@@ -37,7 +46,6 @@ public class PreporukaService {
         preporuka.setOpisPreparata(topPreparat.getPotkategorija() + " " + topPreparat.getPrimarnaKategorija());
         
         FinalnaDijagnoza finalnaDijagnoza = finalnaDijagnozaService.createFinalnaDijagnoza(bolest, biljka, topPreparat);
-        KieSession kieSession = kieSessionService.getKieSession("username");
         
         kieSession.insert(preporuka);
         kieSession.insert(finalnaDijagnoza);
@@ -47,18 +55,19 @@ public class PreporukaService {
         for (FactHandle handle: handlers) {
             Object obj = kieSession.getObject(handle);
             if (obj.getClass() == Preporuka.class){
-                System.out.println("Preporuka" + (Preporuka) obj);
-                //sacuvati u bazi, vratiti kao odgovor servera
-                return (Preporuka) obj;
+                Preporuka p = (Preporuka) obj;
+                if (p.getBiljka().getId() == preporuka.getBiljka().getId()){
+                    return preporukaRepository.save(p);
+                }
             }
             if (obj.getClass() == FinalnaDijagnoza.class){
-                System.out.println("Finalna dijagnoza" + (FinalnaDijagnoza) obj);
-                //sacuvati u bazi
+                FinalnaDijagnoza dijagnoza = (FinalnaDijagnoza) obj;
+                if (dijagnoza.getBiljka().getId() == finalnaDijagnoza.getBiljka().getId() &&
+                    dijagnoza.getBolest().getId() == finalnaDijagnoza.getBolest().getId()){
+                        finalnaDijagnozaRepositiry.save(dijagnoza);
+                }
             }
-            //hendlati slucajeve koji mogu da se dese u pravilima
         }
         return null;
     }
-
-
 }

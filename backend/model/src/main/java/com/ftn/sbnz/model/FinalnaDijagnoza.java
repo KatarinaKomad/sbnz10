@@ -2,12 +2,10 @@ package com.ftn.sbnz.model;
 
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -41,10 +39,13 @@ public class FinalnaDijagnoza {
 
     private LocalDate datumPreporuke;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @OneToOne
     private Biljka biljka;
 
     @Enumerated(EnumType.STRING)
     private FazaBiljke fazaBiljke;
 
+    public void setPreparat(Preparat preparat){
+        this.preporuceniPreparat = preparat;
+    }
 }

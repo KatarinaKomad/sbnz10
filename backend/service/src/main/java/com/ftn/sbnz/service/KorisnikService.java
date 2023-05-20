@@ -21,5 +21,14 @@ public class KorisnikService {
     public List<Korisnik> findAll() {
         return korisnikRepository.findAll();
     }    
+
+    // public Korisnik getCurrentlyLoggedUser() {
+    //     String userEmail = SecurityContextHolder.getContext().getAuthentication().getName();
+    //     return this.findByEmail(userEmail);
+    //             // .orElseThrow(() -> new BadRequestException(ExceptionMessageConstants.userWithEmailDoesNotExist(userEmail)));
+    // }
        
+    public Korisnik findByEmail(String email) {
+        return korisnikRepository.findByEmail(email);
+    }
 }
