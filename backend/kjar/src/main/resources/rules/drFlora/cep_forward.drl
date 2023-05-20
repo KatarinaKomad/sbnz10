@@ -65,11 +65,12 @@ rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju ne pos
         
         $dijagnoza : FinalnaDijagnoza(bolest.id == $bolest.id,
                                     biljka.id == $biljka.id,
-                                    preporuceniPreparat.id == $preparat.id)
+                                    preporuceniPreparat.id == $preparat.id,
+                                    $preporuka: preporuka)
         
-        $preporuka: Preporuka(bolest.id == $bolest.id,
-                              nazivPreparata == $preparat.naziv,
-                              biljka.id == $biljka.id)
+        // $preporuka: Preporuka(bolest.id == $bolest.id,
+        //                       nazivPreparata == $preparat.naziv,
+        //                       biljka.id == $biljka.id)
         
         not(DuplaDozaSlabogPreparataAlarm(biljka == $biljka, bolest == $bolest))
         
@@ -92,11 +93,12 @@ rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju postoj
         
         $dijagnoza : FinalnaDijagnoza(bolest.id == $bolest.id,
                                     biljka.id == $biljka.id,
-                                    preporuceniPreparat.id == $preparat.id)
+                                    preporuceniPreparat.id == $preparat.id,
+                                    $preporuka: preporuka)
         
-        $preporuka: Preporuka(bolest.id == $bolest.id,
-                              nazivPreparata == $preparat.naziv,
-                              biljka.id == $biljka.id)
+        // $preporuka: Preporuka(bolest.id == $bolest.id,
+        //                       nazivPreparata == $preparat.naziv,
+        //                       biljka.id == $biljka.id)
 
         not(PromenaSlabogUJakPreparatAlarm(biljka == $biljka, bolest == $bolest))
         

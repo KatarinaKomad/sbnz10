@@ -1,0 +1,107 @@
+import com.ftn.sbnz.model.FinalnaDijagnoza;
+import com.ftn.sbnz.model.Preparat;
+import com.ftn.sbnz.model.Bolest;
+import com.ftn.sbnz.model.enums.FazaBiljke;
+import com.ftn.sbnz.model.enums.PotkategorijaPreparata;
+import com.ftn.sbnz.model.Preporuka;
+import java.time.LocalDate;
+import com.ftn.sbnz.model.Biljka;
+import com.ftn.sbnz.model.enums.KategorijaPreparata;
+
+declare PreviseInsekticida
+    @role(event)
+    biljka: Biljka
+end
+
+
+rule "Bolest jabuke koja se leci insekticidima i insekticidi se primenjeni vec 2 puta u godini -> smanjiti dozu duplo"
+    no-loop
+    when
+        $dijagnoza: FinalnaDijagnoza( $preparat: preporuceniPreparat, 
+                                    preporuceniPreparat.getKategorijaPreparata() == KategorijaPreparata.INSEKTICID,
+                                    $biljka: biljka, 
+                                    $fazaBiljke: fazaBiljke,
+                                    biljka.tip.naziv == "jabuka",
+                                    $datumPreporuke: datumPreporuke,
+                                    datumPreporuke.isAfter(LocalDate.now().minusYears(1)),
+                                    $preporuka: preporuka)
+        Number(intValue >= 2) from accumulate(
+                $d : FinalnaDijagnoza(this != $dijagnoza,
+                                biljka.id == $biljka.id,
+                                preporuceniPreparat.getKategorijaPreparata() == KategorijaPreparata.INSEKTICID,
+                                datumPreporuke.isAfter(LocalDate.now().minusYears(1)),
+                                datumPreporuke.isBefore($datumPreporuke)
+                                ), 
+                                count($d)
+                                )
+        not(PreviseInsekticida(biljka == $biljka))
+    then
+        modify($preporuka){setPreporucenaDoza($preporuka.getPreporucenaDoza() / 2),
+                            setPoruka("Doza preparata je prepolovljena jer se insekticid nad biljkom koristio već 2 puta ove godine")}
+        insert(new PreviseInsekticida($biljka));
+        System.out.println("Izmenjena doza preparata kod jabuke");
+end
+
+rule "Jabuka ima lisne vasi i korisnik ima i kruske -> napomena da se prskaju i kruske" 
+    no-loop
+    when
+        $dijagnoza: FinalnaDijagnoza( $preparat: preporuceniPreparat,
+                                    $biljka: biljka,
+                                    biljka.tip.naziv == "jabuka",
+                                    bolest.naziv == "Lisne vaši",
+                                    $vlasnik: biljka.vlasnik,
+                                    $preporuka: preporuka)
+        Biljka(vlasnik == $vlasnik,
+                tip.naziv == "kruška")
+    then
+        System.out.println("Preporuka za krusku");
+        modify($preporuka){setPoruka("Zbog posedovanje sorte kruške koja je podležna istoj bolesti, tretirajte je preparatom na isti način.")}
+end
+
+rule "kruska ima lisne vasi i korisnik ima i jabuke -> napomena da se prskaju i kruske" 
+    no-loop
+    when
+        $dijagnoza: FinalnaDijagnoza( $preparat: preporuceniPreparat,
+                                    $biljka: biljka,
+                                    biljka.tip.naziv == "kruška",
+                                    bolest.naziv == "Lisne vaši",
+                                    $vlasnik: biljka.vlasnik,
+                                    $preporuka: preporuka)
+        Biljka(vlasnik == $vlasnik,
+                tip.naziv == "jabuka")
+    then
+        System.out.println("Preporuka za jabuku");
+        modify($preporuka){setPoruka("Zbog posedovanje sorte jabuke koja je podležna istoj bolesti, tretirajte je preparatom na isti način.")}
+end
+
+rule "Jabuka ima lisne minere i korisnik ima i kruske -> napomena da se prskaju i kruske" 
+    no-loop
+    when
+        $dijagnoza: FinalnaDijagnoza( $preparat: preporuceniPreparat,
+                                    $biljka: biljka,
+                                    biljka.tip.naziv == "jabuka",
+                                    bolest.naziv == "Lisni mineri",
+                                    $vlasnik: biljka.vlasnik,
+                                    $preporuka: preporuka)
+        Biljka(vlasnik == $vlasnik,
+                tip.naziv == "kruška")
+    then
+        System.out.println("Preporuka za krusku");
+        modify($preporuka){setPoruka("Zbog posedovanje sorte kruške koja je podležna istoj bolesti, tretirajte je preparatom na isti način.")}
+end
+
+rule "kruska ima lisne minere i korisnik ima i jabuke -> napomena da se prskaju i kruske" 
+    no-loop
+    when
+        $dijagnoza: FinalnaDijagnoza( $preparat: preporuceniPreparat,
+                                    $biljka: biljka,
+                                    biljka.tip.naziv == "kruška",
+                                    bolest.naziv == "Lisni mineri",
+                                    $vlasnik: biljka.vlasnik,
+                                    $preporuka: preporuka)
+        Biljka(vlasnik == $vlasnik,
+                tip.naziv == "jabuka")
+    then
+        System.out.println("Preporuka za jabuku");
+        modify($preporuka){setPoruka("Zbog posedovanje sorte jabuke koja je podležna istoj bolesti, tretirajte je preparatom na isti način.")}
+end

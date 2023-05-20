@@ -24,9 +24,6 @@ public class Preporuka {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
-    // @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
-    // private Preparat preparat;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Bolest Bolest;

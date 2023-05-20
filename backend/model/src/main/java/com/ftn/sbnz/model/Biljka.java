@@ -2,6 +2,7 @@ package com.ftn.sbnz.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -37,15 +38,18 @@ public class Biljka {
     @Enumerated(EnumType.STRING)
     private KategorijaBiljke kategorija;
 
-    @OneToOne
+    @OneToOne()
     private TipBiljke tip;
 
-    @OneToOne
+    @OneToOne()
     private Korisnik vlasnik;
 
     public Long getId(){
         return this.id;
     }
 
+    public TipBiljke getTipBiljke(){
+        return tip;
+    }
     
 }

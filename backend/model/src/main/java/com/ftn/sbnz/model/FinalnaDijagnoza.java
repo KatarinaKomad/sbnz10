@@ -2,6 +2,7 @@ package com.ftn.sbnz.model;
 
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -39,13 +40,25 @@ public class FinalnaDijagnoza {
 
     private LocalDate datumPreporuke;
 
-    @OneToOne
+    @OneToOne()
     private Biljka biljka;
 
     @Enumerated(EnumType.STRING)
     private FazaBiljke fazaBiljke;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    private Preporuka preporuka;
+
     public void setPreparat(Preparat preparat){
         this.preporuceniPreparat = preparat;
     }
+
+    public void setPreporuka(Preporuka preporuka){
+        this.preporuka = preporuka;
+    }
+
+    public Preporuka getPreporuka(){
+        return this.preporuka;
+    }
+    
 }
