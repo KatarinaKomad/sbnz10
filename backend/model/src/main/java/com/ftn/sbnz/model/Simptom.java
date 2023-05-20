@@ -8,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.ftn.sbnz.model.enums.Lokacija;
-import com.ftn.sbnz.model.enums.Opis;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

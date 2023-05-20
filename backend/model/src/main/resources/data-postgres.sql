@@ -125,6 +125,13 @@ INSERT INTO bolest_slabi_preparati(bolest_id, slabi_preparati_id) VALUES
 (3, 14),
 (3, 15);
 
-INSERT INTO biljka (kategorija, trenutna_faza, vreme_sadnje, tip_id) VALUES
-('VOCE', 'LISTANJE', '2022-02-06', 1),
-('VOCE', 'LISTANJE', '2022-02-06', 2);
+INSERT INTO biljka (kategorija, trenutna_faza, vreme_sadnje, tip_id, vlasnik_id) VALUES
+('VOCE', 'LISTANJE', '2022-02-06', 1, 1),
+('VOCE', 'LISTANJE', '2022-02-06', 2, 2);
+
+
+INSERT INTO finalna_dijagnoza (datum_preporuke, faza_biljke, biljka_id, bolest_id, preporuceni_preparat_id) VALUES
+('2023-05-06', 'LISTANJE', 1, 1, 2);
+
+-- INSERT INTO biljka_finalne_dijagnoze(biljka_id, finalne_dijagnoze_id) VALUES
+-- (1, 1);

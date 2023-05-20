@@ -6,28 +6,29 @@ import com.ftn.sbnz.model.enums.PotkategorijaPreparata;
 import com.ftn.sbnz.model.Preporuka;
 import java.time.LocalDate;
 import com.ftn.sbnz.model.Biljka;
+import com.ftn.sbnz.model.enums.KategorijaPreparata;
+import com.ftn.sbnz.event.NeizlecenaBolestVoca
 
-declare NeizlecenaBolestVoca
-    @role(event)
-    biljka: Biljka
-    bolest: Bolest
-    preparat: Preparat
-    fazaJavljanja: FazaBiljke
-end
 
 rule "Dijagnoza iste bolesti 2 ili vise puta kod iste biljke u istoj fazi u mesec dana -> aktivirati alarm NeizlecenaBolestVoca"
     no-loop
     when 
-        $dijagnoza: FinalnaDijagnoza($id: id, $bolest: bolest, $preparat: preporuceniPreparat, $biljka: biljka, $fazaBiljke: fazaBiljke, $datumJavljanja: datumPreporuke)
-        Number(intValue >= 2) from accumulate(
+        $dijagnoza: FinalnaDijagnoza($id: id, 
+                                    $bolest: bolest, 
+                                    $preparat: preporuceniPreparat, 
+                                    $biljka: biljka, 
+                                    $fazaBiljke: fazaBiljke,
+                                    datumPreporuke.isAfter(LocalDate.now().minusMonths(1)))
+        Number(intValue >= 1) from accumulate(
             $d : FinalnaDijagnoza(this != $dijagnoza,
                                           bolest.id == $bolest.id,
                                           biljka.id == $biljka.id,
                                           fazaBiljke == $fazaBiljke,
-                                          datumPreporuke.isAfter($datumJavljanja.minusMonths(1))),
+                                          datumPreporuke.isAfter(LocalDate.now().minusMonths(1))
+                                         ), 
                                           count($d)
         )
-        not (NeizlecenaBolestVoca(biljka == $biljka, bolest == $bolest, fazaJavljanja == $fazaBiljke))
+        not (NeizlecenaBolestVoca(biljka == $biljka, bolest == $bolest, preparat == $preparat, fazaJavljanja == $fazaBiljke))
     then
         System.out.println("Neizlecena bolest voca za " + $biljka.getId() + ", bolest " + $bolest.getNaziv());
         insert(new NeizlecenaBolestVoca($biljka, $bolest, $preparat, $fazaBiljke));
@@ -49,8 +50,62 @@ rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju ne pos
                                     preporuceniPreparat.id == $preparat.id)
         
         $preporuka: Preporuka(bolest.id == $bolest.id,
-                              nazivPreparata == $preparat.naziv)
+                              nazivPreparata == $preparat.naziv,
+                              biljka.id == $biljka.id)
         
     then
+        System.out.println("Dupla doza " + $biljka.getId() + ", bolest " + $bolest.getNaziv());
         modify($preporuka) {setPreporucenaDoza($preporuka.getPreporucenaDoza() * 2)}
 end
+
+rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju postoji jak preparat -> preporuciti jak preparat" 
+    no-loop
+    when 
+        $alarm: NeizlecenaBolestVoca($biljka: biljka, 
+                                    $bolest: bolest,  
+                                    bolest.jakiPreparati.size() > 0,
+                                    $fazaBiljke : fazaJavljanja, 
+                                    $preparat: preparat, 
+                                    preparat.potkategorija == PotkategorijaPreparata.SLAB
+                                    ) //dodati da se ovaj alarm sad desio, da se ne aktivira na neki raniji
+        
+        $dijagnoza : FinalnaDijagnoza(bolest.id == $bolest.id,
+                                    biljka.id == $biljka.id,
+                                    preporuceniPreparat.id == $preparat.id)
+        
+        $preporuka: Preporuka(bolest.id == $bolest.id,
+                              nazivPreparata == $preparat.naziv,
+                              biljka.id == $biljka.id)
+        
+    then
+        modify($dijagnoza) {setPreparat($bolest.getTopJakPreparat())}
+        modify($preporuka) {setPreporucenaDoza($bolest.getTopJakPreparat().getKoncentracija()), 
+                                    setNazivPreparata($bolest.getTopJakPreparat().getNaziv()),
+                                    setOpisPreparata($bolest.getTopJakPreparat().getPotkategorijaPreparata() + " " + $bolest.getTopJakPreparat().getKategorijaPreparata()) }
+        modify($alarm) {setPreparat($bolest.getTopJakPreparat())}
+        System.out.println("Neizlecena bolest alarm jak preparat " + $alarm.getPreparat().getNaziv());
+end
+
+rule "NeizlecenaBolestVoca i preporuceni jak preparat insekticid -> napomena za upotrebu u ishrani" 
+    no-loop
+    when 
+        $alarm: NeizlecenaBolestVoca($biljka: biljka, 
+                                    $bolest: bolest,  
+                                    bolest.jakiPreparati.size() > 0,
+                                    $fazaBiljke : fazaJavljanja,
+                                    $preparat: preparat,       
+                                    preparat.potkategorija == PotkategorijaPreparata.JAK,                         
+                                    preparat.primarnaKategorija == KategorijaPreparata.INSEKTICID                                  
+                                    ) //dodati da se ovaj alarm sad desio, da se ne aktivira na neki raniji
+                
+        $preporuka: Preporuka(bolest.id == $bolest.id,
+                              nazivPreparata == $preparat.naziv,
+                              biljka.id == $biljka.id)
+        
+    then
+        modify($preporuka) {setPoruka("Biljku ne upotrebljavati u ishrani do 2 nedelje nakon prskanja")}
+end
+
+
+
+

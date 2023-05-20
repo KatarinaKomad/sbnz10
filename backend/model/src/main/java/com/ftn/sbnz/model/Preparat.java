@@ -1,4 +1,5 @@
 package com.ftn.sbnz.model;
+import java.util.IntSummaryStatistics;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -45,4 +46,25 @@ public class Preparat {
     private List<Integer> ocene;
 
     private double koncentracija;
+
+    public Double getAverageRate(){
+        IntSummaryStatistics sumOcene = ocene.stream().mapToInt((o) -> o).summaryStatistics();
+        return sumOcene.getAverage();
+    }
+
+    public Double getKoncentracija(){
+        return koncentracija;
+    }
+
+    public String getNaziv(){
+        return naziv;
+    }
+
+    public KategorijaPreparata getKategorijaPreparata(){
+        return primarnaKategorija;
+    }
+
+    public PotkategorijaPreparata getPotkategorijaPreparata(){
+        return potkategorija;
+    }
 }

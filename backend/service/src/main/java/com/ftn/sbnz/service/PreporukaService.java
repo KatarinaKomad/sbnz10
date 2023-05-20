@@ -23,6 +23,9 @@ public class PreporukaService {
     private KieSessionService kieSessionService;
 
     @Autowired
+    KieSession kieSession;
+
+    @Autowired
     private FinalnaDijagnozaService finalnaDijagnozaService;
     
     public Preporuka createSugggestion(Bolest bolest, Biljka biljka){
@@ -37,7 +40,7 @@ public class PreporukaService {
         preporuka.setOpisPreparata(topPreparat.getPotkategorija() + " " + topPreparat.getPrimarnaKategorija());
         
         FinalnaDijagnoza finalnaDijagnoza = finalnaDijagnozaService.createFinalnaDijagnoza(bolest, biljka, topPreparat);
-        KieSession kieSession = kieSessionService.getKieSession("username");
+        // KieSession kieSession = kieSessionService.getKieSession("username");
         
         kieSession.insert(preporuka);
         kieSession.insert(finalnaDijagnoza);
