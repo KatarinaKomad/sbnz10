@@ -75,7 +75,8 @@ INSERT INTO PREPARAT (naziv, primarna_kategorija, potkategorija, koncentracija) 
 ('Chorus 75 WG', 'FUNGICID', 'JAK', 2.0), --30--
 ('Makoseb', 'FUNGICID', 'SLAB', 0.2),
 ('Plures', 'INSEKTICID', 'SLAB', 0.3),
-('Cipkord', 'INSEKTICID', 'SLAB', 0.15);
+('Cipkord', 'INSEKTICID', 'SLAB', 0.15),
+('Diminil', 'INSEKTICID', 'SLAB', 2.2);
 
 
 
@@ -112,7 +113,8 @@ INSERT INTO preparat_ocene (preparat_id, ocene) VALUES
 (30, 5),
 (31, 4),
 (32, 5),
-(33, 5);
+(33, 5),
+(34, 5);
 
 
 INSERT INTO BOLEST (naziv, faza_javljanja) VALUES
@@ -125,7 +127,8 @@ INSERT INTO BOLEST (naziv, faza_javljanja) VALUES
 ('Lisne vaši', 'LISTANJE'),
 ('Monilija višnje', 'CVETANJE'),
 ('Šupljikavost lista', 'LISTANJE'),
-('Višnjina muva', 'FORMIRANJE_PLODA');--10--
+('Višnjina muva', 'FORMIRANJE_PLODA'),--10--
+('Lisni mineri', 'LISTANJE');
 
 
 
@@ -157,7 +160,9 @@ INSERT INTO tip_biljke_moguce_bolesti (tip_biljke_id, moguce_bolesti_id) VALUES
 (2, 6),
 (3, 8),
 (3, 9),
-(3, 10);
+(3, 10),
+(2, 11),
+(1, 11);
 
 INSERT INTO bolest_simptomi (bolest_id, simptomi_id) VALUES
 (1, 1),
@@ -199,7 +204,9 @@ INSERT INTO bolest_simptomi (bolest_id, simptomi_id) VALUES
 (9, 5),
 (9, 4),
 (10, 25),
-(10, 23);
+(10, 23),
+(11, 14),
+(11, 15);
 
 INSERT INTO bolest_jaki_preparati(bolest_id, jaki_preparati_id) VALUES
 (1, 1),
@@ -246,17 +253,20 @@ INSERT INTO bolest_slabi_preparati(bolest_id, slabi_preparati_id) VALUES
 (10, 25),
 (10, 32),
 (10, 14),
-(7, 33);
+(7, 33),
+(11, 34);
 
 INSERT INTO biljka (kategorija, trenutna_faza, vreme_sadnje, tip_id, vlasnik_id) VALUES
 ('VOCE', 'LISTANJE', '2022-02-06', 1, 1),
 ('VOCE', 'LISTANJE', '2022-02-06', 2, 1),
-('VOCE', 'FORMIRANJE_PLODA', '2022-02-10', 3, 1);
-
+('VOCE', 'FORMIRANJE_PLODA', '2022-02-10', 3, 1),
+('VOCE', 'FORMIRANJE_PLODA', '2022-02-10', 2, 1),
+('VOCE', 'LISTANJE', '2022-02-06', 2, 2),
+('VOCE', 'LISTANJE', '2022-02-06', 1, 2);
 
 INSERT INTO finalna_dijagnoza (datum_preporuke, faza_biljke, biljka_id, bolest_id, preporuceni_preparat_id) VALUES
 ('2023-05-06', 'LISTANJE', 1, 1, 2),
 ('2023-05-01', 'LISTANJE', 2, 7, 26),
-('2023-05-01', 'FORMIRANJE_PLODA', 3, 10, 32);
--- INSERT INTO biljka_finalne_dijagnoze(biljka_id, finalne_dijagnoze_id) VALUES
--- (1, 1);
+('2023-05-01', 'FORMIRANJE_PLODA', 3, 10, 32),
+('2022-10-01', 'LISTANJE', 4, 7, 26),
+('2023-04-11', 'LISTANJE', 4, 6, 11);

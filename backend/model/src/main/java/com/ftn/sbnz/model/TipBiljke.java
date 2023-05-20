@@ -28,4 +28,8 @@ public class TipBiljke {
 
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Bolest> moguceBolesti;
+
+    public String getNaziv(){
+        return naziv;
+    }
 }

@@ -37,9 +37,7 @@ public class DroolsConfig {
     @Autowired
     private FinalnaDijagnozaRepositiry finalnaDijagnozaRepositiry;
 
-    @Autowired
-
-  
+      
     @Bean
     public KieContainer kieContainer() {
         logger.info("Creating new Kie Container.");
@@ -64,7 +62,7 @@ public class DroolsConfig {
         }
 
         // Korisnik currentUser = korisnikService.getCurrentlyLoggedUser();
-        Korisnik currentUser = korisnikRepository.findById(1L).get();
+        Korisnik currentUser = korisnikRepository.findById(2L).get();
         List<Biljka> activeUserPlants = biljkaRepository.findByVlasnikId(currentUser.getId());
         for(Biljka plant: activeUserPlants){
             kieSession.insert(plant);

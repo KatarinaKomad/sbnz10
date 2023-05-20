@@ -46,28 +46,38 @@ public class PreporukaService {
         preporuka.setOpisPreparata(topPreparat.getPotkategorija() + " " + topPreparat.getPrimarnaKategorija());
         
         FinalnaDijagnoza finalnaDijagnoza = finalnaDijagnozaService.createFinalnaDijagnoza(bolest, biljka, topPreparat);
-        
+        finalnaDijagnoza.setPreporuka(preporuka);
+
         kieSession.insert(preporuka);
         kieSession.insert(finalnaDijagnoza);
         kieSession.fireAllRules();
        
+        return this.handleSessionChanges(preporuka, finalnaDijagnoza);
+        
+    }
+
+    private Preporuka handleSessionChanges(Preporuka preporuka, FinalnaDijagnoza finalnaDijagnoza){
         Collection<FactHandle> handlers = kieSession.getFactHandles();
         for (FactHandle handle: handlers) {
             Object obj = kieSession.getObject(handle);
             if (obj.getClass() == Preporuka.class){
                 Preporuka p = (Preporuka) obj;
                 if (p.getBiljka().getId() == preporuka.getBiljka().getId()){
-                    return preporukaRepository.save(p);
+                    preporuka = preporukaRepository.save(p);
                 }
             }
             if (obj.getClass() == FinalnaDijagnoza.class){
                 FinalnaDijagnoza dijagnoza = (FinalnaDijagnoza) obj;
+                System.out.println("Dijagnoza");
                 if (dijagnoza.getBiljka().getId() == finalnaDijagnoza.getBiljka().getId() &&
                     dijagnoza.getBolest().getId() == finalnaDijagnoza.getBolest().getId()){
                         finalnaDijagnozaRepositiry.save(dijagnoza);
                 }
             }
+            else{
+                finalnaDijagnozaRepositiry.save(finalnaDijagnoza);
+            }
         }
-        return null;
+        return preporuka;
     }
 }
