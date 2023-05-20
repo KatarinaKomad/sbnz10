@@ -9,6 +9,24 @@ import com.ftn.sbnz.model.Biljka;
 import com.ftn.sbnz.model.enums.KategorijaPreparata;
 import com.ftn.sbnz.event.NeizlecenaBolestVoca
 
+declare DuplaDozaSlabogPreparataAlarm
+    @role(event)
+    biljka: Biljka
+    bolest: Bolest
+end
+
+declare PromenaSlabogUJakPreparatAlarm
+    @role(event)
+    biljka: Biljka
+    bolest: Bolest
+end
+
+declare NapomenaZaInsekticidAlarm
+    @role(event)
+    biljka: Biljka
+    bolest: Bolest
+    preparat: Preparat
+end
 
 rule "Dijagnoza iste bolesti 2 ili vise puta kod iste biljke u istoj fazi u mesec dana -> aktivirati alarm NeizlecenaBolestVoca"
     no-loop
@@ -28,7 +46,7 @@ rule "Dijagnoza iste bolesti 2 ili vise puta kod iste biljke u istoj fazi u mese
                                          ), 
                                           count($d)
         )
-        not (NeizlecenaBolestVoca(biljka == $biljka, bolest == $bolest, preparat == $preparat, fazaJavljanja == $fazaBiljke))
+        not (NeizlecenaBolestVoca(biljka == $biljka, bolest == $bolest, fazaJavljanja == $fazaBiljke))
     then
         System.out.println("Neizlecena bolest voca za " + $biljka.getId() + ", bolest " + $bolest.getNaziv());
         insert(new NeizlecenaBolestVoca($biljka, $bolest, $preparat, $fazaBiljke));
@@ -53,9 +71,12 @@ rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju ne pos
                               nazivPreparata == $preparat.naziv,
                               biljka.id == $biljka.id)
         
+        not(DuplaDozaSlabogPreparataAlarm(biljka == $biljka, bolest == $bolest))
+        
     then
         System.out.println("Dupla doza " + $biljka.getId() + ", bolest " + $bolest.getNaziv());
         modify($preporuka) {setPreporucenaDoza($preporuka.getPreporucenaDoza() * 2)}
+        insert(new DuplaDozaSlabogPreparataAlarm($biljka, $bolest));
 end
 
 rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju postoji jak preparat -> preporuciti jak preparat" 
@@ -76,6 +97,8 @@ rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju postoj
         $preporuka: Preporuka(bolest.id == $bolest.id,
                               nazivPreparata == $preparat.naziv,
                               biljka.id == $biljka.id)
+
+        not(PromenaSlabogUJakPreparatAlarm(biljka == $biljka, bolest == $bolest))
         
     then
         modify($dijagnoza) {setPreparat($bolest.getTopJakPreparat())}
@@ -83,6 +106,7 @@ rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju postoj
                                     setNazivPreparata($bolest.getTopJakPreparat().getNaziv()),
                                     setOpisPreparata($bolest.getTopJakPreparat().getPotkategorijaPreparata() + " " + $bolest.getTopJakPreparat().getKategorijaPreparata()) }
         modify($alarm) {setPreparat($bolest.getTopJakPreparat())}
+        insert(new PromenaSlabogUJakPreparatAlarm($biljka, $bolest));
         System.out.println("Neizlecena bolest alarm jak preparat " + $alarm.getPreparat().getNaziv());
 end
 
@@ -102,7 +126,10 @@ rule "NeizlecenaBolestVoca i preporuceni jak preparat insekticid -> napomena za 
                               nazivPreparata == $preparat.naziv,
                               biljka.id == $biljka.id)
         
+        not(NapomenaZaInsekticidAlarm(biljka == $biljka, bolest == $bolest, preparat == $preparat))
+        
     then
+        insert(new NapomenaZaInsekticidAlarm($biljka, $bolest, $preparat));
         modify($preporuka) {setPoruka("Biljku ne upotrebljavati u ishrani do 2 nedelje nakon prskanja")}
 end
 

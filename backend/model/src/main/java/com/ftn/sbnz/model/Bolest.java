@@ -9,7 +9,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 
 import com.ftn.sbnz.model.enums.FazaBiljke;
 
@@ -35,13 +35,13 @@ public class Bolest {
     
     private String naziv;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Simptom> simptomi;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Preparat> jakiPreparati;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToMany(cascade = CascadeType.ALL)
     private List<Preparat> slabiPreparati;
 
     @Enumerated(EnumType.STRING)

@@ -17,7 +17,6 @@ import com.ftn.sbnz.model.Korisnik;
 import com.ftn.sbnz.respository.BiljkaRepository;
 import com.ftn.sbnz.respository.FinalnaDijagnozaRepositiry;
 import com.ftn.sbnz.respository.KorisnikRepository;
-import com.ftn.sbnz.service.KorisnikService;
 
 import java.util.List;
 
@@ -39,7 +38,6 @@ public class DroolsConfig {
     private FinalnaDijagnozaRepositiry finalnaDijagnozaRepositiry;
 
     @Autowired
-    private KorisnikService korisnikService;
 
   
     @Bean

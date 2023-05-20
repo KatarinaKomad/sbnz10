@@ -62,13 +62,10 @@ public class BolestService {
         QueryResults results = kieSession.getQueryResults("Poklapanje simptoma bolesti", existingPlant.getTip().getMoguceBolesti(), unosSimptomi.getTrenutnaFaza(), unosSimptomi.getSimptomi());    
         for(QueryResultsRow queryResult : results) {
             List<Bolest> moguceBolesti = (List<Bolest>) queryResult.get("$moguceBolesti");
-            System.out.println(moguceBolesti.size());
             if(moguceBolesti.size() > 0) {
                Preporuka preporuka = preporukaService.createSugggestion(moguceBolesti.get(0), existingPlant);
                return PreporukaMapper.toDTO(preporuka);
             }
-            // System.out.println(brojSimptoma);
-            // System.out.println(moguceBolesti.get(0).getNaziv());
         }
         return null;       
     }
