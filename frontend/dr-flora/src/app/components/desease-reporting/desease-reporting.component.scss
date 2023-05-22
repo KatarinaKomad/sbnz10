@@ -6,15 +6,16 @@
     justify-content: center;
     padding-left: 10%;
     padding-right: 10%;
-    padding-top: 4%;
+    padding-top: 2%;
     padding-bottom:  4%;
+    height: fit-content;
 }
 
 .description{
     font-family: $font;
     font-size: 25px;
     color: $dark-orange;
-    padding-bottom: 3%;
+    padding-bottom: 2%;
     font-weight: lighter;
 }
 
@@ -29,4 +30,29 @@
 .id-input:focus{
     outline: none;
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.submit-button{
+    @include greenButton();
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    font-size: medium;
+    padding: 1% 5%;
+    margin-top: 2%;
+    align-self: flex-end;
+}
+
+.select-container{
+    padding-top: 3%;
+}
+
+.label{
+   font-family: $font;
+   font-size: medium;
+   color: $dark-green; 
+}
+
+.option{
+    padding-right: 5%
 }

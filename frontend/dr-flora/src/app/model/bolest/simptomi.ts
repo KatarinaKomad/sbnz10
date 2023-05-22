@@ -1,3 +1,5 @@
+import { FazaBiljke } from "../biljka/biljka";
+
 export interface Simptom {
     lokacija: LokacijaSimptoma,
     opis: string,
@@ -10,4 +12,10 @@ export enum LokacijaSimptoma{
     STABLO = "STABLO",
     CVET ="CVET",
     GRANA = "GRANA"
+}
+
+export interface UnosSimptoma{
+    idBiljke: number;
+    trenutnaFaza: FazaBiljke,
+    symptomsIDs: number[]
 }

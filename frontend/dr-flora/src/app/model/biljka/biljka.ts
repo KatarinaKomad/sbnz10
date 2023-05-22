@@ -1,0 +1,5 @@
+export enum FazaBiljke{
+    LISTANJE = "LISTANJE",
+    CVETANJE = "CVETANJE",
+    FORMIRANJE_PLODA = "FORMIRANJE_PLODA"
+}

@@ -9,7 +9,7 @@ import { AngularMaterialModule } from "../shared/angular-material.module";
 import { RouterModule } from "@angular/router";
 import { UserRoutinModule } from "./user-routing.module";
 import { DeseaseSymptomsFormComponent } from "src/app/components/desease-symptoms-form/desease-symptoms-form.component";
-import { DeseaseReportingComponent } from "src/app/desease-reporting/desease-reporting.component";
+import { DeseaseReportingComponent } from "src/app/components/desease-reporting/desease-reporting.component";
 import { AppRoutingModule } from "src/app/app-routing.module";
 
 

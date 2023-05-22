@@ -19,17 +19,3 @@ query "Poklapanje simptoma bolesti" (List $bolesti, FazaBiljke $trenutnaFazaBilj
         $moguceBolesti: collectList($bolest)
     ) 
 end
-
-
-
-// rule "Dijagnoza bolesti na osnovu simptoma, kategorije i trenutne faze biljke"
-//     when 
-//         $unos: UnosSimptoma($simptomi: simptomi, $trenutnaFazaBiljke: trenutnaFaza, $idBiljke: idBiljke, $tip: tip)
-//         accumulate(
-//             Bolest($b: this) from $tip.moguceBolesti 
-//             and
-//             poklapanjeSimptomaBolesti($b, $trenutnaFazaBiljke, $simptomi)
-//         )
-//     then
-//         System.out.println($b.naziv)
-// end

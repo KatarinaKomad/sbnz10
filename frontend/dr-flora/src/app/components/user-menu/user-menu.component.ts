@@ -15,11 +15,11 @@ interface IMenuOption{
 export class UserMenuComponent implements OnInit {
 
   menuOptionsRouting : IMenuOption[]  = [
-    {optionName: "dodavanje nove biljke", optionRoute: "add-new-plant"},
-    {optionName:"unos novih simptoma", optionRoute: "report-desease"},
-    {optionName:"istorija bolesti", optionRoute: "history"},
-    {optionName:"pregled biljaka", optionRoute: "/lants"},
-    {optionName:"izveštaji", optionRoute: "reports"}
+    {optionName: "Dodavanje nove biljke", optionRoute: "add-new-plant"},
+    {optionName:"Unos novih simptoma", optionRoute: "report-desease"},
+    {optionName:"Istorija bolesti", optionRoute: "history"},
+    {optionName:"Pregled biljaka", optionRoute: "/lants"},
+    {optionName:"Izveštaji", optionRoute: "reports"}
   ]
   objectKeys = Object.keys;
   ngOnInit(): void {

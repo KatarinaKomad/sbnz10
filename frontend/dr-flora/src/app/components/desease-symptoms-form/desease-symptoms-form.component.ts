@@ -55,13 +55,17 @@ export class DeseaseSymptomsFormComponent implements OnInit{
   openDialog(lokacija: LokacijaSimptoma){
     let params = {
       sve_opcije: this.sviSimptomi[lokacija],
-      odabrane_opcije: [],
+      odabrane_opcije: this.symptomsForm? this.symptomsForm[lokacija] : [],
     }
     this.dialog.open(MultiselectDropdownComponent, {
       data: params,
     }).afterClosed().subscribe(data => {
         if (data) {
-          console.log(params) }
+          console.log(params) 
+          if(this.symptomsForm){
+            this.symptomsForm[lokacija] = params.odabrane_opcije
+          }
+        }
     })
   }
 

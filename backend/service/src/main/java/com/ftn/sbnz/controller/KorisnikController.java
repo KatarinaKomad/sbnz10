@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ftn.sbnz.model.Korisnik;
 import com.ftn.sbnz.service.KorisnikService;
 
-@CrossOrigin(origins = "https://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(value = "/user")
 public class KorisnikController {
