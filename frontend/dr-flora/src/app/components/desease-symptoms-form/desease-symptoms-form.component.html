@@ -1,0 +1,17 @@
+<div *ngIf="symptomsForm" class="symptoms-container">
+    <div style="display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap;">            
+        <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.LIST)" 
+            [style.backgroundColor]="this.symptomsForm[LokacijaSimptoma.LIST].length > 0 ? '#E9EDC9' : 'white'">Simptomi listova
+            <mat-icon aria-hidden="false" class="icon" fontIcon="keyboard_arrow_right"></mat-icon>
+        </button>
+        <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.PLOD)" >Simptomi plodova
+            <mat-icon aria-hidden="false" class="icon" fontIcon="keyboard_arrow_right"></mat-icon>
+        </button>
+        <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.CVET)" >Simptomi cvetova
+            <mat-icon aria-hidden="false" class="icon" fontIcon="keyboard_arrow_right"></mat-icon>
+        </button>
+        <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.GRANA)" >Simptomi grane
+            <mat-icon aria-hidden="false" class="icon" fontIcon="keyboard_arrow_right"></mat-icon>
+        </button>
+    </div>
+</div>

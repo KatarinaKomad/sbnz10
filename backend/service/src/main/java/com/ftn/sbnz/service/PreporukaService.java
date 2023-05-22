@@ -68,7 +68,6 @@ public class PreporukaService {
             }
             if (obj.getClass() == FinalnaDijagnoza.class){
                 FinalnaDijagnoza dijagnoza = (FinalnaDijagnoza) obj;
-                System.out.println("Dijagnoza");
                 if (dijagnoza.getBiljka().getId() == finalnaDijagnoza.getBiljka().getId() &&
                     dijagnoza.getBolest().getId() == finalnaDijagnoza.getBolest().getId()){
                         finalnaDijagnozaRepositiry.save(dijagnoza);

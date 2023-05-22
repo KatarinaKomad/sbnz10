@@ -1,0 +1,14 @@
+<form [formGroup]="this.reportingForm" class="report-container">
+    <p class="description">Unesite simptome biljke</p>
+    <div style="display: flex; width: 30vw;">
+        <input class="id-input" type="number" placeholder="Identifikator biljke" formControlName="plantId"/>
+    </div>
+    <mat-radio-group color="warn" class="select-container" formControlName="fazaBiljke">
+        <label class="label">Trenutna faza:</label>
+        <mat-radio-button [value]=FazaBiljke.LISTANJE class="option">listanje</mat-radio-button>
+        <mat-radio-button [value]=FazaBiljke.CVETANJE class="option">cvetanje</mat-radio-button>
+        <mat-radio-button [value]=FazaBiljke.FORMIRANJE_PLODA class="option">formiranje ploda</mat-radio-button>
+    </mat-radio-group>
+    <app-desease-symptoms-form [symptomsForm] = "this.simptomi"></app-desease-symptoms-form>
+    <button (click)="onSubmit()" class="submit-button">Odredi bolest</button>
+</form>

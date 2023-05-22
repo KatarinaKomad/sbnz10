@@ -30,6 +30,9 @@
     font-family: $font;
     font-size: medium;
     color: $dark_green;
+    text-decoration: none;
+    justify-content: center;
+    display: flex;
 
     :focus{
         background: $middle_green_hover;

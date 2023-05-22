@@ -57,7 +57,6 @@ public class BolestService {
         unosSimptomi.setTip(existingPlant.getTip());
         unosSimptomi.setTrenutnaFaza(unosSimptomaDTO.getTrenutnaFaza());
         existingPlant.setTrenutnaFaza(unosSimptomaDTO.getTrenutnaFaza());
-        // kieSession = kieContainer.newKieSession("rulesSession");
         
         QueryResults results = kieSession.getQueryResults("Poklapanje simptoma bolesti", existingPlant.getTip().getMoguceBolesti(), unosSimptomi.getTrenutnaFaza(), unosSimptomi.getSimptomi());    
         for(QueryResultsRow queryResult : results) {
