@@ -1,0 +1,9 @@
+@import 'src/app/style/styles';
+
+.symptoms-container{
+    display: flex;
+    flex-direction: column;
+    width: -webkit-fill-available;
+    justify-content: center;
+    // align-items: center;
+}

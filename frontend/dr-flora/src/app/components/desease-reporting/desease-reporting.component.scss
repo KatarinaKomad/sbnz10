@@ -1,0 +1,32 @@
+@import 'src/app/style/styles';
+
+.report-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-top: 4%;
+    padding-bottom:  4%;
+}
+
+.description{
+    font-family: $font;
+    font-size: 25px;
+    color: $dark-orange;
+    padding-bottom: 3%;
+    font-weight: lighter;
+}
+
+.id-input{
+    @include inputField();
+    border: none;
+    border-bottom: solid thin $middle_green;
+    box-shadow: none;
+    color: $dark-green;
+}
+
+.id-input:focus{
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}

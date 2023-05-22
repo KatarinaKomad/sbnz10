@@ -1,0 +1,36 @@
+@import 'src/app/style/styles';
+
+.dropdown-button{
+    @include inputField();
+    border: none;
+    border-bottom: solid thin $middle_green;
+    box-shadow: none;
+    width: 30vw;
+    padding: 5%;
+    margin-top: 5vh;
+    justify-content: space-between;
+    font-family: "Segoe UI";
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-button:focus{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.options-container{
+    display: flex;
+    flex-direction: column;
+    background-color: #FCF7EF;
+    box-shadow: 0 0 5px 10px #FCF7EF;
+    max-height: 40vh;
+    height: min-content;
+    overflow-y: scroll;
+    position: absolute;
+}
+
+.option-text{
+    font-family: $font;
+    color: $dark_green;
+    font-size: medium;
+}

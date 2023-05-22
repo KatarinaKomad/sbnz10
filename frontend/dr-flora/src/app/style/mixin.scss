@@ -11,3 +11,14 @@
     box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
     
 }
+
+@mixin inputField{
+    font-size: medium;
+    width: -webkit-fill-available;
+    padding: 2%;
+    height: 3vh;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    min-width: 200px;
+    min-height: 30px;
+    background-color: $background_color;
+}

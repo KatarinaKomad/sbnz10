@@ -1,0 +1,13 @@
+<div *ngIf="symptomsForm" class="symptoms-container">
+    
+    <form [formGroup]="symptomsForm">
+        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+            <app-multiselect-dropdown [options]="simptomiLista" placeholder="Simptomi listova"/>
+            <app-multiselect-dropdown [options]="simptomiCveta" placeholder="Simptomi cvetova"/>
+        </div>
+        <div style="display: flex; flex-direction: row; justify-content: space-between;">
+            <app-multiselect-dropdown [options]="simptomiPloda" placeholder="Simptomi ploda"/>
+            <app-multiselect-dropdown [options]="simptomiGrane" placeholder="Simptomi grane"/>
+        </div>
+    </form>
+</div>

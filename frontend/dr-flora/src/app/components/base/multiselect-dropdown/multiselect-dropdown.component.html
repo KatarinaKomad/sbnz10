@@ -1,0 +1,11 @@
+<div>
+    <button class="dropdown-button" (click)="openOptions()">{{placeholder}}
+        <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_down"></mat-icon>
+    </button>
+    <div class="options-container" *ngIf="isOpenOptions">
+        <span *ngFor="let simptiom of options">
+            <label class="option-text"><input type="checkbox"/>{{simptiom.opis}}
+            </label>
+        </span>
+    </div>
+</div>

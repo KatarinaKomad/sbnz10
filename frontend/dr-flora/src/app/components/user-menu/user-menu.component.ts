@@ -15,11 +15,11 @@ interface IMenuOption{
 export class UserMenuComponent implements OnInit {
 
   menuOptionsRouting : IMenuOption[]  = [
-    {optionName: "dodavanje nove biljke", optionRoute: "/user/add-new-plant"},
-    {optionName:"unos novih simptoma", optionRoute: "/user/new-symptoms"},
-    {optionName:"istorija bolesti", optionRoute: "/user/history"},
-    {optionName:"pregled biljaka", optionRoute: "/user/plants"},
-    {optionName:"izveštaji", optionRoute: "/user/reports"}
+    {optionName: "dodavanje nove biljke", optionRoute: "add-new-plant"},
+    {optionName:"unos novih simptoma", optionRoute: "report-desease"},
+    {optionName:"istorija bolesti", optionRoute: "history"},
+    {optionName:"pregled biljaka", optionRoute: "/lants"},
+    {optionName:"izveštaji", optionRoute: "reports"}
   ]
   objectKeys = Object.keys;
   ngOnInit(): void {
@@ -35,6 +35,6 @@ export class UserMenuComponent implements OnInit {
   }
 
   changePage(url : string) : void {
-    this.router.navigateByUrl(url);
+    // this.router.navigate([{ outlets: { userPage: [`${url}`] }}]);
   }
 }
