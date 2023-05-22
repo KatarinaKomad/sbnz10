@@ -1,0 +1,40 @@
+@import 'src/app/style/styles';
+
+.user-menu-container{
+    display: flex;
+    flex-direction: column;
+    background-color: $middle_green;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    overflow: auto;
+    height: 100%;
+    width: 15vw;
+    min-width: max-content;
+}
+
+.menu-option{
+    background: transparent;
+    border: none;
+    color: $background_color;
+    border-bottom: solid 3px $background_color;
+    height: 8%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.option-button{
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    font-family: $font;
+    font-size: medium;
+    color: $dark_green;
+    text-decoration: none;
+    justify-content: center;
+    display: flex;
+
+    :focus{
+        background: $middle_green_hover;
+    }
+}

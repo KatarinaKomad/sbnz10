@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AnimationItem } from 'lottie-web';
 import { AnimationOptions } from 'ngx-lottie';
 
@@ -8,18 +9,19 @@ import { AnimationOptions } from 'ngx-lottie';
   styleUrls: ['./home-page.component.scss']
 })
 export class HomePageComponent implements OnInit{
-  
-  // options: AnimationOptions = {    
-  //   path: '/assets/lottie/home_gif.json'  
-  // };  
-
+   
   ngOnInit(): void {  }
 
-  // // This is the component function that binds to the animationCreated event from the package  
-  // onAnimate(animationItem: AnimationItem): void {    
-  //   console.log(animationItem);  
-  // }
-  constructor(){
+  constructor(private router: Router){}
+  showSignin: boolean = false;
+
+  onSignin() {
+    this.showSignin = true;
+    console.log(this.showSignin)
+    // this.router.navigateByUrl('/signin')
+  }
+
+  onSignup() {
 
   }
 }

@@ -1,0 +1,21 @@
+import com.ftn.sbnz.model.Bolest;
+import com.ftn.sbnz.model.Simptom;
+import com.ftn.sbnz.model.TipBiljke;
+import com.ftn.sbnz.model.enums.FazaBiljke;
+import com.ftn.sbnz.model.enums.Lokacija;
+import java.util.List;
+
+query "Poklapanje simptoma bolesti" (List $bolesti, FazaBiljke $trenutnaFazaBiljke,  List $simptomiBiljke)
+    accumulate (
+        Bolest($bolest: this,
+                $trenutnaFazaBiljke == fazaJavljanja,
+                $simptomiBolesti: simptomi) from $bolesti 
+        and
+        Number(intValue >= 0.5 * $simptomiBolesti.size())
+            from accumulate (
+                        Simptom($s: this, $simptomiBolesti.contains(this)) from $simptomiBiljke,
+                        count($s)
+            ),
+        $moguceBolesti: collectList($bolest)
+    ) 
+end

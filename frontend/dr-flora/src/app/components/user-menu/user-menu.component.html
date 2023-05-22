@@ -1,0 +1,5 @@
+<div class="user-menu-container">
+    <div *ngFor="let option of menuOptionsRouting" class="menu-option">
+        <a class="option-button" [routerLink]="[{ outlets: { userPage: [option.optionRoute] } }]">{{option.optionName}}</a>
+    </div>
+</div>

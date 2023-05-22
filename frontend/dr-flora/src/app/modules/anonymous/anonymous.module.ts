@@ -6,6 +6,11 @@ import { LottieModule } from "ngx-lottie";
 import player from 'lottie-web';
 import { CommonModule } from "@angular/common";
 import { MatButtonModule } from "@angular/material/button";
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatInputModule } from '@angular/material/input';
+import { LoginComponent } from "src/app/components/login/login.component";
+import { SharedModule } from "../shared/shared.module";
 
 //Export this function
 export function playerFactory(): any {  
@@ -14,16 +19,16 @@ export function playerFactory(): any {
 
 const declaredModules = [
     HomePageComponent,
-    HomeGifComponent
+    HomeGifComponent,
+    LoginComponent,
   ];
 
 @NgModule({
     declarations: declaredModules,
     imports: [ 
-        CommonModule,
         AnonymousRoutingModule,
         LottieModule.forRoot({ player: playerFactory }),  
-        MatButtonModule
+        SharedModule
     ],
     exports: declaredModules,
     providers: [],

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.ftn.sbnz.model.Korisnik;
 
 @Repository
-public interface KorisnikRepository extends JpaRepository<Korisnik, Integer> {
+public interface KorisnikRepository extends JpaRepository<Korisnik, Long> {
 
     Korisnik findByEmail(String email);
 
