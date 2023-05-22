@@ -1,13 +1,16 @@
 <div *ngIf="symptomsForm" class="symptoms-container">
-    
-    <form [formGroup]="symptomsForm">
-        <div style="display: flex; flex-direction: row; justify-content: space-between;">
-            <app-multiselect-dropdown [options]="simptomiLista" placeholder="Simptomi listova"/>
-            <app-multiselect-dropdown [options]="simptomiCveta" placeholder="Simptomi cvetova"/>
-        </div>
-        <div style="display: flex; flex-direction: row; justify-content: space-between;">
-            <app-multiselect-dropdown [options]="simptomiPloda" placeholder="Simptomi ploda"/>
-            <app-multiselect-dropdown [options]="simptomiGrane" placeholder="Simptomi grane"/>
-        </div>
-    </form>
+    <div style="display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap;">            
+        <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.LIST)" >Simptomi listova
+            <mat-icon aria-hidden="false" class="icon" fontIcon="keyboard_arrow_right"></mat-icon>
+        </button>
+        <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.PLOD)" >Simptomi plodova
+            <mat-icon aria-hidden="false" class="icon" fontIcon="keyboard_arrow_right"></mat-icon>
+        </button>
+        <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.CVET)" >Simptomi cvetova
+            <mat-icon aria-hidden="false" class="icon" fontIcon="keyboard_arrow_right"></mat-icon>
+        </button>
+        <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.GRANA)" >Simptomi grane
+            <mat-icon aria-hidden="false" class="icon" fontIcon="keyboard_arrow_right"></mat-icon>
+        </button>
+    </div>
 </div>

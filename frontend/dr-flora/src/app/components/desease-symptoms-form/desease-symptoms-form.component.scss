@@ -7,3 +7,28 @@
     justify-content: center;
     // align-items: center;
 }
+
+.dropdown-button{
+    @include inputField();
+    border: none;
+    border-bottom: solid thin $middle_green;
+    box-shadow: none;
+    width: 30vw;
+    margin-top: 5vh;
+    justify-content: space-between;
+    font-family: "Segoe UI";
+    display: flex;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border-radius: 5px;
+    height: 3vh;
+}
+
+.dropdown-button:focus{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.icon {
+    color: $dark-green;
+    font-weight: lighter !important;;
+}

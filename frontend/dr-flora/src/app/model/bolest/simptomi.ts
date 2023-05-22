@@ -1,6 +1,7 @@
 export interface Simptom {
     lokacija: LokacijaSimptoma,
-    opis: string
+    opis: string,
+    id: number,
 }
 
 export enum LokacijaSimptoma{

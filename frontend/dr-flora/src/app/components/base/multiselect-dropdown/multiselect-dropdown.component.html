@@ -1,11 +1,16 @@
-<div>
-    <button class="dropdown-button" (click)="openOptions()">{{placeholder}}
-        <mat-icon aria-hidden="false" fontIcon="keyboard_arrow_down"></mat-icon>
-    </button>
-    <div class="options-container" *ngIf="isOpenOptions">
-        <span *ngFor="let simptiom of options">
-            <label class="option-text"><input type="checkbox"/>{{simptiom.opis}}
-            </label>
+<div class="container">
+    <p class="dialog-title">Slektujte simptome koji se javljaju na vašoj biljci</p>
+    <div class="options-container">
+        <span *ngFor="let simptiom of data['sve_opcije']" style="width: 50%;">
+            <mat-checkbox type="checkbox" id="simptiom.id" 
+                (change)="handleSelect(simptiom.id)"
+                
+                color="warn"
+                [checked]="data.odabrane_opcije.includes(simptiom.id)">
+                {{simptiom.opis}}
+            </mat-checkbox>
+            <!-- <label class="option-text" htmlFor="simptiom.id">{{simptiom.opis}}</label> -->
         </span>
     </div>
+    <button class="done-button" (click)="handleClose()">Gotovo</button>
 </div>
