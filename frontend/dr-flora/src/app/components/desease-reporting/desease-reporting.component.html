@@ -12,3 +12,10 @@
     <app-desease-symptoms-form [symptomsForm] = "this.simptomi"></app-desease-symptoms-form>
     <button (click)="onSubmit()" class="submit-button">Odredi bolest</button>
 </form>
+<mat-spinner  *ngIf="isLoadingResponse"
+                color="warn" 
+                style="position: absolute;
+                left: 50%;
+                top: 50%;
+                transform: translate(-50%, -50%);">
+</mat-spinner>

@@ -1,0 +1,57 @@
+@import 'src/app/style/styles';
+
+.recomendation-container{
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    height: 60vh;
+    background-color: $background_secondary;
+    overflow: hidden;
+    padding-top: 3%;
+    padding-bottom: 5%;
+}
+
+.recomendation-item{
+    border-bottom: solid thin $middle_green;
+    width: 100%;
+    font-family: $font;
+    font-size: medium;
+    margin-left: 5%;
+    margin-right: 5%;
+    overflow-x: hidden;
+    width: 90%;
+    font-weight: lighter;
+    padding-bottom: 2%;
+
+    .subtitle{
+        color: $dark-green-hover;
+        margin-top: 1%;
+        margin-bottom: 1%;
+    }
+
+    .description{
+        color: $dark-green;
+    }
+
+    .sub-subtitle{
+        color: $dark-green-hover;
+        padding-left: 5%;
+    }
+
+}
+
+.recomendation-title{
+    color: #E78761;
+    font-weight: lighter;
+    font-size: large;
+    margin-bottom: 1%;
+    padding-left: 3%;
+}
+
+.note{
+    font-size: 12px;
+    margin-top: 0%;
+    padding-left: 3%;
+    font-weight: lighter;
+    color: $dark-green;
+}
