@@ -7,6 +7,7 @@ import com.ftn.sbnz.model.Preporuka;
 import java.time.LocalDate;
 import com.ftn.sbnz.model.Biljka;
 import com.ftn.sbnz.model.enums.KategorijaPreparata;
+import com.ftn.sbnz.model.enums.KategorijaBiljke;
 import com.ftn.sbnz.event.NeizlecenaBolestVoca
 
 declare DuplaDozaSlabogPreparataAlarm
@@ -35,6 +36,7 @@ rule "Dijagnoza iste bolesti 2 ili vise puta kod iste biljke u istoj fazi u mese
                                     $bolest: bolest, 
                                     $preparat: preporuceniPreparat, 
                                     $biljka: biljka, 
+                                    biljka.kategorija == KategorijaBiljke.VOCE,
                                     $fazaBiljke: fazaBiljke,
                                     datumPreporuke.isAfter(LocalDate.now().minusMonths(1)))
         Number(intValue >= 1) from accumulate(

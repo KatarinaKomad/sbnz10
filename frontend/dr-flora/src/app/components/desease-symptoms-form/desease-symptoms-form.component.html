@@ -1,16 +1,19 @@
 <div *ngIf="symptomsForm" class="symptoms-container">
     <div style="display: flex; flex-direction: row; justify-content: space-between; flex-wrap: wrap;">            
         <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.LIST)" 
-            [style.backgroundColor]="this.symptomsForm[LokacijaSimptoma.LIST].length > 0 ? '#E9EDC9' : 'white'">Simptomi listova
+            [style.backgroundColor]="this.symptomsForm[LokacijaSimptoma.LIST].length > 0 ? '#E9EDC9' : '#FEFCF7'">Simptomi listova
             <mat-icon aria-hidden="false" class="icon" fontIcon="keyboard_arrow_right"></mat-icon>
         </button>
-        <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.PLOD)" >Simptomi plodova
+        <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.PLOD)" 
+        [style.backgroundColor]="this.symptomsForm[LokacijaSimptoma.PLOD].length > 0 ? '#E9EDC9' : '#FEFCF7'">Simptomi plodova
             <mat-icon aria-hidden="false" class="icon" fontIcon="keyboard_arrow_right"></mat-icon>
         </button>
-        <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.CVET)" >Simptomi cvetova
+        <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.CVET)" 
+        [style.backgroundColor]="this.symptomsForm[LokacijaSimptoma.CVET].length > 0 ? '#E9EDC9' : '#FEFCF7'">Simptomi cvetova
             <mat-icon aria-hidden="false" class="icon" fontIcon="keyboard_arrow_right"></mat-icon>
         </button>
-        <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.GRANA)" >Simptomi grane
+        <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.GRANA)" 
+        [style.backgroundColor]="this.symptomsForm[LokacijaSimptoma.GRANA].length > 0 ? '#E9EDC9' : '#FEFCF7'">Simptomi grane
             <mat-icon aria-hidden="false" class="icon" fontIcon="keyboard_arrow_right"></mat-icon>
         </button>
     </div>

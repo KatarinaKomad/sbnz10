@@ -62,7 +62,7 @@ public class DroolsConfig {
         }
 
         // Korisnik currentUser = korisnikService.getCurrentlyLoggedUser();
-        Korisnik currentUser = korisnikRepository.findById(2L).get();
+        Korisnik currentUser = korisnikRepository.findById(1L).get();
         List<Biljka> activeUserPlants = biljkaRepository.findByVlasnikId(currentUser.getId());
         for(Biljka plant: activeUserPlants){
             kieSession.insert(plant);

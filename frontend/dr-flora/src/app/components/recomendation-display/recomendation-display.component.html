@@ -1,0 +1,33 @@
+<div class="recomendation-container">
+    <p class="recomendation-title">
+        Dijagnostikovana bolest
+    </p>
+    <p class="note">
+        Preporučeno tretiranje biljke
+    </p>
+    <div class="recomendation-item">
+        <p class="subtitle">Bolest:
+            <label class="description">{{data.nazivBolesti}}</label>
+        </p>
+    </div>
+    <div class="recomendation-item">
+        <p class="subtitle">Preporučeni preparat:</p>
+        <p class="sub-subtitle"
+            >Naziv:
+            <label class="description">{{data.nazivPreporucenogPreparata}}</label>
+        </p>
+        <p class="sub-subtitle">
+            Koncentracija:
+            <label class="description">{{data.preporucenDoza}}</label>
+        </p>
+        <p class="sub-subtitle">
+            Vrsta:
+            <label class="description">{{data.opisPreparata.toLowerCase()}}</label>
+        </p>
+    </div>
+    <div class="recomendation-item">
+        <p class="subtitle">Napomena: 
+            <label class="description">{{data.poruka}}</label> 
+        </p>
+    </div>
+</div>
