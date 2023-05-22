@@ -66,14 +66,15 @@ rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju ne pos
         $dijagnoza : FinalnaDijagnoza(bolest.id == $bolest.id,
                                     biljka.id == $biljka.id,
                                     preporuceniPreparat.id == $preparat.id,
-                                    $preporuka: preporuka)
+                                    $preporuka: preporuka,
+                                    datumPreporuke == LocalDate.now())
         
         not(DuplaDozaSlabogPreparataAlarm(biljka == $biljka, bolest == $bolest))
         
     then
         // System.out.println("Dupla doza " + $biljka.getId() + ", bolest " + $bolest.getNaziv());
         modify($preporuka) {setPreporucenaDoza($preporuka.getPreporucenaDoza() * 2),
-                            setPoruka("Preporučena je dupla doya preparata jer se bolest javila dva puta u mesec dana")}
+                            setPoruka("Preporučena je dupla doza preparata jer se bolest javila dva puta u mesec dana")}
         insert(new DuplaDozaSlabogPreparataAlarm($biljka, $bolest));
 end
 
@@ -86,12 +87,13 @@ rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju postoj
                                     $fazaBiljke : fazaJavljanja, 
                                     $preparat: preparat, 
                                     preparat.potkategorija == PotkategorijaPreparata.SLAB
-                                    ) //dodati da se ovaj alarm sad desio, da se ne aktivira na neki raniji
+                                    )
         
         $dijagnoza : FinalnaDijagnoza(bolest.id == $bolest.id,
                                     biljka.id == $biljka.id,
                                     preporuceniPreparat.id == $preparat.id,
-                                    $preporuka: preporuka)
+                                    $preporuka: preporuka,
+                                    datumPreporuke == LocalDate.now())
         
 
         not(PromenaSlabogUJakPreparatAlarm(biljka == $biljka, bolest == $bolest))

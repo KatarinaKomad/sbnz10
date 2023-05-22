@@ -261,7 +261,7 @@ INSERT INTO biljka (kategorija, trenutna_faza, vreme_sadnje, tip_id, vlasnik_id)
 ('VOCE', 'LISTANJE', '2022-02-06', 2, 1),
 ('VOCE', 'FORMIRANJE_PLODA', '2022-02-10', 3, 1),
 ('VOCE', 'FORMIRANJE_PLODA', '2022-02-10', 2, 1),
-('VOCE', 'LISTANJE', '2022-02-06', 2, 2),
+('VOCE', 'LISTANJE', '2022-02-06', 2, 2),--5--
 ('VOCE', 'LISTANJE', '2022-02-06', 1, 2);
 
 INSERT INTO finalna_dijagnoza (datum_preporuke, faza_biljke, biljka_id, bolest_id, preporuceni_preparat_id) VALUES
