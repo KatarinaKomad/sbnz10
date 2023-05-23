@@ -1,0 +1,40 @@
+<p class="title">Dodavanje biljke</p>
+<p class="note">Dodajte novu biljku i opcino unesite njene ukoliko već postoje</p>
+<form class="plant-form" [formGroup]="plantForm">
+    <div class="fields-container">
+        <div class="input-container">
+            <select class="input"   formControlName="category" required>
+                <option value="VOCE">Voće</option>
+                <option value="POVRCE">Povrće</option>
+            </select>
+            <p class="input-label">Kategorija</p>
+        </div>
+        <div class="input-container">
+            <select class="input"  formControlName="category" required>
+                <option value="VOCE">Voće</option>
+                <option value="POVRCE">Povrće</option>
+            </select>
+            <p class="input-label">Vrsta</p>
+        </div>
+        <div class="input-container">
+            <div class="calendar-container">
+                <input class="input" formControlName="plantingDate" [matDatepicker]="dp" required>
+                <mat-datepicker-toggle class="calendar-icon" matIconSuffix [for]="dp"></mat-datepicker-toggle>
+                <mat-datepicker #dp color="warn"></mat-datepicker>
+            </div>
+            <p class="input-label">Datum sadnje</p>
+        </div>
+        <div class="input-container">
+            <select class="input"   formControlName="category" required>
+                <option [value]="FazaBiljke.LISTANJE">Listanje</option>
+                <option [value]="FazaBiljke.CVETANJE">Cvetanje</option>
+                <option [value]="FazaBiljke.FORMIRANJE_PLODA">Formiranje ploda</option>
+            </select>
+            <p class="input-label">Trenutna:</p>
+        </div>
+        <div class="button-container"> 
+            <button class="submit-button">Nastavi sa unosom simptoma</button>
+            <button class="submit-button">Sačuvaj i završi</button>
+        </div>
+    </div>
+</form>

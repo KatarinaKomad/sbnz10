@@ -1,6 +1,6 @@
 @import "constants";
-@import "mixin";
-
+@import "./app-theme.scss";
+@import "./mixin.scss";
 
 .title{
   font-family: $font;
