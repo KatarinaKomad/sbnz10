@@ -1,6 +1,6 @@
 <p class="title">Dodavanje biljke</p>
 <p class="note">Dodajte novu biljku i opcino unesite njene ukoliko već postoje</p>
-<form class="plant-form" [formGroup]="plantForm">
+<form class="plant-form" [formGroup]="plantForm" *ngIf="!enterSymptoms">
     <div class="fields-container">
         <div class="input-container">
             <app-select-dropdown [options]="Object.values(KategorijaBiljke)" 
@@ -30,8 +30,12 @@
             <p class="input-label">Trenutna faza:</p>
         </div>
         <div class="button-container"> 
-            <button class="submit-button">Nastavi sa unosom simptoma</button>
-            <button class="submit-button">Sačuvaj i završi</button>
+            <button class="submit-button" (click)="handleContinue()">Nastavi sa unosom simptoma</button>
+            <button class="submit-button" (click)="handleSave()">Sačuvaj i završi</button>
         </div>
     </div>
 </form>
+<div *ngIf="enterSymptoms">
+    <app-desease-symptoms-form [symptomsForm]="simptomi" ></app-desease-symptoms-form>
+    <button class="submit-button" (click)="handleSave()">Sačuvaj i završi</button>
+</div>

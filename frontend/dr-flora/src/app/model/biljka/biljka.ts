@@ -1,12 +1,12 @@
 export enum FazaBiljke{
-    LISTANJE = "LISTANJE",
-    CVETANJE = "CVETANJE",
-    FORMIRANJE_PLODA = "FORMIRANJE PLODA"
+    LISTANJE = <any>"LISTANJE",
+    CVETANJE = <any>"CVETANJE",
+    FORMIRANJE_PLODA = <any>"FORMIRANJE PLODA"
 }
 
 export enum KategorijaBiljke{
-    VOĆE = "VOĆE",
-    POVRĆE = "POVRĆE",
+    VOCE = <any>"VOĆE",
+    POVRĆE = <any>"POVRĆE",
 }
 
 export enum VrsteVoca{
@@ -28,9 +28,10 @@ export enum VrstePovrca{
 }
 
 export interface Biljka{
-    kategorija: KategorijaBiljke,
+    kategorija: string,
     nazivTipa: string,
     datumSadnje: Date,
-    trenutnaFaza: FazaBiljke
-
+    trenutnaFaza: string,
+    vlasnikEmail: string,
+    id? : number
 }

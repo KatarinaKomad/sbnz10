@@ -1,6 +1,6 @@
 package com.ftn.sbnz.dto;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import com.ftn.sbnz.model.enums.FazaBiljke;
 import com.ftn.sbnz.model.enums.KategorijaBiljke;
@@ -22,6 +22,8 @@ public class BiljkaDTO {
     private FazaBiljke trenutnaFaza;
     private KategorijaBiljke kategorija;
     private String nazivTipa;
-    private Date datumSadnje;
+    private LocalDate datumSadnje;
+    private String vlasnikEmail;
+    private Long id;
 
 }

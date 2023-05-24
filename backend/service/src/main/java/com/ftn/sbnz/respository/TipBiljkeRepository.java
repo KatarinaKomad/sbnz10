@@ -8,4 +8,5 @@ import com.ftn.sbnz.model.TipBiljke;
 @Repository
 public interface TipBiljkeRepository extends JpaRepository<TipBiljke, Integer>{
     
+    TipBiljke findByNaziv(String naziv);
 }

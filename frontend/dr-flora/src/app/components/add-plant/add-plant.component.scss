@@ -76,22 +76,20 @@ select:focus > option:hover{
         background-color: transparent;
     }
 
-
-    .button-container{
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-    
-        .submit-button{
-            @include greenButton();
-            font-size: medium;
-            padding: 1.5% 3%;
-        }
-    }
-
     .option:hover{
         background: $light_orange;
     }
 }
 
+.button-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.submit-button{
+    @include greenButton();
+    font-size: medium;
+    padding: 1.5% 3%;
+}

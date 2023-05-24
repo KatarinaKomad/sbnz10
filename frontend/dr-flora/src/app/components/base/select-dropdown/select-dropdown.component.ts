@@ -7,7 +7,7 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./select-dropdown.component.scss']
 })
 export class SelectDropdownComponent{
-  @Input() options? : string[] ;
+  @Input() options? : any[] ;
   @Input() defaultOption? : string;
   @Output() newSelectEvent = new EventEmitter<string>();
   @Input() selectOptionControl? : FormControl;
