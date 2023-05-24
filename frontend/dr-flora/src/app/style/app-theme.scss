@@ -1,6 +1,0 @@
-@import '@angular/material/theming';    
-@include mat-core();    
-$datepicker-primary: mat-palette($mat-red, 500);
-$datepicker-accent:  mat-palette($mat-light-green, A200, A100, A400);
-$datepicker-theme:   mat-light-theme($datepicker-primary, $datepicker-accent);
-@include angular-material-theme($datepicker-theme);

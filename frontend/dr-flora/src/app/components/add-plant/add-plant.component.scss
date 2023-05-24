@@ -1,9 +1,11 @@
 @import 'src/app/style/styles';
-// @import '@angular/material/theming';    
-// @include mat-core();    
-// $datepicker-primary: mat-palette($mat-red);
-// $ddatepicker-accent:  mat-palette($mat-pink, A200, A100, A400);
-// $datepicker-theme:   mat-light-theme($datepicker-primary, $datepicker-accent);
+
+select:focus > option:hover{ 
+    background: $light_orange !important;
+ }
+
+
+
 .title{
     color: $dark-orange;
     font-size: x-large;
@@ -24,12 +26,17 @@
     align-items: center;
     padding-top: 2%;
     font-family: $font;
-
+    height: 80%;
+    justify-content: space-between;
 
 
     .fields-container{
         justify-self: center;
         width: 50%;
+        display: flex;
+        flex-direction: column;
+        height: 80%;
+        justify-content: space-between
     }
     
     .input-container{
@@ -41,6 +48,7 @@
         // width: 15vw;
         display: flex;
         flex-direction: row;
+        padding-bottom: 0;
 
         .calendar-icon{
             border-bottom: solid thin $middle_green
@@ -81,4 +89,9 @@
             padding: 1.5% 3%;
         }
     }
+
+    .option:hover{
+        background: $light_orange;
+    }
 }
+

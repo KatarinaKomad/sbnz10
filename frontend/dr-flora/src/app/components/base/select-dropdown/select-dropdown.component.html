@@ -1,0 +1,10 @@
+<div *ngIf="options">
+    <button class="field" (click)="showOptions()" 
+                [style.color]="(selectOptionControl &&  selectOptionControl.value)? '#40513B' : '#A4B69F'"
+                [style.fontSize]="(selectOptionControl &&  selectOptionControl.value)? 'large' : 'medium'">{{(selectOptionControl &&  selectOptionControl.value) ? selectOptionControl.value.toLowerCase() : defaultOption}}
+        <mat-icon aria-hidden="false" class="icon" fontIcon="keyboard_arrow_down"></mat-icon>
+    </button>
+    <ul class="options-container" *ngIf="!hideOptions">
+        <li *ngFor="let option of options"><a (click)="changeSelectedValue(option)">{{option.toLowerCase()}}</a></li>
+    </ul>
+</div>

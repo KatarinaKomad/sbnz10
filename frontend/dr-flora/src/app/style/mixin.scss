@@ -1,19 +1,6 @@
 @import '@angular/material/theming';
 @include mat-core();
 
-// Based on the Angular Material purple-green prebuilt theme. 
-// Pick differnet colors and/or switch to a light background theme here:
-$primary: mat-palette($mat-green, 700);
-$accent:  mat-palette($mat-green, A200, A100, A400);
-$theme: mat-dark-theme($primary, $accent);
-
-@mixin calendar-theme($theme) {
-    $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-}
-
-@include calendar-theme($theme);
-
 @mixin greenButton {
     font-size: 18px;
     background: $middle_green;

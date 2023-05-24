@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
-import { FazaBiljke } from 'src/app/model/biljka/biljka';
+import { FazaBiljke, KategorijaBiljke, VrstePovrca, VrsteVoca } from 'src/app/model/biljka/biljka';
 
 @Component({
   selector: 'app-add-plant',
@@ -11,14 +11,25 @@ export class AddPlantComponent {
 
   constructor(private _formBuilder: FormBuilder){}
 
+  plantForm = this._formBuilder.group({
+    category: new FormControl('', Validators.required),
+    subcatergory: new FormControl('', Validators.required),
+    plantingDate: new FormControl(null, Validators.required),
+    currentPhase: new FormControl('', Validators.required)
+  })
+
   selectedDate : Date = new Date();
+  vrste : string[] = this.plantForm.controls.category.value === "VOĆE" ? Object.values(VrsteVoca) : Object.values(VrstePovrca);
+  Object = Object;
+
+  maxDate: Date = new Date();
 
   FazaBiljke = FazaBiljke;
-  plantForm = this._formBuilder.group({
-    category: new FormControl('VOCE', Validators.required),
-    subcatergory: new FormControl('jabuka', Validators.required),
-    plantingDate: new FormControl(this.selectedDate, Validators.required),
-    currentPhase: new FormControl('LISTANJE', Validators.required)
-  })
-  
+  KategorijaBiljke = KategorijaBiljke;
+
+  handleChangeCategory(value : string){
+    this.plantForm.controls.subcatergory.setValue('');
+    this.vrste = value === "VOĆE" ? Object.values(VrsteVoca) : Object.values(VrstePovrca);
+    
+  }
 }

@@ -3,11 +3,11 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Simptom } from 'src/app/model/bolest/simptomi';
 
 @Component({
-  selector: 'app-multiselect-dropdown',
-  templateUrl: './multiselect-dropdown.component.html',
-  styleUrls: ['./multiselect-dropdown.component.scss']
+  selector: 'app-multiselect-dialog',
+  templateUrl: './multiselect-dialog.component.html',
+  styleUrls: ['./multiselect-dialog.component.scss']
 })
-export class MultiselectDropdownComponent {
+export class MultiselectDialogComponent {
 
   isOpenOptions : boolean = false;
   b: boolean =  this.data.odabrane_opcije.includes(1)
@@ -20,7 +20,7 @@ export class MultiselectDropdownComponent {
   // @Input() placeholder? : String;
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { sve_opcije: Simptom[], odabrane_opcije: number[]},
-    private dialogRef: MatDialogRef<MultiselectDropdownComponent>
+    private dialogRef: MatDialogRef<MultiselectDialogComponent>
  ) { }
 
     handleSelect(id: number) : void{
