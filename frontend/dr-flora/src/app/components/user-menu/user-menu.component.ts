@@ -15,10 +15,10 @@ interface IMenuOption{
 export class UserMenuComponent implements OnInit {
 
   menuOptionsRouting : IMenuOption[]  = [
-    {optionName: "Dodavanje nove biljke", optionRoute: "add-new-plant"},
+    {optionName: "Dodavanje nove biljke", optionRoute: "add-plant"},
     {optionName:"Unos novih simptoma", optionRoute: "report-desease"},
     {optionName:"Istorija bolesti", optionRoute: "history"},
-    {optionName:"Pregled biljaka", optionRoute: "/lants"},
+    {optionName:"Pregled biljaka", optionRoute: "plants"},
     {optionName:"Izveštaji", optionRoute: "reports"}
   ]
   objectKeys = Object.keys;

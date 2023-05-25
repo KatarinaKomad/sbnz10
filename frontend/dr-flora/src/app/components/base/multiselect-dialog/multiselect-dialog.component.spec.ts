@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MultiselectDropdownComponent } from './multiselect-dropdown.component';
+import { MultiselectDialogComponent } from './multiselect-dialog.component';
 
 describe('MultiselectDropdownComponent', () => {
-  let component: MultiselectDropdownComponent;
-  let fixture: ComponentFixture<MultiselectDropdownComponent>;
+  let component: MultiselectDialogComponent;
+  let fixture: ComponentFixture<MultiselectDialogComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MultiselectDropdownComponent]
+      declarations: [MultiselectDialogComponent]
     });
-    fixture = TestBed.createComponent(MultiselectDropdownComponent);
+    fixture = TestBed.createComponent(MultiselectDialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

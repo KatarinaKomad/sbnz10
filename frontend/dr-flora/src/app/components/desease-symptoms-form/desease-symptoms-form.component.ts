@@ -3,7 +3,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { LokacijaSimptoma, Simptom } from 'src/app/model/bolest/simptomi';
 import { SimptomService } from 'src/app/service/simptom/simptom.service';
-import { MultiselectDropdownComponent } from '../base/multiselect-dropdown/multiselect-dropdown.component';
+import { MultiselectDialogComponent } from '../base/multiselect-dialog/multiselect-dialog.component';
 
 @Component({
   selector: 'app-desease-symptoms-form',
@@ -57,7 +57,7 @@ export class DeseaseSymptomsFormComponent implements OnInit{
       sve_opcije: this.sviSimptomi[lokacija],
       odabrane_opcije: this.symptomsForm? this.symptomsForm[lokacija] : [],
     }
-    this.dialog.open(MultiselectDropdownComponent, {
+    this.dialog.open(MultiselectDialogComponent, {
       data: params,
     }).afterClosed().subscribe(data => {
         if (data) {

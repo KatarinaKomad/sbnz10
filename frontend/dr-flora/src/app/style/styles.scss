@@ -1,6 +1,5 @@
 @import "constants";
-@import "mixin";
-
+@import "./mixin.scss";
 
 .title{
   font-family: $font;
@@ -37,7 +36,7 @@
 }
 
 html {
-  overflow: scroll;
+  overflow: auto;
   overflow-x: hidden;
 }
 ::-webkit-scrollbar {

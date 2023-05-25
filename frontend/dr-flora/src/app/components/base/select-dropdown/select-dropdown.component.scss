@@ -1,0 +1,51 @@
+@import 'src/app/style/styles';
+
+.field{
+    @include inputField();
+    border: none;
+    border-bottom: solid thin $middle_green;
+    display: flex;
+    flex-direction: row;
+    box-shadow: none;
+    height: auto;
+    font-family: $font;
+    color: $dark-green;
+    font-size: medium;
+    justify-content: space-between;
+    // padding-left: 0;
+    // box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.field:focus{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.icon{
+    float: right;
+}
+
+.options-container{
+    background-color: white;
+    list-style-type: none;
+    cursor: pointer;
+    padding-left: 0;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    margin-top: auto;
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+}
+
+li{
+    padding: 10px;
+    border-bottom: solid thin $light_green;
+}
+
+a{
+    width: 100%;
+    display: flex;
+}
+
+li:hover{
+    background-color: $middle_green;
+}
