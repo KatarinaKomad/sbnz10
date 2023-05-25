@@ -64,7 +64,9 @@ select:focus > option:hover{
     }
 
     .input:focus{
-        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+        box-shadow: none;
+        outline: none;
+        border-bottom: solid thin $middle_green;
     }
 
     .input-label{
@@ -92,4 +94,14 @@ select:focus > option:hover{
     @include greenButton();
     font-size: medium;
     padding: 1.5% 3%;
+    margin-top: 5%;
+}
+
+.symptoms-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    align-self: center;
 }

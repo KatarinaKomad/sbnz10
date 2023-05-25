@@ -2,8 +2,12 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { NgToastService } from 'ng-angular-popup';
 import { Biljka, FazaBiljke, KategorijaBiljke, VrstePovrca, VrsteVoca } from 'src/app/model/biljka/biljka';
-import { LokacijaSimptoma } from 'src/app/model/bolest/simptomi';
+import { LokacijaSimptoma, UnosSimptoma } from 'src/app/model/bolest/simptomi';
 import { BiljkaService } from 'src/app/service/biljka/biljka.service';
+import { RecomendationDisplayComponent } from '../recomendation-display/recomendation-display.component';
+import { BolestService } from 'src/app/service/bolest/bolest.service';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-plant',
@@ -12,7 +16,12 @@ import { BiljkaService } from 'src/app/service/biljka/biljka.service';
 })
 export class AddPlantComponent {
 
-  constructor(private _formBuilder: FormBuilder, private biljkaServie: BiljkaService,  private toast: NgToastService){}
+  constructor(private _formBuilder: FormBuilder, 
+              private biljkaServie: BiljkaService,  
+              private toast: NgToastService,
+              private bolestService : BolestService,
+              private dialog: MatDialog,
+              private router: Router){}
 
   plantForm = this._formBuilder.group({
     category: new FormControl('', Validators.required),
@@ -32,6 +41,8 @@ export class AddPlantComponent {
 
   savedPlant?: Biljka;
 
+  isLoadingDeseaseResponse: boolean = false;
+
   simptomi : {[key in LokacijaSimptoma] : number[]} = {
     [LokacijaSimptoma.LIST] : [],
     [LokacijaSimptoma.CVET] : [],
@@ -47,26 +58,90 @@ export class AddPlantComponent {
     this.vrste = value === "VOĆE" ? Object.values(VrsteVoca) : Object.values(VrstePovrca);
   }
 
-  handleSave(){
+  handleSave() : void {
     if (this.plantForm.valid){
-      let newPlant : Biljka = {
-        kategorija: KategorijaBiljke[this.plantForm.controls.category.value as any],
-        nazivTipa: this.plantForm.controls.subcatergory.value as any as string,
-        datumSadnje: this.plantForm.controls.plantingDate.value as any as Date,
-        trenutnaFaza: FazaBiljke[this.plantForm.controls.currentPhase.value as any],
-        vlasnikEmail:  "natasha.lakovic@gmail.com"//current user
-      } 
-      this.biljkaServie.saveNewPlant(newPlant).subscribe({
-         next: (respose) => { 
-          this.savedPlant = respose;
-          this.toast.success({detail: "Uspešno čuvanje biljke", position:'tr', duration:3000})
-        },
-         error: (err) => this.toast.error({detail: "Došlo je do greške", summary:"Molimo Vas pokušajte ponovo", position:'tr', duration:3000})
-      })
+      try{
+        this.biljkaServie.saveNewPlant(this.createPlant()).subscribe({
+           next: (respose) => { 
+            this.savedPlant = respose;
+            this.plantForm.reset();
+            this.displaySuccessMessage("Uspešno čuvanje biljke",  `Identifikator biljke je: ${respose.id}`)
+          },
+           error: (err) => this.displayErrorMessage("Došlo je do greške", "Molimo pokušajte ponovo")
+        })
+      }
+      catch(e){
+        this.displayErrorMessage("Neispravno popunjena forma", "Molimo Vas pokušajte ponovo birajući ponuđene opcije")
+      }
     }
   }
 
+
   handleContinue(){
-    this.enterSymptoms = true;
+    if (this.plantForm.valid){
+      try{
+        this.biljkaServie.saveNewPlant(this.createPlant()).subscribe({
+           next: (respose) => { 
+            this.savedPlant = respose;
+            this.enterSymptoms = true;
+            this.displaySuccessMessage("Uspešno čuvanje biljke",  `Identifikator biljke je: ${respose.id}`)
+          },
+           error: (err) => this.displayErrorMessage("Došlo je do greške", "Molimo pokušajte ponovo")
+        })
+      }
+      catch(e){
+        this.displayErrorMessage("Neispravno popunjena forma", "Molimo Vas pokušajte ponovo birajući ponuđene opcije")
+
+      }
+    }
+  }
+
+  createPlant() : Biljka {
+    let newPlant : Biljka = {
+      kategorija: this.plantForm.controls.category.value as string,
+      nazivTipa: this.plantForm.controls.subcatergory.value?.toLowerCase() as any as string,
+      datumSadnje: this.plantForm.controls.plantingDate.value as any as Date,
+      trenutnaFaza: this.plantForm.controls.currentPhase.value as string,
+      vlasnikEmail:  "natasha.lakovic@gmail.com"//current user
+    } 
+    return newPlant
+  }
+
+  handleSaveSymptoms(){
+    this.isLoadingDeseaseResponse = true
+    if(this.plantForm.valid  && this.savedPlant && Object.values(this.simptomi).some(obj => obj.length > 0)){
+        let state : UnosSimptoma = {
+          symptomsIDs: Object.values(this.simptomi).reduce(function(res, v) {
+            return res.concat(v);}, []),
+          idBiljke: this.savedPlant.id as any as number, 
+          trenutnaFaza: this.plantForm.controls.currentPhase.value as any as FazaBiljke        
+        }
+        this.bolestService.determineDesease(state).subscribe({
+          next: response => {
+            this.isLoadingDeseaseResponse = false
+            this.dialog.open(RecomendationDisplayComponent, {
+              data: response,
+            }).afterClosed().subscribe(() => this.router.navigateByUrl('/user')) //bice nesto sto predstavalja home page za usera
+          },
+          error: (err) => {
+            this.isLoadingDeseaseResponse = false
+            this.toast.error({detail: "Došlo je do greške", summary:"Molimo pokušajte ponovo", position:'tr', duration:3000})
+          }
+        })
+    }
+    else{
+      this.toast.error({detail: "Nevalidna forma", summary:"Identifikator biljke, faza i bar jedan simptom moraju biti uneti", position:'tr', duration:3000})
+    }
+  }
+
+  displaySuccessMessage(message: string, description: string){
+    this.toast.success({detail: message, summary: description, position:'tr', duration:3000})
+  }
+
+  displayErrorMessage(message: string, description: string){
+    this.toast.error({detail: message,  summary: description, position:'tr', duration:3000})
   }
 }
+
+
+

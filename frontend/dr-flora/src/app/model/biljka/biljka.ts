@@ -1,11 +1,11 @@
 export enum FazaBiljke{
     LISTANJE = <any>"LISTANJE",
     CVETANJE = <any>"CVETANJE",
-    FORMIRANJE_PLODA = <any>"FORMIRANJE PLODA"
+    FORMIRANJE_PLODA = <any>"FORMIRANJE_PLODA"
 }
 
 export enum KategorijaBiljke{
-    VOCE = <any>"VOĆE",
+    VOĆE = <any>"VOĆE",
     POVRĆE = <any>"POVRĆE",
 }
 
