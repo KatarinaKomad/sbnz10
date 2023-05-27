@@ -1,0 +1,40 @@
+<div class="container">
+    <p class="title">Istorija bolesti</p>
+    <p class="subtitle">Uz mogućnost ocenjivanja preparata</p>
+    <div style="max-height: 60%; overflow: auto; min-width: 90%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; margin-top: 2%;" >
+        <table>
+            <thead>
+                <tr>
+                    <th>BOLEST</th>
+                    <th>ID BILJKE</th>
+                    <th>TIP BILJKE</th>
+                    <th>FAZA</th>
+                    <th>PREPARAT</th>
+                    <th>DOZA</th>
+                    <th>DATUM</th>
+                    <th>NAPOMENA</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let dijagnoza of dijagnoze">
+                    <td>{{dijagnoza.nazivBolesti}}</td>
+                    <td>{{dijagnoza.idBiljke}}</td>
+                    <td>{{dijagnoza.nazivtipaBiljke}}</td>
+                    <td>{{dijagnoza.fazaBiljke}}</td>
+                    <td>{{dijagnoza.nazivPreparata}}
+                        <!-- <progress [id]="dijagnoza.id" [value]="dijagnoza.ocenaPreparata" max="5"> 32% </progress> -->
+                        <!-- <div class="progress-element progress-element--html">
+                            <div class="progress-container">
+                              <progress [id]="dijagnoza.id" max="5" [value]="dijagnoza.ocenaPreparata" [style.maxWidth]="dijagnoza.ocenaPreparata * 20"></progress>
+                            </div>
+                          </div> -->
+                    </td>
+                    <td>{{dijagnoza.doza}}</td>
+                    <td>{{dijagnoza.datumPreporuke}}</td>
+                    <td>{{dijagnoza.poruka}}</td>
+    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -11,4 +11,5 @@ import com.ftn.sbnz.model.FinalnaDijagnoza;
 public interface FinalnaDijagnozaRepositiry extends JpaRepository<FinalnaDijagnoza, Long> {
 ;
     List<FinalnaDijagnoza> findByBiljkaId(Long biljkaId);
+
 }

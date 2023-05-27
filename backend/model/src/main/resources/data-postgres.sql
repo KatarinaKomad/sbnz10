@@ -264,9 +264,17 @@ INSERT INTO biljka (kategorija, trenutna_faza, vreme_sadnje, tip_id, vlasnik_id)
 ('VOĆE', 'LISTANJE', '2022-02-06', 2, 2),--5--
 ('VOĆE', 'LISTANJE', '2022-02-06', 1, 2);
 
-INSERT INTO finalna_dijagnoza (datum_preporuke, faza_biljke, biljka_id, bolest_id, preporuceni_preparat_id) VALUES
-('2023-05-06', 'LISTANJE', 1, 1, 2),
-('2023-05-01', 'LISTANJE', 2, 7, 26),
-('2023-05-01', 'FORMIRANJE_PLODA', 3, 10, 32),
-('2022-10-01', 'LISTANJE', 4, 7, 26),
-('2023-04-11', 'LISTANJE', 4, 6, 11);
+INSERT INTO preporuka(naziv_preparata, opis_preparata, poruka, preporucena_doza, bolest_id, biljka_id) VALUES
+('Blauvit', 'slab fungicid', '', 0.7, 1, 1),
+('Tonus', 'jak insekticid', '',0.025, 7, 2),
+('Plures', 'slab insekticid', '',0.3, 10, 3),
+('Tonus', 'jak insekticid', '',0.025, 7, 4),
+('Abastate', 'jak insekticid','',0.075 ,6, 4);
+
+INSERT INTO finalna_dijagnoza (datum_preporuke, faza_biljke, biljka_id, bolest_id, preporuceni_preparat_id, preporuka_id) VALUES
+('2023-05-06', 'LISTANJE', 1, 1, 2, 1),
+('2023-05-01', 'LISTANJE', 2, 7, 26, 2),
+('2023-05-01', 'FORMIRANJE_PLODA', 3, 10, 32, 3),
+('2022-10-01', 'LISTANJE', 4, 7, 26, 4),
+('2023-04-11', 'LISTANJE', 4, 6, 11, 5);
+

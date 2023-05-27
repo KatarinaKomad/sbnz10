@@ -5,9 +5,12 @@ import { MatInputModule } from "@angular/material/input";
 import { AngularMaterialModule } from "./angular-material.module";
 import { MultiselectDialogComponent } from "src/app/components/base/multiselect-dialog/multiselect-dialog.component";
 import { SelectDropdownComponent } from "src/app/components/base/select-dropdown/select-dropdown.component";
+import { DeseaseHistoryOverviewComponent } from "src/app/components/desease-history-overview/desease-history-overview.component";
 
 @NgModule({
-    declarations: [MultiselectDialogComponent, SelectDropdownComponent],
+    declarations: [MultiselectDialogComponent, 
+                SelectDropdownComponent, 
+                DeseaseHistoryOverviewComponent],
     imports: [CommonModule,
         FormsModule,
         MatInputModule,
@@ -15,6 +18,10 @@ import { SelectDropdownComponent } from "src/app/components/base/select-dropdown
         ReactiveFormsModule,
 
     ],
-    exports: [ReactiveFormsModule, CommonModule, MultiselectDialogComponent, SelectDropdownComponent]
+    exports: [ReactiveFormsModule, 
+            CommonModule, 
+            MultiselectDialogComponent, 
+            SelectDropdownComponent, 
+            DeseaseHistoryOverviewComponent]
 })
 export class SharedModule{}
