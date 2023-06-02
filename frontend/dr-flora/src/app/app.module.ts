@@ -9,7 +9,6 @@ import { LottieModule } from "ngx-lottie";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgToastModule} from 'ng-angular-popup';
 import { HttpClientModule } from '@angular/common/http';
-import { SelectDropdownComponent } from './components/base/select-dropdown/select-dropdown.component';
 
 //Export this function
 export function playerFactory(): any {  

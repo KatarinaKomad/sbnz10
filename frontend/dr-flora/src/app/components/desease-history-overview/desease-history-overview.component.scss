@@ -1,0 +1,81 @@
+@import 'src/app/style/styles';
+
+table{
+    background-color: $background_secondary;
+    font-family: $font;
+    height: 100px;
+    width: 100%;
+    overflow: auto;
+    margin: auto;
+    border: none;
+
+    td{
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        padding: 1.5%;
+    }
+
+    
+    tbody{
+        tr{
+            box-shadow:  0 4px 6px -4px #A8B497;
+            color: $dark-green;
+            font-size: medium;
+        }
+
+    }
+    
+    thead{
+        box-shadow:  0 4px 4px -4px $dark-orange;
+    }
+    
+    th{
+        font-weight: lighter;
+        color: $dark-orange;
+        font-size: medium;
+        padding-bottom: 1%;
+        text-align: center;
+        padding-top: 1%;
+        outline: none;
+    }
+
+    progress{
+        accent-color: $light_green;
+        // border-color: white;
+        // color
+        // box-shadow:  0 4px 4px -4px $dark-orange;
+    }
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    height: 100%;
+    padding-top: 2%;
+    font-family: $font;
+    overflow: auto;
+
+
+    .title{
+        font-size: xx-large;
+        color: $dark-orange;
+        margin-bottom: 0;
+        margin-top: 0;
+        width: 90%;
+    }
+
+    .subtitle{
+        font-size: medium;
+        color: $dark-green-hover;
+        width: 90%;
+    }
+}
+
+.rate-button{
+    @include greenButton();
+    font-size: 14px;
+    padding: 5% 10%;
+}
