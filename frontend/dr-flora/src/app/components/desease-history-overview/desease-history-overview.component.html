@@ -13,6 +13,7 @@
                     <th>DOZA</th>
                     <th>DATUM</th>
                     <th>NAPOMENA</th>
+                    <th>OCENJIVANJE</th>
                 </tr>
             </thead>
             <tbody>
@@ -21,18 +22,13 @@
                     <td>{{dijagnoza.idBiljke}}</td>
                     <td>{{dijagnoza.nazivtipaBiljke}}</td>
                     <td>{{dijagnoza.fazaBiljke}}</td>
-                    <td>{{dijagnoza.nazivPreparata}}
-                        <!-- <progress [id]="dijagnoza.id" [value]="dijagnoza.ocenaPreparata" max="5"> 32% </progress> -->
-                        <!-- <div class="progress-element progress-element--html">
-                            <div class="progress-container">
-                              <progress [id]="dijagnoza.id" max="5" [value]="dijagnoza.ocenaPreparata" [style.maxWidth]="dijagnoza.ocenaPreparata * 20"></progress>
-                            </div>
-                          </div> -->
-                    </td>
+                    <td>{{dijagnoza.nazivPreparata}}</td>
                     <td>{{dijagnoza.doza}}</td>
                     <td>{{dijagnoza.datumPreporuke}}</td>
                     <td>{{dijagnoza.poruka}}</td>
-    
+                    <td>
+                        <button class="rate-button">oceni preparat</button>
+                    </td>    
                 </tr>
             </tbody>
         </table>
