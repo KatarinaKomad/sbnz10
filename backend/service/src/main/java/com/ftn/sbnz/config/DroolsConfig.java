@@ -11,12 +11,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.ftn.sbnz.event.NeizlecenaBolestVoca;
 import com.ftn.sbnz.model.Biljka;
 import com.ftn.sbnz.model.FinalnaDijagnoza;
 import com.ftn.sbnz.model.Korisnik;
 import com.ftn.sbnz.respository.BiljkaRepository;
 import com.ftn.sbnz.respository.FinalnaDijagnozaRepositiry;
 import com.ftn.sbnz.respository.KorisnikRepository;
+import com.ftn.sbnz.respository.NeizlecenaBolestVocaRepository;
 
 import java.util.List;
 
@@ -36,6 +38,9 @@ public class DroolsConfig {
 
     @Autowired
     private FinalnaDijagnozaRepositiry finalnaDijagnozaRepositiry;
+
+    @Autowired
+    private NeizlecenaBolestVocaRepository neizlecenaBolestVocaRepository;
 
       
     @Bean
@@ -69,6 +74,10 @@ public class DroolsConfig {
             List<FinalnaDijagnoza> plantHistory = finalnaDijagnozaRepositiry.findByBiljkaId(plant.getId());
             for (FinalnaDijagnoza dijagnoza : plantHistory){
                 kieSession.insert(dijagnoza);
+            }
+            List<NeizlecenaBolestVoca> neizleceneBolesti = neizlecenaBolestVocaRepository.findByBiljkaId(plant.getId());
+            for (NeizlecenaBolestVoca neizlecenaBolestVoca : neizleceneBolesti){
+                kieSession.insert(neizlecenaBolestVoca);
             }
         }
 

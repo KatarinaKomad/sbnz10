@@ -278,3 +278,7 @@ INSERT INTO finalna_dijagnoza (datum_preporuke, faza_biljke, biljka_id, bolest_i
 ('2022-10-01', 'LISTANJE', 4, 7, 26, 4),
 ('2023-04-11', 'LISTANJE', 4, 6, 11, 5);
 
+INSERT INTO neizlecena_bolest_voca (datum_dijagnoze, faza_javljanja, biljka_id, bolest_id, preparat_id) VALUES
+('2023-05-06', 'CVETANJE', 1, 2, 2),
+('2023-02-06', 'LISTANJE', 1, 3, 2);
+

@@ -6,6 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import org.kie.api.definition.type.Role;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +15,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Role(Role.Type.EVENT)
 @Entity
 @Data
 @NoArgsConstructor
@@ -59,5 +62,8 @@ public class Preporuka {
         this.opisPreparata = opis;
     }
     
+    public void modifyMessage(String message){
+        this.poruka.concat(" ").concat(message);
+    }
     
 }

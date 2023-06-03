@@ -36,15 +36,16 @@ rule "Dijagnoza iste bolesti 2 ili vise puta kod iste biljke u istoj fazi u mese
                                     $bolest: bolest, 
                                     $preparat: preporuceniPreparat, 
                                     $biljka: biljka, 
-                                    biljka.kategorija == KategorijaBiljke.VOCE,
+                                    biljka.kategorija == KategorijaBiljke.VOĆE,
                                     $fazaBiljke: fazaBiljke,
-                                    datumPreporuke.isAfter(LocalDate.now().minusMonths(1)))
+                                    datumPreporuke.isAfter(LocalDate.now().minusMonths(1))
+                                    ) 
         Number(intValue >= 1) from accumulate(
             $d : FinalnaDijagnoza(this != $dijagnoza,
                                           bolest.id == $bolest.id,
                                           biljka.id == $biljka.id,
                                           fazaBiljke == $fazaBiljke,
-                                          datumPreporuke.isAfter(LocalDate.now().minusMonths(1))
+                                          this meets[744h] $dijagnoza //1 month
                                          ), 
                                           count($d)
         )
@@ -69,7 +70,9 @@ rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju ne pos
                                     biljka.id == $biljka.id,
                                     preporuceniPreparat.id == $preparat.id,
                                     $preporuka: preporuka,
-                                    datumPreporuke == LocalDate.now())
+                                    datumPreporuke == LocalDate.now(),
+                                    this meets[5m] $alarm)
+                                    // datumPreporuke == LocalDate.now()
         
         not(DuplaDozaSlabogPreparataAlarm(biljka == $biljka, bolest == $bolest))
         
@@ -95,7 +98,8 @@ rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju postoj
                                     biljka.id == $biljka.id,
                                     preporuceniPreparat.id == $preparat.id,
                                     $preporuka: preporuka,
-                                    datumPreporuke == LocalDate.now())
+                                    datumPreporuke == LocalDate.now(),
+                                    this meets[5m] $alarm)
         
 
         not(PromenaSlabogUJakPreparatAlarm(biljka == $biljka, bolest == $bolest))
@@ -120,12 +124,13 @@ rule "NeizlecenaBolestVoca i preporuceni jak preparat insekticid -> napomena za 
                                     $fazaBiljke : fazaJavljanja,
                                     $preparat: preparat,       
                                     preparat.potkategorija == PotkategorijaPreparata.JAK,                         
-                                    preparat.primarnaKategorija == KategorijaPreparata.INSEKTICID                                  
+                                    preparat.primarnaKategorija == KategorijaPreparata.INSEKTICID                                 
                                     )
                 
         $preporuka: Preporuka(bolest.id == $bolest.id,
                               nazivPreparata == $preparat.naziv,
-                              biljka.id == $biljka.id)
+                              biljka.id == $biljka.id,
+                              this meets[5m] $alarm)
         
         not(NapomenaZaInsekticidAlarm(biljka == $biljka, bolest == $bolest, preparat == $preparat))
         
