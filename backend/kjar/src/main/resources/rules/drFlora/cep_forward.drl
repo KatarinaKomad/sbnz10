@@ -8,7 +8,10 @@ import java.time.LocalDate;
 import com.ftn.sbnz.model.Biljka;
 import com.ftn.sbnz.model.enums.KategorijaPreparata;
 import com.ftn.sbnz.model.enums.KategorijaBiljke;
-import com.ftn.sbnz.event.NeizlecenaBolestVoca
+import com.ftn.sbnz.event.NeizlecenaBolestVoca;
+import com.ftn.sbnz.event.UgrozenaBiljka;
+import com.ftn.sbnz.event.NeizlecenaBolestPovrca;
+import com.ftn.sbnz.event.UnosSimptoma;
 
 declare DuplaDozaSlabogPreparataAlarm
     @role(event)
@@ -51,7 +54,7 @@ rule "Dijagnoza iste bolesti 2 ili vise puta kod iste biljke u istoj fazi u mese
         )
         not (NeizlecenaBolestVoca(biljka == $biljka, bolest == $bolest, fazaJavljanja == $fazaBiljke))
     then
-        // System.out.println("Neizlecena bolest voca za " + $biljka.getId() + ", bolest " + $bolest.getNaziv());
+        System.out.println("Neizlecena bolest voca za " + $biljka.getId() + ", bolest " + $bolest.getNaziv());
         insert(new NeizlecenaBolestVoca($biljka, $bolest, $preparat, $fazaBiljke));
 end
 
@@ -79,7 +82,7 @@ rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju ne pos
     then
         // System.out.println("Dupla doza " + $biljka.getId() + ", bolest " + $bolest.getNaziv());
         modify($preporuka) {setPreporucenaDoza($preporuka.getPreporucenaDoza() * 2),
-                            setPoruka("Preporučena je dupla doza preparata jer se bolest javila dva puta u mesec dana")}
+                            modifyMessage("Preporučena je dupla doza preparata jer se bolest javila dva puta u mesec dana.")}
         insert(new DuplaDozaSlabogPreparataAlarm($biljka, $bolest));
 end
 
@@ -109,7 +112,7 @@ rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju postoj
         modify($preporuka) {setPreporucenaDoza($bolest.getTopJakPreparat().getKoncentracija()), 
                                     setNazivPreparata($bolest.getTopJakPreparat().getNaziv()),
                                     setOpisPreparata($bolest.getTopJakPreparat().getPotkategorijaPreparata() + " " + $bolest.getTopJakPreparat().getKategorijaPreparata()),
-                                    setPoruka("Preporučen je jači preparat umesto slabijeg jer je ista bolest dijagnostikovana dva puta u mesec dana") }
+                                    modifyMessage("Preporučen je jači preparat umesto slabijeg jer je ista bolest dijagnostikovana dva puta u mesec dana.") }
         modify($alarm) {setPreparat($bolest.getTopJakPreparat())}
         insert(new PromenaSlabogUJakPreparatAlarm($biljka, $bolest));
         // System.out.println("Neizlecena bolest alarm jak preparat " + $alarm.getPreparat().getNaziv());
@@ -136,9 +139,171 @@ rule "NeizlecenaBolestVoca i preporuceni jak preparat insekticid -> napomena za 
         
     then
         insert(new NapomenaZaInsekticidAlarm($biljka, $bolest, $preparat));
-        modify($preporuka) {setPoruka("Biljku ne upotrebljavati u ishrani do 2 nedelje nakon prskanja")}
+        modify($preporuka) {modifyMessage("Biljku ne upotrebljavati u ishrani do 2 nedelje nakon prskanja.")}
 end
 
 
+rule "Simptomi se javljaju na više lokacija i postoji slab preparat koncetracije > 0.4% za bolest → preporučiti preparat koncetracije > 0.4%"
+    no-loop
+    when    
+        $unos_simptoma: UnosSimptoma($simptomi: simptomi,
+                                     $idBiljke: idBiljke)
+        $s1: Simptom($simptomi.contains(this),
+                    $lokacija: lokacija)
+        Number(intValue >= 1) from accumulate(
+            $s: Simptom(this != $s1,
+                        $simptomi.contains(this),
+                        lokacija != $lokacija),
+                        count($s)
+        )
+        $dijagnoza: FinalnaDijagnoza(this meets[2m] $unos_simptoma,
+                                     biljka.id == $idBiljke,
+                                     $preporuka: preporuka,
+                                     preporuceniPreparat.potkategorija == PotkategorijaPreparata.SLAB,
+                                     $bolest: bolest)
+        $pr: Preporuka(this == $preporuka,
+                       preporucenaDoza <= 0.4)
+    then
+        System.out.println("slab <= 0.4");
+        modify($dijagnoza){setPreparat($bolest.getNajjaciSlabPreparat())}
+        modify($pr){setNazivPreparata($bolest.getNajjaciSlabPreparat().getNaziv()),
+                    setPreporucenaDoza($bolest.getNajjaciSlabPreparat().getKoncentracija()),
+                    setOpisPreparata($bolest.getNajjaciSlabPreparat().getPotkategorijaPreparata() + " " + $bolest.getNajjaciSlabPreparat().getKategorijaPreparata())}
+
+end;
+
+rule "Simptomi se javljaju na više lokacija i postoji jak preparat koncetracije > 0.4% za bolest → preporučiti preparat koncetracije > 0.4%"
+    no-loop
+    when    
+        $unos_simptoma: UnosSimptoma($simptomi: simptomi,
+                                     $idBiljke: idBiljke)
+        $s1: Simptom($simptomi.contains(this),
+                    $lokacija: lokacija)
+        Number(intValue >= 1) from accumulate(
+            $s: Simptom(this != $s1,
+                        $simptomi.contains(this),
+                        lokacija != $lokacija),
+                        count($s)
+        )
+        $dijagnoza: FinalnaDijagnoza(this meets[2m] $unos_simptoma,
+                                     biljka.id == $idBiljke,
+                                     $preporuka: preporuka,
+                                     preporuceniPreparat.potkategorija == PotkategorijaPreparata.JAK,
+                                     $bolest: bolest)
+        $pr: Preporuka(this == $preporuka,
+                       preporucenaDoza <= 0.4)
+    then
+        System.out.println("jak <= 0.4");
+        modify($dijagnoza){setPreparat($bolest.getNajjaciJakPreparat())}
+        modify($pr){setNazivPreparata($bolest.getNajjaciJakPreparat().getNaziv()),
+                    setPreporucenaDoza($bolest.getNajjaciJakPreparat().getKoncentracija()),
+                    setOpisPreparata($bolest.getNajjaciJakPreparat().getPotkategorijaPreparata() + " " + $bolest.getNajjaciJakPreparat().getKategorijaPreparata())}
+
+end;
 
 
+rule "alarm NeizlecenaBolestVoca se javio bar 3 puta u roku od 6 meseci → aktivirati alarm UgrozenaBiljka"
+    no-loop
+    when
+        $neizlecen_bolest: NeizlecenaBolestVoca(
+                                                $biljka: biljka, 
+                                                $bolest: bolest,  
+                                                $fazaBiljke : fazaJavljanja, 
+                                                $preparat: preparat
+                                            ) over window: time(4320h) //6meseci
+        Number(intValue >= 2) from accumulate(
+            $d : NeizlecenaBolestVoca(this != $neizlecen_bolest,
+                                          biljka.id == $biljka.id,
+                                          this meets[4320h] $neizlecen_bolest //6 month
+                                         ), 
+                                          count($d)
+        ) 
+         not (UgrozenaBiljka(biljka == $biljka, $faza: fazaBiljke))
+    then
+        System.out.println("UgrozenaBiljkAlarma " + $biljka.getId());
+        insert(new UgrozenaBiljka($biljka, $fazaBiljke));
+       
+end;
+
+rule "alarm NeizlecenaBolestPovrca se javio bar 3 puta u roku od 6 meseci → aktivirati alarm UgrozenaBiljka"
+    no-loop
+    when
+        $neizlecen_bolest: NeizlecenaBolestPovrca(
+                                                $biljka: biljka, 
+                                                $bolest: bolest,  
+                                                $fazaBiljke : fazaJavljanja, 
+                                                $preparat: preparat
+                                            ) over window: time(4320h) //6meseci
+        Number(intValue >= 2) from accumulate(
+            $d : NeizlecenaBolestPovrca(this != $neizlecen_bolest,
+                                          biljka.id == $biljka.id,
+                                          this meets[4320h] $neizlecen_bolest //6 month
+                                         ), 
+                                          count($d)
+        ) 
+         not (UgrozenaBiljka(biljka == $biljka, $faza: fazaBiljke))
+    then
+        System.out.println("UgrozenaBiljkAlarma " + $biljka.getId());
+        insert(new UgrozenaBiljka($biljka, $fazaBiljke));
+       
+end;
+
+
+rule "UgrozenaBiljka u fazi cvetanja -preporuka za dodatne proizvode"
+    no-loop 
+    when    
+        $alarm: UgrozenaBiljka($biljka: biljka,
+                                    $fazaBiljke: fazaBiljke,
+                                    fazaBiljke == FazaBiljke.CVETANJE)
+    
+        $finalna_dijagnoza: FinalnaDijagnoza(
+                                          biljka.id == $biljka.id,
+                                          fazaBiljke == $fazaBiljke,
+                                          $preporuka: preporuka,
+                                          this meets[5m] $alarm //sada
+                                         )
+        $pr: Preporuka(this == $preporuka)
+    then
+        modify($pr){ modifyMessage("Vaša biljka je ugrožena jer je ovo 3. neizlečena bolest u pola godine. Preporučuje se upotreba pomoćnih preparata FOLIGAL BOR, FOLIGAL MANGAN I FOLIGAL CINK.")};
+        System.out.println("UgrozenaBiljkAlarma cvetanje" + $biljka.getId());
+
+end;
+
+
+rule "UgrozenaBiljka u fazi listanja  -preporuka za dodatne proizvode"
+    no-loop
+    when    
+        $alarm: UgrozenaBiljka($biljka: biljka,
+                                    $fazaBiljke: fazaBiljke,
+                                    fazaBiljke == FazaBiljke.LISTANJE)
+    
+        $finalna_dijagnoza: FinalnaDijagnoza( biljka.id == $biljka.id,
+                                    fazaBiljke == $fazaBiljke,
+                                    $preporuka: preporuka,
+                                    this meets[5m] $alarm //sada
+                                         )
+        $pr: Preporuka(this == $preporuka)
+    then
+        System.out.println("UgrozenaBiljkAlarma listanje "  + $biljka.getId() );
+        modify($pr){ modifyMessage("Vaša biljka je ugrožena jer je ovo 3. neizlečena bolest u pola godine, preporučuje se upotreba pomoćnih preparata FOLIGAL BOR i FOLIGAL CINK.");};
+end;
+
+
+
+rule "UgrozenaBiljka u fazi formiranja ploda  -preporuka za dodatne proizvode"
+    no-loop
+    when    
+        $alarm: UgrozenaBiljka($biljka: biljka,
+                                    $fazaBiljke: fazaBiljke,
+                                    fazaBiljke == FazaBiljke.FORMIRANJE_PLODA)
+    
+        $finalna_dijagnoza: FinalnaDijagnoza( biljka.id == $biljka.id,
+                                    fazaBiljke == $fazaBiljke,
+                                    $preporuka: preporuka,
+                                    this meets[5m] $alarm //sada
+                                         ) //dodati neki alarm ili stanje ovde
+        $pr: Preporuka(this == $preporuka)
+    then
+        System.out.println("UgrozenaBiljkAlarma listanje "  + $biljka.getId() );
+        modify($pr){ modifyMessage("Vaša biljka je ugrožena jer je ovo 3. neizlečena bolest u pola godine, preporučuje se upotreba pomoćnih preparata FOLIGAL KALCIJUM.");};
+end;

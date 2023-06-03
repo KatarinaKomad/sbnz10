@@ -262,7 +262,8 @@ INSERT INTO biljka (kategorija, trenutna_faza, vreme_sadnje, tip_id, vlasnik_id)
 ('VOĆE', 'FORMIRANJE_PLODA', '2022-02-10', 3, 1),
 ('VOĆE', 'FORMIRANJE_PLODA', '2022-02-10', 2, 1),
 ('VOĆE', 'LISTANJE', '2022-02-06', 2, 2),--5--
-('VOĆE', 'LISTANJE', '2022-02-06', 1, 2);
+('VOĆE', 'LISTANJE', '2022-02-06', 1, 2),
+('VOĆE', 'FORMIRANJE_PLODA', '2022-02-10', 1, 1);
 
 INSERT INTO preporuka(naziv_preparata, opis_preparata, poruka, preporucena_doza, bolest_id, biljka_id) VALUES
 ('Blauvit', 'slab fungicid', '', 0.7, 1, 1),

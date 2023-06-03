@@ -15,10 +15,12 @@ import com.ftn.sbnz.event.NeizlecenaBolestVoca;
 import com.ftn.sbnz.model.Biljka;
 import com.ftn.sbnz.model.FinalnaDijagnoza;
 import com.ftn.sbnz.model.Korisnik;
+import com.ftn.sbnz.model.Simptom;
 import com.ftn.sbnz.respository.BiljkaRepository;
 import com.ftn.sbnz.respository.FinalnaDijagnozaRepositiry;
 import com.ftn.sbnz.respository.KorisnikRepository;
 import com.ftn.sbnz.respository.NeizlecenaBolestVocaRepository;
+import com.ftn.sbnz.respository.SimptomRepository;
 
 import java.util.List;
 
@@ -42,6 +44,8 @@ public class DroolsConfig {
     @Autowired
     private NeizlecenaBolestVocaRepository neizlecenaBolestVocaRepository;
 
+    @Autowired
+    private SimptomRepository simptomRepository;
       
     @Bean
     public KieContainer kieContainer() {
@@ -79,6 +83,11 @@ public class DroolsConfig {
             for (NeizlecenaBolestVoca neizlecenaBolestVoca : neizleceneBolesti){
                 kieSession.insert(neizlecenaBolestVoca);
             }
+        }
+
+        List<Simptom> all = simptomRepository.findAll();
+        for (Simptom s: all){
+            kieSession.insert(s);
         }
 
         this.kieSessionManager.insert(kieSession);

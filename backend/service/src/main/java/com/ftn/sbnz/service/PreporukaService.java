@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ftn.sbnz.event.NeizlecenaBolestVoca;
+import com.ftn.sbnz.event.UnosSimptoma;
 import com.ftn.sbnz.model.Biljka;
 import com.ftn.sbnz.model.Bolest;
 import com.ftn.sbnz.model.FinalnaDijagnoza;
@@ -40,7 +41,7 @@ public class PreporukaService {
     private NeizlecenaBolestVocaRepository neizlecenaBolestVocaRepository;
     
     
-    public Preporuka createSugggestion(Bolest bolest, Biljka biljka){
+    public Preporuka createSugggestion(Bolest bolest, Biljka biljka, UnosSimptoma unosSimptomi){
         Preporuka preporuka = new Preporuka();
         preporuka.setBiljka(biljka);
         preporuka.setBolest(bolest);
@@ -56,6 +57,7 @@ public class PreporukaService {
 
         kieSession.insert(preporuka);
         kieSession.insert(finalnaDijagnoza);
+        kieSession.insert(unosSimptomi);
         kieSession.fireAllRules();
        
         return this.handleSessionChanges(preporuka, finalnaDijagnoza);

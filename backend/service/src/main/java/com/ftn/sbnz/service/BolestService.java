@@ -41,6 +41,7 @@ public class BolestService {
     @Autowired
     private PreporukaService preporukaService;
 
+
     public KieContainer getKieContainer() {
         return kieContainer;
     }
@@ -56,13 +57,14 @@ public class BolestService {
         unosSimptomi.setSimptomi(simptomiBiljke);
         unosSimptomi.setTip(existingPlant.getTip());
         unosSimptomi.setTrenutnaFaza(unosSimptomaDTO.getTrenutnaFaza());
+
         existingPlant.setTrenutnaFaza(unosSimptomaDTO.getTrenutnaFaza());
         
         QueryResults results = kieSession.getQueryResults("Poklapanje simptoma bolesti", existingPlant.getTip().getMoguceBolesti(), unosSimptomi.getTrenutnaFaza(), unosSimptomi.getSimptomi());    
         for(QueryResultsRow queryResult : results) {
             List<Bolest> moguceBolesti = (List<Bolest>) queryResult.get("$moguceBolesti");
             if(moguceBolesti.size() > 0) {
-               Preporuka preporuka = preporukaService.createSugggestion(moguceBolesti.get(0), existingPlant);
+               Preporuka preporuka = preporukaService.createSugggestion(moguceBolesti.get(0), existingPlant, unosSimptomi);
                return PreporukaMapper.toDTO(preporuka);
             }
         }

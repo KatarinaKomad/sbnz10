@@ -63,7 +63,7 @@ public class Preporuka {
     }
     
     public void modifyMessage(String message){
-        this.poruka.concat(" ").concat(message);
+        this.poruka = this.poruka + " " + message;
     }
     
 }
