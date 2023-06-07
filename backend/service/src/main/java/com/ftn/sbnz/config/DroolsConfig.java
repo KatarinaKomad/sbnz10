@@ -11,14 +11,23 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.ftn.sbnz.event.NeizlecenaBolestVoca;
 import com.ftn.sbnz.model.Biljka;
+import com.ftn.sbnz.model.Doktor;
 import com.ftn.sbnz.model.FinalnaDijagnoza;
 import com.ftn.sbnz.model.Korisnik;
+import com.ftn.sbnz.model.Simptom;
 import com.ftn.sbnz.respository.BiljkaRepository;
+import com.ftn.sbnz.respository.DoktorRepository;
 import com.ftn.sbnz.respository.FinalnaDijagnozaRepositiry;
 import com.ftn.sbnz.respository.KorisnikRepository;
+import com.ftn.sbnz.respository.NeizlecenaBolestVocaRepository;
+import com.ftn.sbnz.respository.SimptomRepository;
 
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Configuration
 public class DroolsConfig {
@@ -37,6 +46,17 @@ public class DroolsConfig {
     @Autowired
     private FinalnaDijagnozaRepositiry finalnaDijagnozaRepositiry;
 
+    @Autowired
+    private NeizlecenaBolestVocaRepository neizlecenaBolestVocaRepository;
+
+    @Autowired
+    private SimptomRepository simptomRepository;
+
+    @Autowired
+    private HttpServletRequest request;
+
+    @Autowired
+    private DoktorRepository doktorRepository;
       
     @Bean
     public KieContainer kieContainer() {
@@ -52,6 +72,10 @@ public class DroolsConfig {
     @Bean
     @SessionScope
     public KieSession kieSession() {
+
+        HttpSession session = request.getSession();
+        Long userid = Long.valueOf((String) session.getAttribute("currentUser"));
+
         KieContainer kieContainer = this.kieContainer();
         KieSession kieSession = kieContainer.newKieSession("rulesSession");
         logger.info("Creating new Kie Session.");
@@ -61,14 +85,31 @@ public class DroolsConfig {
             kieSession.insert(user);
         }
 
-        // Korisnik currentUser = korisnikService.getCurrentlyLoggedUser();
-        Korisnik currentUser = korisnikRepository.findById(1L).get();
-        List<Biljka> activeUserPlants = biljkaRepository.findByVlasnikId(currentUser.getId());
-        for(Biljka plant: activeUserPlants){
-            kieSession.insert(plant);
-            List<FinalnaDijagnoza> plantHistory = finalnaDijagnozaRepositiry.findByBiljkaId(plant.getId());
-            for (FinalnaDijagnoza dijagnoza : plantHistory){
-                kieSession.insert(dijagnoza);
+        List<Simptom> all = simptomRepository.findAll();
+        for (Simptom s: all){
+            kieSession.insert(s);
+        }
+
+        Korisnik currentUser = korisnikRepository.findById(userid).get();
+
+        if (currentUser != null) {
+            List<Biljka> activeUserPlants = biljkaRepository.findByVlasnikId(currentUser.getId());
+            for(Biljka plant: activeUserPlants){
+                kieSession.insert(plant);
+                List<FinalnaDijagnoza> plantHistory = finalnaDijagnozaRepositiry.findByBiljkaId(plant.getId());
+                for (FinalnaDijagnoza dijagnoza : plantHistory){
+                    kieSession.insert(dijagnoza);
+                }
+                List<NeizlecenaBolestVoca> neizleceneBolesti = neizlecenaBolestVocaRepository.findByBiljkaId(plant.getId());
+                for (NeizlecenaBolestVoca neizlecenaBolestVoca : neizleceneBolesti){
+                    kieSession.insert(neizlecenaBolestVoca);
+                }
+            }
+        }
+        else{
+            Doktor doktor = doktorRepository.findById(userid).get();
+            if (doktor != null){
+                //doddati sta njemu treba da bude u sesiji
             }
         }
 

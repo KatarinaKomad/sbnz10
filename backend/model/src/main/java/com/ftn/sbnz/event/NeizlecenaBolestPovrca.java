@@ -32,8 +32,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class NeizlecenaBolestVoca {
-
+public class NeizlecenaBolestPovrca {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -52,7 +51,7 @@ public class NeizlecenaBolestVoca {
 
     private LocalDate datumDijagnoze;
     
-    public NeizlecenaBolestVoca(Biljka biljka,  Bolest bolest,  Preparat preparat, FazaBiljke fazaJavljanja) {
+    public NeizlecenaBolestPovrca(Biljka biljka,  Bolest bolest,  Preparat preparat, FazaBiljke fazaJavljanja) {
         this.biljka = biljka;
         this.preparat = preparat;
         this.bolest = bolest;

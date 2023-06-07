@@ -36,6 +36,8 @@ public class Korisnik {
     private String prezime;  
     @Column(nullable = false) 
     private String email;
+    @Column(nullable = false)
+    private String password;
 
     public Long getId(){
         return id;

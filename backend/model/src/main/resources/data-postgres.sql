@@ -1,6 +1,6 @@
-insert into KORISNIK(email, ime, prezime, kategorija, poeni) VALUES
-('komad.katarina@gmail.com', 'Katarina', 'Komad', 'REGULAR', 0),
-('natasha.lakovic@gmail.com', 'Natasa', 'Lakovic', 'REGULAR', 0);
+insert into KORISNIK(email, ime, prezime, kategorija, poeni, password) VALUES
+('komad.katarina@gmail.com', 'Katarina', 'Komad', 'REGULAR', 0, '123'),
+('natasha.lakovic@gmail.com', 'Natasa', 'Lakovic', 'REGULAR', 0, '123');
 
 insert into SIMPTOM(lokacija, opis) VALUES
 ('LIST', 'svetlo-smeđe pege'), 
@@ -262,7 +262,8 @@ INSERT INTO biljka (kategorija, trenutna_faza, vreme_sadnje, tip_id, vlasnik_id)
 ('VOĆE', 'FORMIRANJE_PLODA', '2022-02-10', 3, 1),
 ('VOĆE', 'FORMIRANJE_PLODA', '2022-02-10', 2, 1),
 ('VOĆE', 'LISTANJE', '2022-02-06', 2, 2),--5--
-('VOĆE', 'LISTANJE', '2022-02-06', 1, 2);
+('VOĆE', 'LISTANJE', '2022-02-06', 1, 2),
+('VOĆE', 'FORMIRANJE_PLODA', '2022-02-10', 1, 1);
 
 INSERT INTO preporuka(naziv_preparata, opis_preparata, poruka, preporucena_doza, bolest_id, biljka_id) VALUES
 ('Blauvit', 'slab fungicid', '', 0.7, 1, 1),
@@ -277,4 +278,8 @@ INSERT INTO finalna_dijagnoza (datum_preporuke, faza_biljke, biljka_id, bolest_i
 ('2023-05-01', 'FORMIRANJE_PLODA', 3, 10, 32, 3),
 ('2022-10-01', 'LISTANJE', 4, 7, 26, 4),
 ('2023-04-11', 'LISTANJE', 4, 6, 11, 5);
+
+INSERT INTO neizlecena_bolest_voca (datum_dijagnoze, faza_javljanja, biljka_id, bolest_id, preparat_id) VALUES
+('2023-05-06', 'CVETANJE', 1, 2, 2),
+('2023-02-06', 'LISTANJE', 1, 3, 2);
 

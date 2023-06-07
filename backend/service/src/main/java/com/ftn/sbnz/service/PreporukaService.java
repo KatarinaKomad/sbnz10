@@ -6,6 +6,8 @@ import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ftn.sbnz.event.NeizlecenaBolestVoca;
+import com.ftn.sbnz.event.UnosSimptoma;
 import com.ftn.sbnz.model.Biljka;
 import com.ftn.sbnz.model.Bolest;
 import com.ftn.sbnz.model.FinalnaDijagnoza;
@@ -13,6 +15,7 @@ import com.ftn.sbnz.model.Preparat;
 import com.ftn.sbnz.model.Preporuka;
 import com.ftn.sbnz.respository.FinalnaDijagnozaRepositiry;
 import com.ftn.sbnz.respository.PreporukaRepository;
+import com.ftn.sbnz.respository.NeizlecenaBolestVocaRepository;
 
 import org.kie.api.runtime.rule.FactHandle;
 
@@ -33,8 +36,12 @@ public class PreporukaService {
 
     @Autowired
     private FinalnaDijagnozaRepositiry finalnaDijagnozaRepositiry;
+
+    @Autowired
+    private NeizlecenaBolestVocaRepository neizlecenaBolestVocaRepository;
     
-    public Preporuka createSugggestion(Bolest bolest, Biljka biljka){
+    
+    public Preporuka createSugggestion(Bolest bolest, Biljka biljka, UnosSimptoma unosSimptomi){
         Preporuka preporuka = new Preporuka();
         preporuka.setBiljka(biljka);
         preporuka.setBolest(bolest);
@@ -50,6 +57,7 @@ public class PreporukaService {
 
         kieSession.insert(preporuka);
         kieSession.insert(finalnaDijagnoza);
+        kieSession.insert(unosSimptomi);
         kieSession.fireAllRules();
        
         return this.handleSessionChanges(preporuka, finalnaDijagnoza);
@@ -75,6 +83,9 @@ public class PreporukaService {
             }
             else{
                 finalnaDijagnozaRepositiry.save(finalnaDijagnoza);
+            }
+            if (obj.getClass() == NeizlecenaBolestVoca.class){
+                neizlecenaBolestVocaRepository.save((NeizlecenaBolestVoca) obj);
             }
         }
         return preporuka;

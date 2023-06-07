@@ -1,6 +1,7 @@
 package com.ftn.sbnz.model;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -65,5 +66,31 @@ public class Bolest {
             return jakiPreparati.get(0);
         }
         return null;
+    }
+
+    public Preparat getNajjaciSlabPreparat(){
+        List<Preparat> selektovaniPreparati = this.slabiPreparati.stream().filter(preparat -> preparat.getKoncentracija() > 0.4).collect(Collectors.toList());
+        if (selektovaniPreparati.size() > 0){
+            Collections.sort(selektovaniPreparati, (p1, p2) -> -(p1.getAverageRate()).compareTo(p2.getAverageRate()));
+            return selektovaniPreparati.get(0);
+        }
+        else{
+            Collections.sort(slabiPreparati, (p1, p2) -> -(p1.getAverageRate()).compareTo(p2.getAverageRate()));
+            Collections.sort(slabiPreparati, (p1, p2) -> -(p1.getKoncentracija()).compareTo(p2.getKoncentracija()));
+            return slabiPreparati.get(0);
+        }
+    }
+
+    public Preparat getNajjaciJakPreparat(){
+        List<Preparat> selektovaniPreparati = this.jakiPreparati.stream().filter(preparat -> preparat.getKoncentracija() > 0.4).collect(Collectors.toList());
+        if (selektovaniPreparati.size() > 0){
+            Collections.sort(selektovaniPreparati, (p1, p2) -> -(p1.getAverageRate()).compareTo(p2.getAverageRate()));
+            return selektovaniPreparati.get(0);
+        }
+        else{
+            Collections.sort(jakiPreparati, (p1, p2) -> -(p1.getAverageRate()).compareTo(p2.getAverageRate()));
+            Collections.sort(jakiPreparati, (p1, p2) -> -(p1.getKoncentracija()).compareTo(p2.getKoncentracija()));
+            return jakiPreparati.get(0);
+        }
     }
 }

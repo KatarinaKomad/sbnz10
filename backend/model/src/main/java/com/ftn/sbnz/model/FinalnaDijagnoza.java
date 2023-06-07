@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+
+import org.kie.api.definition.type.Role;
+
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
@@ -19,7 +22,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
+@Role(Role.Type.EVENT)
 @Entity
 @Data
 @NoArgsConstructor
