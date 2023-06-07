@@ -13,6 +13,7 @@ export class HttpClientService {
   public createHeader() {
     let headers = new HttpHeaders({
       'Content-Type': 'application/json',
+      'currentUser': this.userService.getCurrentUserId()
       // 'Authorization': "Bearer " + this.userService.getCurrentUserToken()
     });
     return headers;

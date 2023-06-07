@@ -1,6 +1,6 @@
-insert into KORISNIK(email, ime, prezime, kategorija, poeni) VALUES
-('komad.katarina@gmail.com', 'Katarina', 'Komad', 'REGULAR', 0),
-('natasha.lakovic@gmail.com', 'Natasa', 'Lakovic', 'REGULAR', 0);
+insert into KORISNIK(email, ime, prezime, kategorija, poeni, password) VALUES
+('komad.katarina@gmail.com', 'Katarina', 'Komad', 'REGULAR', 0, '123'),
+('natasha.lakovic@gmail.com', 'Natasa', 'Lakovic', 'REGULAR', 0, '123');
 
 insert into SIMPTOM(lokacija, opis) VALUES
 ('LIST', 'svetlo-smeđe pege'), 

@@ -33,7 +33,7 @@ public class BolestService {
     private SimptomiRepository simptomiRepository;
 
     @Autowired
-	KieSession kieSession;
+	KieSessionService kieSessionService;
 
     @Autowired
     private KieContainer kieContainer;
@@ -41,12 +41,15 @@ public class BolestService {
     @Autowired
     private PreporukaService preporukaService;
 
+    @Autowired
+    private KieSession kieSession;
+
 
     public KieContainer getKieContainer() {
         return kieContainer;
     }
     
-    public PreporukaDTO determineDiseaseExistingPlant(UnosSimptomaDTO unosSimptomaDTO) throws NameNotFoundException{
+    public PreporukaDTO determineDiseaseExistingPlant(UnosSimptomaDTO unosSimptomaDTO, String userid) throws NameNotFoundException{
         Biljka existingPlant = biljkaRepository.findById(unosSimptomaDTO.getIdBiljke()).orElseThrow(() ->  new NameNotFoundException());
         UnosSimptoma unosSimptomi = new UnosSimptoma();
         List<Simptom> simptomiBiljke = unosSimptomaDTO.getSymptomsIDs().stream()
@@ -59,7 +62,7 @@ public class BolestService {
         unosSimptomi.setTrenutnaFaza(unosSimptomaDTO.getTrenutnaFaza());
 
         existingPlant.setTrenutnaFaza(unosSimptomaDTO.getTrenutnaFaza());
-        
+        // KieSession kieSession = kieSessionService.getKieSession(Long.valueOf(userid));
         QueryResults results = kieSession.getQueryResults("Poklapanje simptoma bolesti", existingPlant.getTip().getMoguceBolesti(), unosSimptomi.getTrenutnaFaza(), unosSimptomi.getSimptomi());    
         for(QueryResultsRow queryResult : results) {
             List<Bolest> moguceBolesti = (List<Bolest>) queryResult.get("$moguceBolesti");
