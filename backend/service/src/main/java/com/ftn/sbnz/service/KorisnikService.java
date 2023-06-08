@@ -1,8 +1,6 @@
 package com.ftn.sbnz.service;
 
 import java.util.List;
-
-import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

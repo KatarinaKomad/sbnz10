@@ -47,4 +47,9 @@ public class FinalnaDijagnozaService {
 
         return all.stream().map(FinalnaDijagnozaMapper::toDTO).collect(Collectors.toList());
     }
+
+    public FinalnaDijagnozaDTO getLastDiagnosis(Long biljkaId) {
+        FinalnaDijagnoza dijagnoza = finalnaDijagnozaRepositiry.getLatesDiagnosisByPlantId(biljkaId);
+        return dijagnoza != null ? FinalnaDijagnozaMapper.toDTO(dijagnoza) : null;
+    }
 }

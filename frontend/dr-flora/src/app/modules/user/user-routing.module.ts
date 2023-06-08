@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { AddPlantComponent } from "src/app/components/add-plant/add-plant.component";
 import { DeseaseHistoryOverviewComponent } from "src/app/components/desease-history-overview/desease-history-overview.component";
 import { DeseaseReportingComponent } from "src/app/components/desease-reporting/desease-reporting.component";
+import { PlantsViewComponent } from "src/app/components/plants-view/plants-view.component";
 import { UserHomePageComponent } from "src/app/components/user-home-page/user-home-page.component";
 
 const routes : Routes = [  
@@ -24,7 +25,12 @@ const routes : Routes = [
                 path: 'history',
                 component: DeseaseHistoryOverviewComponent,
                 outlet: 'userPage'
-            }
+            },
+            {
+                path: 'plants',
+                component: PlantsViewComponent,
+                outlet: 'userPage'
+            },
           ],
     },
     
