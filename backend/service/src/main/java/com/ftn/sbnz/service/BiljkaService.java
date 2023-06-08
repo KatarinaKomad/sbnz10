@@ -1,5 +1,8 @@
 package com.ftn.sbnz.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +36,10 @@ public class BiljkaService {
         biljkaRepository.save(biljka);
         return BiljkaMapper.toDTO(biljka);
 
+    }
+
+
+    public List<BiljkaDTO> findAllByUser(Long vlasnikId) {
+        return biljkaRepository.findByVlasnikId(vlasnikId).stream().map(BiljkaMapper::toDTO).collect(Collectors.toList());
     }
 }

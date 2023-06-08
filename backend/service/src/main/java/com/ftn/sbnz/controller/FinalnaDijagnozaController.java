@@ -32,5 +32,18 @@ public class FinalnaDijagnozaController {
             return ResponseEntity.badRequest().build();
         }
     }
+
+    
+    @GetMapping("/last-desease/{biljkaId}")
+    public ResponseEntity<?> getLastDiagnosis(@PathVariable("biljkaId") Long biljkaId){
+        try{
+            FinalnaDijagnozaDTO dijagnoza = this.finalnaDijagnozaService.getLastDiagnosis(biljkaId);
+            return new ResponseEntity<>(dijagnoza, HttpStatus.OK);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
     
 }

@@ -3,6 +3,7 @@ package com.ftn.sbnz.respository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ftn.sbnz.model.FinalnaDijagnoza;
@@ -11,5 +12,8 @@ import com.ftn.sbnz.model.FinalnaDijagnoza;
 public interface FinalnaDijagnozaRepositiry extends JpaRepository<FinalnaDijagnoza, Long> {
 ;
     List<FinalnaDijagnoza> findByBiljkaId(Long biljkaId);
+
+    @Query(value= "SELECT * FROM finalna_dijagnoza where biljka_id = ?1 ORDER BY datum_preporuke DESC LIMIT 1", nativeQuery = true)
+    FinalnaDijagnoza getLatesDiagnosisByPlantId(Long biljkaId);
 
 }

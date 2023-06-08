@@ -11,6 +11,7 @@ import { DeseaseSymptomsFormComponent } from "src/app/components/desease-symptom
 import { DeseaseReportingComponent } from "src/app/components/desease-reporting/desease-reporting.component";
 import { RecomendationDisplayComponent } from "src/app/components/recomendation-display/recomendation-display.component";
 import { AddPlantComponent } from "src/app/components/add-plant/add-plant.component";
+import { PlantsViewComponent } from "src/app/components/plants-view/plants-view.component";
 
 
 const declarations = [
@@ -19,7 +20,8 @@ const declarations = [
     DeseaseSymptomsFormComponent,
     DeseaseReportingComponent, 
     RecomendationDisplayComponent,
-    AddPlantComponent
+    AddPlantComponent,
+    PlantsViewComponent,
 ]
 
 @NgModule({
