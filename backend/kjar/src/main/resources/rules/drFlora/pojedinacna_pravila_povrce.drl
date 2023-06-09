@@ -1,0 +1,50 @@
+import com.ftn.sbnz.model.FinalnaDijagnoza;
+import com.ftn.sbnz.model.Preparat;
+import com.ftn.sbnz.model.Bolest;
+import com.ftn.sbnz.model.enums.FazaBiljke;
+import com.ftn.sbnz.model.enums.PotkategorijaPreparata;
+import com.ftn.sbnz.model.Preporuka;  
+import java.time.LocalDate;
+import com.ftn.sbnz.model.Biljka;
+import com.ftn.sbnz.model.enums.KategorijaPreparata;
+
+// na lubenici plamenjača i 
+// korisnik ima dinje → 
+// u odgovoru dodati napomenu da se isti tretman primeni i na dinju
+rule "Lubenica ima plamenjacu i korisnik ima i dinje -> napomena da se prskaju i dinje" 
+    no-loop
+    when
+        $dijagnoza: FinalnaDijagnoza( $preparat: preporuceniPreparat,
+                                    $biljka: biljka,
+                                    biljka.tip.naziv == "lubenica",
+                                    bolest.naziv == "Plamenjača",
+                                    $vlasnik: biljka.vlasnik,
+                                    $preporuka: preporuka,
+                                    datumPreporuke == LocalDate.now())
+        Biljka(vlasnik == $vlasnik,
+                tip.naziv == "dinja")
+    then
+        // System.out.println("Preporuka za dinju");
+        modify($preporuka){setPoruka("Zbog posedovanje sorte dinje koja je podležna istoj bolesti, tretirajte je preparatom na isti način.")}
+end
+
+
+ // za dinju plamenjača 
+ // korisnik ima lubenice → 
+ // u odgovoru dodati napomenu da se isti tretman primeni i na lubenicama
+rule "Dinja ima plamenjacu i korisnik ima i lubenice -> napomena da se prskaju i lubenice" 
+    no-loop
+    when
+        $dijagnoza: FinalnaDijagnoza( $preparat: preporuceniPreparat,
+                                    $biljka: biljka,
+                                    biljka.tip.naziv == "dinja",
+                                    bolest.naziv == "Plamenjača",
+                                    $vlasnik: biljka.vlasnik,
+                                    $preporuka: preporuka,
+                                    datumPreporuke == LocalDate.now())
+        Biljka(vlasnik == $vlasnik,
+                tip.naziv == "lubenica")
+    then
+        // System.out.println("Preporuka za lubenicu");
+        modify($preporuka){setPoruka("Zbog posedovanje sorte lubenice koja je podležna istoj bolesti, tretirajte je preparatom na isti način.")}
+end

@@ -25,6 +25,17 @@ declare PromenaSlabogUJakPreparatAlarm
     bolest: Bolest
 end
 
+declare PreporucenJosJedanPreparat
+    @role(event)
+    biljka: Biljka
+    bolest: Bolest
+end
+declare PovecanaDozaJakogPreparataAlarm
+    @role(event)
+    biljka: Biljka
+    bolest: Bolest
+end
+
 declare NapomenaZaInsekticidAlarm
     @role(event)
     biljka: Biljka
@@ -32,7 +43,7 @@ declare NapomenaZaInsekticidAlarm
     preparat: Preparat
 end
 
-rule "Dijagnoza iste bolesti 2 ili vise puta kod iste biljke u istoj fazi u mesec dana -> aktivirati alarm NeizlecenaBolestVoca"
+rule "Dijagnoza iste bolesti 2 ili vise puta kod istog voce u istoj fazi u mesec dana -> aktivirati alarm NeizlecenaBolestVoca"
     no-loop
     when 
         $dijagnoza: FinalnaDijagnoza($id: id, 
@@ -140,6 +151,156 @@ rule "NeizlecenaBolestVoca i preporuceni jak preparat insekticid -> napomena za 
     then
         insert(new NapomenaZaInsekticidAlarm($biljka, $bolest, $preparat));
         modify($preporuka) {modifyMessage("Biljku ne upotrebljavati u ishrani do 2 nedelje nakon prskanja.")}
+end
+
+
+rule "Dijagnoza iste bolesti 2 ili vise puta kod istog povrca u istoj fazi u mesec dana -> aktivirati alarm NeizlecenaBolestPovrca"
+    no-loop
+    when 
+        $dijagnoza: FinalnaDijagnoza($id: id, 
+                                    $bolest: bolest, 
+                                    $preparat: preporuceniPreparat, 
+                                    $biljka: biljka, 
+                                    biljka.kategorija == KategorijaBiljke.POVRĆE,
+                                    $fazaBiljke: fazaBiljke,
+                                    datumPreporuke.isAfter(LocalDate.now().minusMonths(1))
+                                    ) 
+        Number(intValue >= 1) from accumulate(
+            $d : FinalnaDijagnoza(this != $dijagnoza,
+                                          bolest.id == $bolest.id,
+                                          biljka.id == $biljka.id,
+                                          fazaBiljke == $fazaBiljke,
+                                          this meets[744h] $dijagnoza //1 month
+                                         ), 
+                                          count($d)
+        )
+        not (NeizlecenaBolestPovrca(biljka == $biljka, bolest == $bolest, fazaJavljanja == $fazaBiljke))
+    then
+        System.out.println("Neizlecena bolest povrca za " + $biljka.getId() + ", bolest " + $bolest.getNaziv());
+        insert(new NeizlecenaBolestPovrca($biljka, $bolest, $preparat, $fazaBiljke));
+end
+
+
+rule "NeizlecenaBolestPovrca paprike i preporuceni slabi preparat za bolest za koju postoji jak preparat -> preporuciti jak preparat" 
+    no-loop
+    when 
+        $alarm: NeizlecenaBolestPovrca($biljka: biljka, 
+                                    biljka.tip.naziv == "paprika",
+                                    $bolest: bolest,  
+                                    bolest.jakiPreparati.size() > 0,
+                                    $fazaBiljke : fazaJavljanja, 
+                                    $preparat: preparat, 
+                                    preparat.potkategorija == PotkategorijaPreparata.SLAB
+                                    )
+        
+        $dijagnoza : FinalnaDijagnoza(bolest.id == $bolest.id,
+                                    biljka.id == $biljka.id,
+                                    preporuceniPreparat.id == $preparat.id,
+                                    $preporuka: preporuka,
+                                    datumPreporuke == LocalDate.now(),
+                                    this meets[5m] $alarm)
+        
+
+        not(PromenaSlabogUJakPreparatAlarm(biljka == $biljka, bolest == $bolest))
+        
+    then
+        modify($dijagnoza) {setPreparat($bolest.getTopJakPreparat())}
+        modify($preporuka) {setPreporucenaDoza($bolest.getTopJakPreparat().getKoncentracija()), 
+                                    setNazivPreparata($bolest.getTopJakPreparat().getNaziv()),
+                                    setOpisPreparata($bolest.getTopJakPreparat().getPotkategorijaPreparata() + " " + $bolest.getTopJakPreparat().getKategorijaPreparata()),
+                                    modifyMessage("Preporučen je jači preparat umesto slabijeg jer je ista bolest dijagnostikovana dva puta u mesec dana.") }
+        modify($alarm) {setPreparat($bolest.getTopJakPreparat())}
+        insert(new PromenaSlabogUJakPreparatAlarm($biljka, $bolest));
+end
+
+rule "NeizlecenaBolestPovrca paprike i preporuceni slabi preparat za bolest za koju ne postoji jak preparat -> preporuciti jos jedan slab preparat duplirane doze" 
+    no-loop
+    when 
+        $alarm: NeizlecenaBolestPovrca($biljka: biljka, 
+                                    biljka.tip.naziv == "paprika",
+                                    $bolest: bolest,  
+                                    bolest.jakiPreparati.size() == 0,
+                                    $fazaBiljke : fazaJavljanja, 
+                                    $preparat: preparat, 
+                                    preparat.potkategorija == PotkategorijaPreparata.SLAB
+                                    )
+        
+        $dijagnoza : FinalnaDijagnoza(bolest.id == $bolest.id,
+                                    biljka.id == $biljka.id,
+                                    preporuceniPreparat.id == $preparat.id,
+                                    $preporuka: preporuka,
+                                    !preporuka.message.contains("Preporučena upotreba i"),
+                                    datumPreporuke == LocalDate.now(),
+                                    this meets[5m] $alarm)
+        
+        not(PreporucenJosJedanPreparat(biljka == $biljka, bolest == $bolest))
+        
+    then
+        $noviPreparat = $bolest.getTopSlabPreparat();
+        modify($preporuka) {
+            modifyMessage("Preporučena upotreba i " + $noviPreparat.naziv + " koncentracije: "  + $noviPreparat.koncentracija * 2) 
+            }
+        insert(new PreporucenJosJedanPreparat($biljka, $bolest));
+end
+
+
+
+rule "NeizlecenaBolestPovrca paprike i preporuceni jak preparat za bolest za koju postoji slab preparat -> preporuciti jos jedan slab preparat" 
+    no-loop
+    when 
+        $alarm: NeizlecenaBolestPovrca($biljka: biljka, 
+                                    biljka.tip.naziv == "paprika",
+                                    $bolest: bolest,  
+                                    bolest.slabiPreparati.size() > 0,
+                                    $fazaBiljke : fazaJavljanja, 
+                                    $preparat: preparat, 
+                                    preparat.potkategorija == PotkategorijaPreparata.JAK
+                                    )
+        
+        $dijagnoza : FinalnaDijagnoza(bolest.id == $bolest.id,
+                                    biljka.id == $biljka.id,
+                                    preporuceniPreparat.id == $preparat.id,
+                                    $preporuka: preporuka,
+                                    !preporuka.message.contains("Preporučena upotreba i"),
+                                    datumPreporuke == LocalDate.now(),
+                                    this meets[5m] $alarm)
+        
+
+        not(PreporucenJosJedanPreparat(biljka == $biljka, bolest == $bolest))
+        
+    then
+        $noviPreparat = $bolest.getTopSlabPreparat();
+        modify($preporuka) {
+            modifyMessage("Preporučena upotreba i " + $noviPreparat.naziv + " koncentracije: "  + $noviPreparat.koncentracija) 
+            }
+        insert(new PreporucenJosJedanPreparat($biljka, $bolest));
+end
+
+rule "NeizlecenaBolestPovrca paprike i preporuceni jaki preparat za bolest za koju ne postoji slab preparat -> preporuciti 1.5 dozu preparata" 
+    no-loop
+    when 
+        $alarm: NeizlecenaBolestPovrca($biljka: biljka, 
+                                    biljka.tip.naziv == "paprika",
+                                    $bolest: bolest,  
+                                    bolest.slabiPreparati.size() == 0,
+                                    $fazaBiljke : fazaJavljanja, 
+                                    $preparat: preparat, 
+                                    preparat.potkategorija == PotkategorijaPreparata.JAK
+                                    )
+        
+        $dijagnoza : FinalnaDijagnoza(bolest.id == $bolest.id,
+                                    biljka.id == $biljka.id,
+                                    preporuceniPreparat.id == $preparat.id,
+                                    $preporuka: preporuka,
+                                    datumPreporuke == LocalDate.now(),
+                                    this meets[5m] $alarm)
+        
+        not(PovecanaDozaJakogPreparataAlarm(biljka == $biljka, bolest == $bolest))
+        
+    then
+        modify($preporuka) {setPreporucenaDoza($preporuka.getPreporucenaDoza() * 1.5),
+                            modifyMessage("Preporučena je veca doza preparata jer se bolest javila dva puta u mesec dana.")}
+        insert(new PovecanaDozaJakogPreparataAlarm($biljka, $bolest));
 end
 
 
