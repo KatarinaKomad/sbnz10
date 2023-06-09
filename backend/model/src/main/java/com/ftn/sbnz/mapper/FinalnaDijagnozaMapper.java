@@ -17,6 +17,7 @@ public class FinalnaDijagnozaMapper {
         .nazivBolesti(dijagnoza.getBolest().getNaziv())
         .poruka(dijagnoza.getPreporuka().getPoruka())
         .id(dijagnoza.getId())
+        .idPreparat(dijagnoza.getPreporuceniPreparat().getId())
         .build();
 
     }

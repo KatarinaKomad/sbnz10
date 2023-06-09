@@ -21,6 +21,7 @@ public class FinalnaDijagnozaDTO {
     private Long id;
     private String nazivBolesti;
     private String nazivPreparata;
+    private Long idPreparat;
     private double doza;
     private double ocenaPreparata;
     private LocalDate datumPreporuke;

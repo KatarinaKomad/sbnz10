@@ -18,11 +18,18 @@ export class KorisnikService {
   constructor() { }
 
   getCuurentuserRole(): Role{
-    return Role.REGULAR; //ispraviti
+    let role = sessionStorage.getItem("role");
+    return role? this.arseEnumValueFromString(role) : Role.REGULAR;
   }
 
   getCurretnUserid(): number{
     return 1; //ispraviti
+  }
+
+  private arseEnumValueFromString(value: string): Role {
+    const enumValues = Object.values(Role) as unknown as Role[keyof Role][];
+    const enumKey = enumValues.find(key => key === value);
+    return enumKey ? Role[enumKey as keyof typeof Role] : Role.REGULAR;
   }
 
 }

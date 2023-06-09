@@ -18,5 +18,6 @@ export class LoginService {
   
   addToSessionStorage(korisnik: Korisnik) {
     sessionStorage.setItem('user', korisnik.id.toString());
+    sessionStorage.setItem('role', korisnik.role.toString());
   }
 }

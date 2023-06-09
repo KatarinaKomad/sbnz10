@@ -11,4 +11,6 @@ export interface FinalnaDijagnoza{
     idBiljke: number;
     fazaBiljke: FazaBiljke;
     poruka: string;
+    idPreparat: number;
+    strDate?: string;
 }

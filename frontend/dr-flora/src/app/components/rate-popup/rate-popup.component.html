@@ -1,0 +1,11 @@
+<div class="dialog">
+    <label class="title">Ocenite proizvod</label>
+    <div class="rate-container">
+        <button *ngFor="let grade of grades" mat-icon-button (click)="onSelectedRate(grade)">
+            <mat-icon *ngIf="!(grade > selectedRate) || grade === selectedRate" class="icon-star">star
+            </mat-icon>
+            <mat-icon *ngIf="grade > selectedRate" class="icon-star">star_border</mat-icon>
+        </button>
+    </div>
+    <button class="submit" (click)="onSubmit()">oceni</button>
+</div>

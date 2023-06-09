@@ -1,6 +1,6 @@
 <div class="container">
     <p class="title">Istorija bolesti</p>
-    <p class="subtitle">Uz mogućnost ocenjivanja preparata</p>
+    <p class="subtitle">Uz mogućnost ocenjivanja preparata koji je korišćen u posldnjih 2 meseca</p>
     <div style="max-height: 60%; overflow: auto; min-width: 90%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; margin-top: 2%;" >
         <table>
             <thead>
@@ -10,6 +10,7 @@
                     <th>TIP BILJKE</th>
                     <th>FAZA</th>
                     <th>PREPARAT</th>
+                    <th>OCENA PREPARATA</th>
                     <th>DOZA</th>
                     <th>DATUM</th>
                     <th>NAPOMENA</th>
@@ -23,11 +24,20 @@
                     <td>{{dijagnoza.nazivtipaBiljke}}</td>
                     <td>{{dijagnoza.fazaBiljke}}</td>
                     <td>{{dijagnoza.nazivPreparata}}</td>
+                    <td class="rate"> {{dijagnoza.ocenaPreparata}}
+                        <mat-icon class="icon-star">star 
+                        </mat-icon> 
+                    </td>
                     <td>{{dijagnoza.doza}}</td>
-                    <td>{{dijagnoza.datumPreporuke}}</td>
-                    <td>{{dijagnoza.poruka}}</td>
-                    <td>
-                        <button class="rate-button">oceni preparat</button>
+                    <td>{{dijagnoza.strDate}}</td>
+                    <td class="note" (click)="showTooltip(dijagnoza)">
+                        {{dijagnoza.poruka}}
+                        <div class="tooltip" *ngIf="!hiddenTooltip && (tooltioToShow == dijagnoza.id)">
+                            {{dijagnoza.poruka}}
+                        </div>
+                    </td>
+                    <td *ngIf="isWithinTwoMonths(dijagnoza.datumPreporuke)">
+                        <button class="rate-button" (click)="openRateDialog(dijagnoza)">oceni preparat</button>
                     </td>    
                 </tr>
             </tbody>
