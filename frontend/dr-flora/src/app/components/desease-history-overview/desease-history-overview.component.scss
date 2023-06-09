@@ -81,6 +81,52 @@ table{
         color: $dark-green-hover;
         width: 90%;
     }
+
+    .id-input{
+        @include inputField();
+        border: none;
+        border-bottom: solid thin $middle_green;
+        box-shadow: none;
+        padding-bottom: 0;
+    }
+    
+    .id-input:focus{
+        outline: none;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+
+    .search-title{
+        color: $dark-green;
+        font-size: large;
+        width: 90%;
+    }
+
+    .form{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .input-container{
+        width: fit-content; 
+        margin-right: 4%;
+    }
+
+    ::placeholder {
+        color: $dark-green-hover;
+        font-size: medium
+      }
+
+    .search-button{
+        @include greenButton();
+        padding: 0;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
 }
 
 .rate-button{
@@ -118,3 +164,12 @@ table{
     justify-content: center;
     width: 100%;
 }
+
+.table-container{
+    max-height: 60%; 
+    overflow: auto; 
+    min-width: 90%; 
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; 
+    margin-top: 2%;
+}
+
