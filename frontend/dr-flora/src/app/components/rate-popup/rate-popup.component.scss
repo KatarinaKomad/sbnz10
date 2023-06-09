@@ -1,0 +1,39 @@
+@import 'src/app/style/styles';
+
+.dialog{
+    display: flex;
+    flex-direction: column;
+    font-family: $font;
+    background-color: #FEFCF7;
+    justify-content: center;
+    padding: 30px;
+    overflow-x: hidden;
+    align-items: center;
+
+    .title{
+        font-size: large;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: $dark-green;
+        margin-bottom: 0;
+    }
+}
+
+.rate-container{
+    display: flex;
+    flex-direction: row;
+    padding-top: 15%;
+    
+.icon-star {
+    transform: scale(2);
+    font-size: 20px;
+    color: $dark-orange;
+ }
+}
+
+.submit{
+    @include greenButton();
+    width: 50%;
+    margin-top: 15%;
+}

@@ -1,6 +1,7 @@
 package com.ftn.sbnz.service;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -39,12 +40,12 @@ public class FinalnaDijagnozaService {
 
     public List<FinalnaDijagnozaDTO> findAllByUser(Long vlasnikId){
         List<FinalnaDijagnoza> all = new LinkedList<FinalnaDijagnoza>(); 
-        List<Biljka> usersPlants = this.biljkaRepository.findByVlasnikId(vlasnikId);
+        List<Biljka> usersPlants = this.biljkaRepository.findByVlasnikId(vlasnikId);;
         for (Biljka biljka : usersPlants){
             all = Stream.concat(all.stream(), finalnaDijagnozaRepositiry.findByBiljkaId(biljka.getId()).stream())
             .collect(Collectors.toList());
         }
-
+        all.sort(Comparator.comparing(FinalnaDijagnoza::getDatumPreporuke).reversed());
         return all.stream().map(FinalnaDijagnozaMapper::toDTO).collect(Collectors.toList());
     }
 

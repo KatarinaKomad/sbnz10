@@ -14,7 +14,16 @@ table{
         justify-content: center;
         align-items: center;
         padding: 1.5%;
+
     }
+    .note{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 150px;
+    }
+
+
 
     
     tbody{
@@ -78,4 +87,34 @@ table{
     @include greenButton();
     font-size: 14px;
     padding: 5% 10%;
+}
+
+.tooltip{
+    display: flex;
+    background-color: #F4F7EF;
+    border: solid 2px $middle-green;
+    color: $dark-green;
+    position: absolute;
+    max-width: 200px;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 4px;
+    white-space: normal;
+    word-wrap: break-word;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    
+}
+
+.icon-star{
+    color: $light-orange;
+}
+
+.rate{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    width: fit-content;
+    justify-content: center;
+    width: 100%;
 }

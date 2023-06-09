@@ -7,11 +7,14 @@ import { MultiselectDialogComponent } from "src/app/components/base/multiselect-
 import { SelectDropdownComponent } from "src/app/components/base/select-dropdown/select-dropdown.component";
 import { DeseaseHistoryOverviewComponent } from "src/app/components/desease-history-overview/desease-history-overview.component";
 import { PlantCardComponent } from "src/app/components/base/plant-card/plant-card.component";
+import { RatePopupComponent } from "src/app/components/rate-popup/rate-popup.component";
 
 let declarations = [MultiselectDialogComponent, 
     SelectDropdownComponent, 
     DeseaseHistoryOverviewComponent,
-    PlantCardComponent,]
+    PlantCardComponent,
+    RatePopupComponent]
+
 
 @NgModule({
     declarations: declarations,

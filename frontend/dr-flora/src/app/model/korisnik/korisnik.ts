@@ -1,7 +1,7 @@
 export enum Role{
-    DOKTOR, 
-    REGULAR,
-    PREMIUM
+    DOKTOR = "DOKTOR", 
+    REGULAR = "REGULAR",
+    PREMIUM = "PREMIUM"
 }
 
 export interface LoginData{
