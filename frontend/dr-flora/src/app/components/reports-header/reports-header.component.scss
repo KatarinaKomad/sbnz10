@@ -23,7 +23,7 @@
     width: 90%;
 }
 
-button{
+.option-button{
     @include greenButton();
     padding: 0.5% 3%;
     width: 25vw;
@@ -129,4 +129,13 @@ button{
     box-shadow: none;
     outline: none;
     border-bottom: solid thin $middle_green;
+}
+
+.search-button{
+    @include greenButton();
+    padding: 5px 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: fit-content;
 }

@@ -3,6 +3,9 @@ import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { VrstePovrca, VrsteVoca } from 'src/app/model/biljka/biljka';
 import { Role } from 'src/app/model/korisnik/korisnik';
 import { KorisnikService } from 'src/app/service/korisnik/korisnik.service';
+import { Router } from '@angular/router';
+import { ReportData, ReportType } from 'src/app/model/report/report';
+import { ReportService } from 'src/app/service/report/report.service';
 
 @Component({
   selector: 'app-reports-header',
@@ -12,7 +15,9 @@ import { KorisnikService } from 'src/app/service/korisnik/korisnik.service';
 export class ReportsHeaderComponent implements OnInit{
 
     constructor(private korisnikService: KorisnikService,
-                private formBuilder: FormBuilder){}
+                private formBuilder: FormBuilder,
+                private router: Router,
+                private reportService: ReportService){}
     
     displayOptions : number[] = [0,1,2,3,4]
     displayForm: boolean = false
@@ -21,6 +26,16 @@ export class ReportsHeaderComponent implements OnInit{
       "Statistika bolesti odabrane vrste biljke",
       'Statistike odabrane bolesti kod svih tipova biljaka',
     ]
+
+    bindRequestType : {[key: number] : ReportType } = {
+      0: ReportType.TIP_BILJKE,
+      1: ReportType.BOLEST,
+      2: ReportType.JAKI_PREPARATI,
+      3: ReportType.SLABI_PREPARATI,
+      4: ReportType.PREPARAT,
+  }
+
+    selectedReportType : ReportType = ReportType.TIP_BILJKE;
 
     ngOnInit(): void {
       if (this.korisnikService.getCuurentuserRole() !== Role.REGULAR){
@@ -44,6 +59,7 @@ export class ReportsHeaderComponent implements OnInit{
       this.displayOptions = [optionId]
       this.isTitileHidden = true
       this.displayForm = true;
+      this.selectedReportType = this.bindRequestType[optionId];
     }
 
     reportForm = this.formBuilder.group({
@@ -56,4 +72,26 @@ export class ReportsHeaderComponent implements OnInit{
 
     vrste : string[] = [...Object.values(VrsteVoca) , ...Object.values(VrstePovrca)];
     Object = Object;
+    
+
+
+    search(){
+      let request : ReportData =  {
+        isDoctor: this.korisnikService.getCuurentuserRole() === Role.DOKTOR,
+        reportType: this.selectedReportType,
+        startDate: this.reportForm.controls.startDate.value as Date,
+        endDate: this.reportForm.controls.endDate.value as Date,
+        nazivBolesti: this.reportForm.controls.nazivBolesti.value as string,
+        tipBiljke: this.reportForm.controls.tipBiljke.value?.toLocaleLowerCase() as string,
+        nazivPreparata: this.reportForm.controls.nazivPreparata.value as string,
+      }
+      this.reportService.gerReportData(request).subscribe({
+        next: (response) => console.log(response),
+        error: () => console.log("error")
+      })
+    }
+
+    reset(){
+      window.location.reload();
+    }
 }
