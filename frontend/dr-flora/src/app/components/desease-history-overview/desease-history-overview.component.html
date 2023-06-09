@@ -1,7 +1,46 @@
 <div class="container">
-    <p class="title">Istorija bolesti</p>
-    <p class="subtitle">Uz mogućnost ocenjivanja preparata koji je korišćen u posldnjih 2 meseca</p>
-    <div style="max-height: 60%; overflow: auto; min-width: 90%; box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; margin-top: 2%;" >
+    <div style="display: flex; flex-direction: row; width: 90%;">
+        <div  style="   display: flex;
+                        flex-direction: column;
+                        flex-grow: 4;
+                        max-width: 30vw;">
+            <p class="title">Istorija bolesti</p>
+            <label class="subtitle">Mogućnost ocenjivanja preparata korišćenih u posldnjih 2 meseca</label>
+        </div>
+        <div style="display: flex;
+                    flex-direction: row;
+                    flex-grow: 7;
+                    max-width: 60vw;">
+            <form [formGroup]="searchForm" class="form">
+                
+                <div class="input-container"> 
+                    <input class="id-input" type="number" placeholder="Identifikator biljke" formControlName="plantId"
+                        [style.color]="(this.searchForm.controls.plantId &&  this.searchForm.controls.plantId.value)? '#40513B' : '#A4B69F'"
+                        [style.fontSize]="(this.searchForm.controls.plantId &&  this.searchForm.controls.plantId.value)? 'large' : 'medium'"/>
+                </div>
+                <div class="input-container">
+                    <input class="id-input" type="type" placeholder="Naziv bolesti" formControlName="nazivBolesti"
+                    [style.color]="(this.searchForm.controls.nazivBolesti &&  this.searchForm.controls.nazivBolesti.value)? '#40513B' : '#A4B69F'"
+                    [style.fontSize]="(this.searchForm.controls.nazivBolesti &&  this.searchForm.controls.nazivBolesti.value)? 'large' : 'medium'"/>
+                </div>
+                <app-select-dropdown [options]="Object.values(vrste)" 
+                                                defaultOption="Odaberite vrstu..."
+                                                [selectOptionControl]="this.searchForm.controls.tipBiljke"
+                                                class="input-container"></app-select-dropdown>
+
+                <button class="search-button" (click)="search()">
+                    <mat-icon>search</mat-icon>
+                </button>
+                <button class="search-button" (click)="reset()" style="margin-left: 3%;">
+                    <mat-icon>autorenew</mat-icon>
+                </button>
+            </form>
+        </div>
+
+    </div>
+    
+    
+    <div class="table-container">
         <table>
             <thead>
                 <tr>

@@ -14,3 +14,9 @@ export interface FinalnaDijagnoza{
     idPreparat: number;
     strDate?: string;
 }
+
+export interface DijagnozaFitlterData{
+    idBiljke?: number,
+    nazivBolesti: string,
+    nazivTipaBiljke: string
+}
