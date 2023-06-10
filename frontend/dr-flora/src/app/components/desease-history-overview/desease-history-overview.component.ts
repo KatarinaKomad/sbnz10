@@ -39,7 +39,7 @@ export class DeseaseHistoryOverviewComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.userRoles.includes(this.korisnikService.getCuurentuserRole())){
-      this.dijagnozaService.findAllByUser(this.korisnikService.getCurretnUserid()).subscribe({
+      this.dijagnozaService.findAllByUser(this.korisnikService.getCurrentUserId() as unknown as number).subscribe({
         next: response => {
           this.dijagnoze = response
           this.sveDijagnoze = response
@@ -72,10 +72,13 @@ export class DeseaseHistoryOverviewComponent implements OnInit {
   }
 
   isWithinTwoMonths(date: Date){
-    let p = date as any as  number[];
-    let dateToCompare = new Date(p[0], p[1] - 1, p[2])
-    let today = new Date();
-    return dateToCompare <= today && dateToCompare >= this.subtractMonths(today, 2)
+    if (this.korisnikService.getCuurentuserRole() !== Role.DOKTOR){
+      let p = date as any as  number[];
+      let dateToCompare = new Date(p[0], p[1] - 1, p[2])
+      let today = new Date();
+      return dateToCompare <= today && dateToCompare >= this.subtractMonths(today, 2)
+    }
+    return true;
   }
 
   subtractMonths(date: Date, months: number) : Date{

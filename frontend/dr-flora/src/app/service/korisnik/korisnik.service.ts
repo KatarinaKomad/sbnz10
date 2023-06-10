@@ -22,10 +22,6 @@ export class KorisnikService {
     return role? this.arseEnumValueFromString(role) : Role.REGULAR;
   }
 
-  getCurretnUserid(): number{
-    return 1; //ispraviti
-  }
-
   private arseEnumValueFromString(value: string): Role {
     const enumValues = Object.values(Role) as unknown as Role[keyof Role][];
     const enumKey = enumValues.find(key => key === value);

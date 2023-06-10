@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { LoginService } from 'src/app/service/login/login.service'
 import { KorisnikService } from 'src/app/service/korisnik/korisnik.service';
+import { Role } from 'src/app/model/korisnik/korisnik';
 
 @Component({
   selector: 'app-login',
@@ -44,7 +45,12 @@ export class LoginComponent{
                                   .subscribe({
                                     next: (response) => {
                                       this.loginService.addToSessionStorage(response);
-                                      this.router.navigateByUrl('/user')
+                                      if (response.role !== Role.DOKTOR){
+                                        this.router.navigateByUrl('/user')
+                                      }
+                                      else{
+                                        this.router.navigateByUrl('/doktor')
+                                      }
                                     },
                                     error: (err) => this.openError("Neuspešno logovanje", "Neispravni username ili password")
                                   })
