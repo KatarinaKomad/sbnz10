@@ -7,7 +7,7 @@ public class BiljkaMapper {
     
     public static BiljkaDTO toDTO(Biljka biljka){
         return BiljkaDTO.builder()
-                .vlasnikEmail(biljka.getVlasnik().getEmail())
+                .vlasnikId(biljka.getVlasnik().getId())
                 .nazivTipa(biljka.getTip().getNaziv())
                 .datumSadnje(biljka.getVremeSadnje())
                 .kategorija(biljka.getKategorija())

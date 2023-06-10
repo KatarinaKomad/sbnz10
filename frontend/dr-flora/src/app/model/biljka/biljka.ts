@@ -47,6 +47,6 @@ export interface Biljka{
     nazivTipa: string,
     datumSadnje: Date,
     trenutnaFaza: string,
-    vlasnikEmail: string,
+    vlasnikId: number,
     id? : number
 }

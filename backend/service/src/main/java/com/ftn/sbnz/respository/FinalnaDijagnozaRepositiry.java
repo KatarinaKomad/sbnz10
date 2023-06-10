@@ -23,5 +23,8 @@ public interface FinalnaDijagnozaRepositiry extends JpaRepository<FinalnaDijagno
     @Query("SELECT fd FROM FinalnaDijagnoza fd JOIN fd.biljka b WHERE fd.datumPreporuke BETWEEN :startDate AND :endDate AND b.tip.naziv = :nazivTipa")
     List<FinalnaDijagnoza> findByTipBiljkeAndDate(String nazivTipa, LocalDate startDate, LocalDate endDate);
 
+    @Query("SELECT COUNT(fd) FROM FinalnaDijagnoza fd JOIN fd.biljka b WHERE fd.datumPreporuke > :lastMonth AND b.vlasnik.id = :userId")
+    Integer countByUserInLastMonth(Long userId, LocalDate lastMonth);
+
 
 }

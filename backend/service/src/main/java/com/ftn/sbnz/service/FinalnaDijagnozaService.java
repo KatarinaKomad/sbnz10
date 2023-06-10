@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -15,9 +16,12 @@ import com.ftn.sbnz.mapper.FinalnaDijagnozaMapper;
 import com.ftn.sbnz.model.Biljka;
 import com.ftn.sbnz.model.Bolest;
 import com.ftn.sbnz.model.FinalnaDijagnoza;
+import com.ftn.sbnz.model.Korisnik;
 import com.ftn.sbnz.model.Preparat;
+import com.ftn.sbnz.model.enums.KategorijaKorisnika;
 import com.ftn.sbnz.respository.BiljkaRepository;
 import com.ftn.sbnz.respository.FinalnaDijagnozaRepositiry;
+import com.ftn.sbnz.respository.KorisnikRepository;
 
 @Service
 public class FinalnaDijagnozaService {
@@ -27,6 +31,9 @@ public class FinalnaDijagnozaService {
 
     @Autowired
     private FinalnaDijagnozaRepositiry finalnaDijagnozaRepositiry;
+
+    @Autowired
+    private KorisnikRepository korisnikRepository;
 
     public FinalnaDijagnoza createFinalnaDijagnoza(Bolest bolest, Biljka biljka, Preparat preparat){
         FinalnaDijagnoza finalnaDijagnoza = new FinalnaDijagnoza();
@@ -52,5 +59,14 @@ public class FinalnaDijagnozaService {
     public FinalnaDijagnozaDTO getLastDiagnosis(Long biljkaId) {
         FinalnaDijagnoza dijagnoza = finalnaDijagnozaRepositiry.getLatesDiagnosisByPlantId(biljkaId);
         return dijagnoza != null ? FinalnaDijagnozaMapper.toDTO(dijagnoza) : null;
+    }
+
+    public boolean isAllowedToRequestDiagnosis(Long uderId){
+        Optional<Korisnik> korisnik = this.korisnikRepository.findById(uderId);
+        if(korisnik.isPresent() && korisnik.get().getKategorija() == KategorijaKorisnika.REGULAR){
+            Integer numberOfDiagnosisiLastMonth = this.finalnaDijagnozaRepositiry.countByUserInLastMonth(uderId, LocalDate.now().minusMonths(1));
+            return numberOfDiagnosisiLastMonth <= 6;
+        }
+        return true;
     }
 }

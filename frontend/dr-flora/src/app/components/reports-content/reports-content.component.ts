@@ -40,9 +40,15 @@ export class ReportsContentComponent implements OnInit, OnChanges{
       case ReportType.TIP_BILJKE: 
         this.chartData = this.reportService.groupByDeseaseAndDate(this.finalneDijagnoze);
         break;
-      case ReportType.PREPARAT: () => {}; break;
-      case ReportType.JAKI_PREPARATI: () => {}; break;
-      case ReportType.SLABI_PREPARATI: () => {}; break;
+      case ReportType.PREPARAT: 
+          this.chartData = this.reportService. groupByPreparaAndDate(this.finalneDijagnoze); 
+          break;
+      case ReportType.JAKI_PREPARATI: 
+        this.chartData = this.reportService. groupByPlantTypeAndDate(this.finalneDijagnoze); 
+        break;
+      case ReportType.SLABI_PREPARATI: 
+        this.chartData = this.reportService. groupByPlantTypeAndDate(this.finalneDijagnoze); 
+        break;
     }
   }
 
