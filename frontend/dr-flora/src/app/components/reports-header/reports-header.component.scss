@@ -40,8 +40,8 @@
 
 .clicked {
     position: absolute;
-    top: 15vh; /* Desired top position */
-    left: 30vw; /* Desired left position */
+    top: 15%; /* Desired top position */
+    left: 50%; /* Desired left position */
     transform: translate(-50%, -50%);
     transition: transform 0.4s ease-in-out; /* Smooth transition */
     box-shadow:  0px 10px 10px -15px #111;
@@ -52,15 +52,6 @@
     align-items: center;
   }
 
-//   @keyframes translateAnimation {
-//     from {
-//       transform: translateX(100px);
-//     }
-//     to {
-//       transform: translateX(500px); /* Example translation */
-//     }
-// }
-
 .input-container{
     display: flex;
     flex-direction: column;
@@ -68,7 +59,6 @@
 }
 
 .calendar-container{
-    // width: 15vw;
     display: flex;
     flex-direction: row;
     padding-bottom: 0;

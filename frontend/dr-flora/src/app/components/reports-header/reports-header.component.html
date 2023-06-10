@@ -13,14 +13,14 @@
     <form [formGroup]="reportForm" class="form" 
             [ngClass]="{'active': displayForm}">
         
-        <div class="input-container" *ngIf="displayOptions.includes(1)">
+        <div class="input-container" *ngIf="displayOptions.includes(0)">
             <input class="input-text" type="type" formControlName="nazivBolesti"
             [style.color]="(this.reportForm.controls.nazivBolesti &&  this.reportForm.controls.nazivBolesti.value)? '#40513B' : '#A4B69F'"
             [style.fontSize]="(this.reportForm.controls.nazivBolesti &&  this.reportForm.controls.nazivBolesti.value)? 'large' : 'medium'"/>
             <p class="input-label">Naziv bolesti</p>
         </div>
         
-        <app-select-dropdown *ngIf="displayOptions.includes(0)" [options]="Object.values(vrste)" 
+        <app-select-dropdown *ngIf="displayOptions.includes(1)" [options]="Object.values(vrste)" 
                                                 defaultOption="Odaberite vrstu..."
                                                 [selectOptionControl]="this.reportForm.controls.tipBiljke"
                                                 class="input-container"></app-select-dropdown>
@@ -49,7 +49,7 @@
             <p class="input-label">krajnji datum</p>
         </div>
         <button class="search-button" (click)="search()">
-            
+            <mat-icon>search</mat-icon>
         </button>
         <button class="search-button" (click)="reset()" style="margin-left: 3%;">
             <mat-icon>autorenew</mat-icon>

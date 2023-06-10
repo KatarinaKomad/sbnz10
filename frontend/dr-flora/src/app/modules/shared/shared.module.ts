@@ -11,6 +11,7 @@ import { RatePopupComponent } from "src/app/components/rate-popup/rate-popup.com
 import { ReportsContentComponent } from "src/app/components/reports-content/reports-content.component";
 import { ReportsHeaderComponent } from "src/app/components/reports-header/reports-header.component";
 import { ReportsPageComponent } from "src/app/components/reports-page/reports-page.component";
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 
 let declarations = [MultiselectDialogComponent, 
     SelectDropdownComponent, 
@@ -29,6 +30,7 @@ let declarations = [MultiselectDialogComponent,
         MatInputModule,
         AngularMaterialModule,
         ReactiveFormsModule,
+        CanvasJSAngularChartsModule
 
     ],
     exports: [ReactiveFormsModule, 

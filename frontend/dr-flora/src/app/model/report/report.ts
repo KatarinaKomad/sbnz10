@@ -15,3 +15,5 @@ export interface ReportData{
     tipBiljke? : string;
     nazivPreparata? : string;
 }
+
+export type ReportDataType = { type: string; name: string; showInLegend: string; color: string; dataPoints: { y: number; label: string; }[]; }[]

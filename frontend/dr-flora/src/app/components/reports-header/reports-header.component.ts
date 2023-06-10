@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { VrstePovrca, VrsteVoca } from 'src/app/model/biljka/biljka';
 import { Role } from 'src/app/model/korisnik/korisnik';
@@ -6,6 +6,7 @@ import { KorisnikService } from 'src/app/service/korisnik/korisnik.service';
 import { Router } from '@angular/router';
 import { ReportData, ReportType } from 'src/app/model/report/report';
 import { ReportService } from 'src/app/service/report/report.service';
+import { FinalnaDijagnoza } from 'src/app/model/dijagnoza/dijagnoza';
 
 @Component({
   selector: 'app-reports-header',
@@ -23,13 +24,16 @@ export class ReportsHeaderComponent implements OnInit{
     displayForm: boolean = false
     
     optionTitles : string[]= [
-      "Statistika bolesti odabrane vrste biljke",
       'Statistike odabrane bolesti kod svih tipova biljaka',
+      "Statistika bolesti odabrane vrste biljke",
     ]
 
+    @Output() reportDataEmiter = new EventEmitter<FinalnaDijagnoza[]>(); 
+    @Output() reportTypeEmiter = new EventEmitter<ReportType>(); 
+
     bindRequestType : {[key: number] : ReportType } = {
-      0: ReportType.TIP_BILJKE,
-      1: ReportType.BOLEST,
+      0: ReportType.BOLEST,
+      1: ReportType.TIP_BILJKE,
       2: ReportType.JAKI_PREPARATI,
       3: ReportType.SLABI_PREPARATI,
       4: ReportType.PREPARAT,
@@ -86,7 +90,10 @@ export class ReportsHeaderComponent implements OnInit{
         nazivPreparata: this.reportForm.controls.nazivPreparata.value as string,
       }
       this.reportService.gerReportData(request).subscribe({
-        next: (response) => console.log(response),
+        next: (response) => {
+          this.reportDataEmiter.emit(response);
+          this.reportTypeEmiter.emit(this.selectedReportType)
+        },
         error: () => console.log("error")
       })
     }
