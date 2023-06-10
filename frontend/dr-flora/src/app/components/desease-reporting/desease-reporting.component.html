@@ -1,4 +1,4 @@
-<form [formGroup]="this.reportingForm" class="report-container">
+<form [formGroup]="this.reportingForm" class="report-container" *ngIf="isAllowedTorequestDiagnosis && isAllowedChecked">
     <p class="description">Unesite simptome biljke</p>
     <div style="display: flex; width: 30vw;">
         <input class="id-input" type="number" placeholder="Identifikator biljke" formControlName="plantId"/>
@@ -19,3 +19,6 @@
                 top: 50%;
                 transform: translate(-50%, -50%);">
 </mat-spinner>
+<div class="description" *ngIf="!isAllowedTorequestDiagnosis && isAllowedChecked">
+    Nije dozvoljeno dasaljete vise zahteva za dijagnozu bolesti jer ste ovog meseca vec poslali 6 zahteva. Samo premium korisniciimaju pravo na neogranicen broj dijagnoza
+</div>

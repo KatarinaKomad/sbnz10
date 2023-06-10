@@ -23,7 +23,7 @@ public class BiljkaDTO {
     private KategorijaBiljke kategorija;
     private String nazivTipa;
     private LocalDate datumSadnje;
-    private String vlasnikEmail;
+    private Long vlasnikId;
     private Long id;
 
 }

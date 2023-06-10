@@ -32,7 +32,7 @@ public class BiljkaService {
         biljka.setTip(tipBiljkeRepository.findByNaziv(dto.getNazivTipa()));
         biljka.setTrenutnaFaza(dto.getTrenutnaFaza());
         biljka.setVremeSadnje(dto.getDatumSadnje());
-        biljka.setVlasnik(korisnikRepository.findByEmail(dto.getVlasnikEmail()));
+        biljka.setVlasnik(korisnikRepository.findById(dto.getVlasnikId()).get());
         biljkaRepository.save(biljka);
         return BiljkaMapper.toDTO(biljka);
 

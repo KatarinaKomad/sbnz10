@@ -8,6 +8,8 @@ import { RecomendationDisplayComponent } from '../recomendation-display/recomend
 import { BolestService } from 'src/app/service/bolest/bolest.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { KorisnikService } from 'src/app/service/korisnik/korisnik.service';
+import { DijagnozaService } from 'src/app/service/dijagnoza/dijagnoza.service';
 
 @Component({
   selector: 'app-add-plant',
@@ -21,7 +23,9 @@ export class AddPlantComponent {
               private toast: NgToastService,
               private bolestService : BolestService,
               private dialog: MatDialog,
-              private router: Router){}
+              private router: Router,
+              private korisnikService: KorisnikService,
+              private dijagnozaService: DijagnozaService){}
 
   plantForm = this._formBuilder.group({
     category: new FormControl('', Validators.required),
@@ -51,7 +55,22 @@ export class AddPlantComponent {
     [LokacijaSimptoma.STABLO]: []
   }
 
-  enterSymptoms: boolean = false
+  ngOnInit(): void {
+    this.dijagnozaService.isAllowedToRequestDiagnosis(this.korisnikService.getCurrentUserId() as unknown as number).subscribe({
+      next: (response) => {
+        this.isAllowedTorequestDiagnosis = response;
+        this.isAllowedChecked = true;
+      },
+      error: (err) => {
+        console.log(err);
+        this.isAllowedChecked = true;}
+    })
+      
+  }
+
+  isAllowedTorequestDiagnosis : boolean = false;
+  enterSymptoms: boolean = false;
+  isAllowedChecked: boolean = false;
 
   handleChangeCategory(value : string){
     this.plantForm.controls.subcatergory.setValue('');
@@ -102,7 +121,7 @@ export class AddPlantComponent {
       nazivTipa: this.plantForm.controls.subcatergory.value?.toLowerCase() as any as string,
       datumSadnje: this.plantForm.controls.plantingDate.value as any as Date,
       trenutnaFaza: this.plantForm.controls.currentPhase.value as string,
-      vlasnikEmail:  "natasha.lakovic@gmail.com"//current user
+      vlasnikId:  this.korisnikService.getCurrentUserId() as unknown as number
     } 
     return newPlant
   }
@@ -116,18 +135,18 @@ export class AddPlantComponent {
           idBiljke: this.savedPlant.id as any as number, 
           trenutnaFaza: this.plantForm.controls.currentPhase.value as any as FazaBiljke        
         }
-        this.bolestService.determineDesease(state).subscribe({
-          next: response => {
-            this.isLoadingDeseaseResponse = false
-            this.dialog.open(RecomendationDisplayComponent, {
-              data: response,
-            }).afterClosed().subscribe(() => this.router.navigateByUrl('/user')) //bice nesto sto predstavalja home page za usera
-          },
-          error: (err) => {
-            this.isLoadingDeseaseResponse = false
-            this.toast.error({detail: "Došlo je do greške", summary:"Molimo pokušajte ponovo", position:'tr', duration:3000})
-          }
-        })
+          this.bolestService.determineDesease(state).subscribe({
+            next: response => {
+              this.isLoadingDeseaseResponse = false
+              this.dialog.open(RecomendationDisplayComponent, {
+                data: response,
+              }).afterClosed().subscribe(() => this.router.navigateByUrl('/user')) //bice nesto sto predstavalja home page za usera
+            },
+            error: (err) => {
+              this.isLoadingDeseaseResponse = false
+              this.toast.error({detail: "Došlo je do greške", summary:"Molimo pokušajte ponovo", position:'tr', duration:3000})
+            }
+          })
     }
     else{
       this.toast.error({detail: "Nevalidna forma", summary:"Identifikator biljke, faza i bar jedan simptom moraju biti uneti", position:'tr', duration:3000})

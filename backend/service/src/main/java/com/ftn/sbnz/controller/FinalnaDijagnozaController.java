@@ -1,6 +1,8 @@
 package com.ftn.sbnz.controller;
 
 import java.util.List;
+
+import org.apache.http.protocol.ResponseServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +41,18 @@ public class FinalnaDijagnozaController {
         try{
             FinalnaDijagnozaDTO dijagnoza = this.finalnaDijagnozaService.getLastDiagnosis(biljkaId);
             return new ResponseEntity<>(dijagnoza, HttpStatus.OK);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/allowed/{userId}")
+    public ResponseEntity<?> isAllowedToRequestDiagnosis(@PathVariable("userId") Long userId){
+        try{
+            boolean allowed = this.finalnaDijagnozaService.isAllowedToRequestDiagnosis(userId);
+            return new ResponseEntity<>(allowed, HttpStatus.OK);
         }
         catch(Exception e){
             e.printStackTrace();
