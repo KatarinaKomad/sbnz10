@@ -37,7 +37,7 @@ rule "Bolest jabuke koja se leci insekticidima i insekticidi se primenjeni vec 2
         not(PreviseInsekticida(biljka == $biljka))
     then
         modify($preporuka){setPreporucenaDoza($preporuka.getPreporucenaDoza() / 2),
-                            setPoruka("Doza preparata je prepolovljena jer se insekticid nad biljkom koristio već 2 puta ove godine")}
+                            setPoruka("Doza preparata je prepolovljena jer se insekticid nad biljkom koristio vec 2 puta ove godine")}
         insert(new PreviseInsekticida($biljka));
         // System.out.println("Izmenjena doza preparata kod jabuke");
 end
@@ -48,15 +48,15 @@ rule "Jabuka ima lisne vasi i korisnik ima i kruske -> napomena da se prskaju i 
         $dijagnoza: FinalnaDijagnoza( $preparat: preporuceniPreparat,
                                     $biljka: biljka,
                                     biljka.tip.naziv == "jabuka",
-                                    bolest.naziv == "Lisne vaši",
+                                    bolest.naziv == "Lisne vasi",
                                     $vlasnik: biljka.vlasnik,
                                     $preporuka: preporuka,
                                     datumPreporuke == LocalDate.now())
         Biljka(vlasnik == $vlasnik,
-                tip.naziv == "kruška")
+                tip.naziv == "kruska")
     then
         // System.out.println("Preporuka za krusku");
-        modify($preporuka){setPoruka("Zbog posedovanje sorte kruške koja je podležna istoj bolesti, tretirajte je preparatom na isti način.")}
+        modify($preporuka){setPoruka("Zbog posedovanje sorte kruske koja je podlezna istoj bolesti, tretirajte je preparatom na isti nacin.")}
 end
 
 rule "kruska ima lisne vasi i korisnik ima i jabuke -> napomena da se prskaju i kruske" 
@@ -64,8 +64,8 @@ rule "kruska ima lisne vasi i korisnik ima i jabuke -> napomena da se prskaju i 
     when
         $dijagnoza: FinalnaDijagnoza( $preparat: preporuceniPreparat,
                                     $biljka: biljka,
-                                    biljka.tip.naziv == "kruška",
-                                    bolest.naziv == "Lisne vaši",
+                                    biljka.tip.naziv == "kruska",
+                                    bolest.naziv == "Lisne vasi",
                                     $vlasnik: biljka.vlasnik,
                                     $preporuka: preporuka,
                                     datumPreporuke == LocalDate.now())
@@ -73,7 +73,7 @@ rule "kruska ima lisne vasi i korisnik ima i jabuke -> napomena da se prskaju i 
                 tip.naziv == "jabuka")
     then
         // System.out.println("Preporuka za jabuku");
-        modify($preporuka){setPoruka("Zbog posedovanje sorte jabuke koja je podležna istoj bolesti, tretirajte je preparatom na isti način.")}
+        modify($preporuka){setPoruka("Zbog posedovanje sorte jabuke koja je podlezna istoj bolesti, tretirajte je preparatom na isti nacin.")}
 end
 
 rule "Jabuka ima lisne minere i korisnik ima i kruske -> napomena da se prskaju i kruske" 
@@ -87,10 +87,10 @@ rule "Jabuka ima lisne minere i korisnik ima i kruske -> napomena da se prskaju 
                                     $preporuka: preporuka,
                                     datumPreporuke == LocalDate.now())
         Biljka(vlasnik == $vlasnik,
-                tip.naziv == "kruška")
+                tip.naziv == "kruska")
     then
         // System.out.println("Preporuka za krusku");
-        modify($preporuka){setPoruka("Zbog posedovanje sorte kruške koja je podležna istoj bolesti, tretirajte je preparatom na isti način.")}
+        modify($preporuka){setPoruka("Zbog posedovanje sorte kruske koja je podlezna istoj bolesti, tretirajte je preparatom na isti nacin.")}
 end
 
 rule "kruska ima lisne minere i korisnik ima i jabuke -> napomena da se prskaju i kruske" 
@@ -98,7 +98,7 @@ rule "kruska ima lisne minere i korisnik ima i jabuke -> napomena da se prskaju 
     when
         $dijagnoza: FinalnaDijagnoza( $preparat: preporuceniPreparat,
                                     $biljka: biljka,
-                                    biljka.tip.naziv == "kruška",
+                                    biljka.tip.naziv == "kruska",
                                     bolest.naziv == "Lisni mineri",
                                     $vlasnik: biljka.vlasnik,
                                     $preporuka: preporuka,
@@ -107,5 +107,5 @@ rule "kruska ima lisne minere i korisnik ima i jabuke -> napomena da se prskaju 
                 tip.naziv == "jabuka")
     then
         // System.out.println("Preporuka za jabuku");
-        modify($preporuka){setPoruka("Zbog posedovanje sorte jabuke koja je podležna istoj bolesti, tretirajte je preparatom na isti način.")}
+        modify($preporuka){setPoruka("Zbog posedovanje sorte jabuke koja je podlezna istoj bolesti, tretirajte je preparatom na isti nacin.")}
 end

@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import com.ftn.sbnz.model.Biljka;
 import com.ftn.sbnz.model.enums.KategorijaPreparata;
 
-// na lubenici plamenjača i 
+// na lubenici plamenjaca i 
 // korisnik ima dinje → 
 // u odgovoru dodati napomenu da se isti tretman primeni i na dinju
 rule "Lubenica ima plamenjacu i korisnik ima i dinje -> napomena da se prskaju i dinje" 
@@ -17,19 +17,19 @@ rule "Lubenica ima plamenjacu i korisnik ima i dinje -> napomena da se prskaju i
         $dijagnoza: FinalnaDijagnoza( $preparat: preporuceniPreparat,
                                     $biljka: biljka,
                                     biljka.tip.naziv == "lubenica",
-                                    bolest.naziv == "Plamenjača",
+                                    bolest.naziv == "Plamenjaca",
                                     $vlasnik: biljka.vlasnik,
                                     $preporuka: preporuka,
                                     datumPreporuke == LocalDate.now())
         Biljka(vlasnik == $vlasnik,
                 tip.naziv == "dinja")
     then
-        // System.out.println("Preporuka za dinju");
-        modify($preporuka){setPoruka("Zbog posedovanje sorte dinje koja je podležna istoj bolesti, tretirajte je preparatom na isti način.")}
+        System.out.println("Preporuka za dinju");
+        modify($preporuka){setPoruka("Zbog posedovanje sorte dinje koja je podlezna istoj bolesti, tretirajte je preparatom na isti nacin.")}
 end
 
 
- // za dinju plamenjača 
+ // za dinju plamenjaca 
  // korisnik ima lubenice → 
  // u odgovoru dodati napomenu da se isti tretman primeni i na lubenicama
 rule "Dinja ima plamenjacu i korisnik ima i lubenice -> napomena da se prskaju i lubenice" 
@@ -38,13 +38,13 @@ rule "Dinja ima plamenjacu i korisnik ima i lubenice -> napomena da se prskaju i
         $dijagnoza: FinalnaDijagnoza( $preparat: preporuceniPreparat,
                                     $biljka: biljka,
                                     biljka.tip.naziv == "dinja",
-                                    bolest.naziv == "Plamenjača",
+                                    bolest.naziv == "Plamenjaca",
                                     $vlasnik: biljka.vlasnik,
                                     $preporuka: preporuka,
                                     datumPreporuke == LocalDate.now())
         Biljka(vlasnik == $vlasnik,
                 tip.naziv == "lubenica")
     then
-        // System.out.println("Preporuka za lubenicu");
-        modify($preporuka){setPoruka("Zbog posedovanje sorte lubenice koja je podležna istoj bolesti, tretirajte je preparatom na isti način.")}
+        System.out.println("Preporuka za lubenicu");
+        modify($preporuka){setPoruka("Zbog posedovanje sorte lubenice koja je podlezna istoj bolesti, tretirajte je preparatom na isti nacin.")}
 end

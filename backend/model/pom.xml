@@ -17,6 +17,8 @@
 		<java.version>11</java.version>
 		<drools.version>7.49.0.Final</drools.version>
 		<spring-boot.repackage.skip>true</spring-boot.repackage.skip>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 	</properties>
 	<dependencies>
 		<dependency>

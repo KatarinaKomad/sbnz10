@@ -3,27 +3,27 @@ insert into KORISNIK(email, ime, prezime, kategorija, poeni, password) VALUES
 ('natasha.lakovic@gmail.com', 'Natasa', 'Lakovic', 'REGULAR', 0, '123');
 
 insert into SIMPTOM(lokacija, opis) VALUES
-('LIST', 'svetlo-smeđe pege'), 
+('LIST', 'svetlo-smede pege'), 
 ('LIST', 'maslonasto zelene pege'),
 ('LIST', 'uvijanje'),
 ('LIST', 'opadanje'),
-('LIST', 'sušenje'), --5--
+('LIST', 'susenje'), --5--
 ('LIST', 'braon larve'),
-('LIST', 'bele tačkice'),
-('LIST', 'žuta boja'),
+('LIST', 'bele tackice'),
+('LIST', 'zuta boja'),
 ('LIST', 'crveni pauci'),
-('LIST', 'paukova mreža (naličje)'), --10--
+('LIST', 'paukova mreza (nalicje)'), --10--
 ('LIST', 'mravi'),
 ('LIST', 'lepljivost'),
 ('LIST', 'crne larve'),
 ('LIST', 'mrke fleke sa zelenim okvirom'),
 ('LIST', 'bele linije'), --15--
 ('LIST', 'zadebljanje'),
-('LIST', 'crveno-ljubičasta boja'),
+('LIST', 'crveno-ljubicasta boja'),
 ('PLOD', 'crvene fleke'),
 ('PLOD', 'opadanje zelenih plodova'),       
 ('PLOD', 'gusenice'), --20--
-('PLOD', 'trulež'),
+('PLOD', 'trulez'),
 ('PLOD', 'izmet insekta'),
 ('PLOD', 'braon fleke'),
 ('PLOD', 'plesan'),
@@ -31,15 +31,15 @@ insert into SIMPTOM(lokacija, opis) VALUES
 ('PLOD', 'crne fleke'),
 ('CVET', 'tamno siva boja'),
 ('CVET', 'opadanje'),
-('CVET', 'sušenje'),
-('CVET', 'zelene tačke'), --30--
+('CVET', 'susenje'),
+('CVET', 'zelene tacke'), --30--
 ('GRANA', 'braon larve'),
 ('GRANA', 'suve'),
 ('LIST', 'belosiva navlaka'),
 ('CVET', 'deformisanje'),
 ('CVET', 'zadebljanje'), --35--
 ('CVET', 'belosiva navlaka'), 
-('PLOD', 'rđasta mreža'),
+('PLOD', 'rdasta mreza'),
 
 ('LIST', 'svetlo-zelene pege'),
 ('LIST', 'nekroza'),
@@ -48,26 +48,26 @@ insert into SIMPTOM(lokacija, opis) VALUES
 
 ('PLOD', 'nekroza u koncentricnim krugovima'),
 ('LIST', 'sitne mrke pege nepravilnog oblika'),
-('PLOD', 'siva tačka'),
+('PLOD', 'siva tacka'),
 
-('STABLO', 'trulež'),
+('STABLO', 'trulez'),
 ('STABLO', 'tamno-zelene mrlje'), --45--
 ('LIST', 'tamno-zelene mrlje'),  --46--
-('STABLO', 'ljubičasto-braon mrlje'), --47--
-('LIST', 'ljubičasto-braon mrlje'), --48 --
+('STABLO', 'ljubicasto-braon mrlje'), --47--
+('LIST', 'ljubicasto-braon mrlje'), --48 --
 ('PLOD', 'boranje'),--49--
 
-('LIST', 'okrugle smeđe mrlje'), --50--
-('STABLO', 'okrugle smeđe mrlje'), --51--
-('LIST', 'koncentrični krugovi'), --52--
-('STABLO', 'koncentrični krugovi'), --53--
+('LIST', 'okrugle smede mrlje'), --50--
+('STABLO', 'okrugle smede mrlje'), --51--
+('LIST', 'koncentricni krugovi'), --52--
+('STABLO', 'koncentricni krugovi'), --53--
 
-('LIST', 'tamno-smeđe mrlje'),  --54--
+('LIST', 'tamno-smede mrlje'),  --54--
 ('CVET', 'belosiva navlaka'),   --55--
 
-('LIST', 'zagrižaj'),   
-('CVET', 'zagrižaj'),   
-('PLOD', 'zagrižaj'),   
+('LIST', 'zagrizaj'),   
+('CVET', 'zagrizaj'),   
+('PLOD', 'zagrizaj'),   
 
 ('LIST', 'jaja'),   
 ('PLOD', 'sitni deformisan'),  --60--
@@ -75,12 +75,12 @@ insert into SIMPTOM(lokacija, opis) VALUES
 ('PLOD', 'promena boje'), 
 ('PLOD', 'jaja'), 
 
-('LIST', 'žućkaste pege'), 
-('PLOD', 'omekšavanje tkiva'), 
+('LIST', 'zuckaste pege'), 
+('PLOD', 'omeksavanje tkiva'), 
 ('LIST', 'crne okruglaste pege'), --65--
 
-('LIST', 'oštećenje'),
-('STABLO', 'oštećenje'),
+('LIST', 'ostecenje'),
+('STABLO', 'ostecenje'),
 
 ('STABLO', 'krupne ovlane pege'),
 ('PLOD', 'sitne mrke pege nepravilnog oblika'),
@@ -91,7 +91,7 @@ insert into SIMPTOM(lokacija, opis) VALUES
 INSERT INTO PREPARAT (naziv, primarna_kategorija, potkategorija, koncentracija) VALUES
 ('Akord plus', 'FUNGICID', 'JAK', 0.2),
 ('Blauvit', 'FUNGICID', 'SLAB', 0.7),
-('Bakarni kreč 50', 'FUNGICID', 'SLAB', 0.6),
+('Bakarni krec 50', 'FUNGICID', 'SLAB', 0.6),
 ('Kaptan 50 WP', 'FUNGICID', 'SLAB', 0.3),
 ('Dithane DG Neo Tec', 'FUNGICID', 'SLAB', 0.25), --5--
 ('Mankogal', 'FUNGICID', 'SLAB', 0.2),
@@ -210,36 +210,36 @@ INSERT INTO preparat_ocene (preparat_id, ocene) VALUES
 
 
 INSERT INTO BOLEST (naziv, faza_javljanja) VALUES
-('Čađava pegavost lista', 'LISTANJE'),
-('Čađava krastavost ploda', 'FORMIRANJE_PLODA'),
-('Kruškina buva', 'FORMIRANJE_PLODA'),
+('cadava pegavost lista', 'LISTANJE'),
+('cadava krastavost ploda', 'FORMIRANJE_PLODA'),
+('Kruskina buva', 'FORMIRANJE_PLODA'),
 ('Pepelnica', 'FORMIRANJE_PLODA'),
 ('Jabukin smotavac', 'FORMIRANJE_PLODA'),--5--
-('Crveni voćni pauk', 'LISTANJE'),
-('Lisne vaši', 'LISTANJE'),
-('Monilija višnje', 'CVETANJE'),
-('Šupljikavost lista', 'LISTANJE'),
-('Višnjina muva', 'FORMIRANJE_PLODA'),--10--
+('Crveni vocni pauk', 'LISTANJE'),
+('Lisne vasi', 'LISTANJE'),
+('Monilija visnje', 'CVETANJE'),
+('supljikavost lista', 'LISTANJE'),
+('Visnjina muva', 'FORMIRANJE_PLODA'),--10--
 ('Lisni mineri', 'LISTANJE'),
-('Plamenjača', 'LISTANJE'),
+('Plamenjaca', 'LISTANJE'),
 ('Siva pegavost', 'LISTANJE'),
 ('Crna pegavost', 'LISTANJE'),
-('Siva trulež', 'LISTANJE'), --15--
+('Siva trulez', 'LISTANJE'), --15--
 ('Kukuruzna sovica', 'LISTANJE'),
 ('Kalifornijski trips', 'FORMIRANJE_PLODA'),
 ('Zelena stenica', 'FORMIRANJE_PLODA'),
 ('Moljac', 'FORMIRANJE_PLODA'),
 ('Krompirova zlatica', 'FORMIRANJE_PLODA'), --20--
 ('Antraknoza', 'LISTANJE'),
-('Rđa pasulja', 'LISTANJE');
+('Rda pasulja', 'LISTANJE');
 
 
 INSERT INTO TIP_BILJKE (naziv) VALUES
-('kruška'),
+('kruska'),
 ('jabuka'),
-('višnja'),
+('visnja'),
 ('breskva'),
-('šljiva'), --5--
+('sljiva'), --5--
 ('paradajz'),
 ('paprika'),
 ('krompir'),
@@ -291,7 +291,7 @@ INSERT INTO tip_biljke_moguce_bolesti (tip_biljke_id, moguce_bolesti_id) VALUES
 (10, 12),-- plamenjaca
 -- pasulj
 (11, 21), -- antraknoza
-(11, 22), -- rđa pasulja
+(11, 22), -- rda pasulja
 (11, 15), -- siva trulez
 (11, 12), -- plamenjaca
 -- boranija
@@ -404,7 +404,7 @@ INSERT INTO bolest_simptomi (bolest_id, simptomi_id) VALUES
 (21, 68),
 (21, 42),
 (21, 69),
--- rđa pasulja
+-- rda pasulja
 (22, 70);
 
 INSERT INTO bolest_jaki_preparati(bolest_id, jaki_preparati_id) VALUES
@@ -457,7 +457,7 @@ INSERT INTO bolest_jaki_preparati(bolest_id, jaki_preparati_id) VALUES
 (20, 25),
 -- antraknoza
 (21, 43),
--- rđa pasulja
+-- rda pasulja
 (22, 43),
 (22, 38);
 
@@ -503,17 +503,20 @@ INSERT INTO bolest_slabi_preparati(bolest_id, slabi_preparati_id) VALUES
 (18, 51),
 -- antraknoza
 (21, 53),
--- rđa pasulja
+-- rda pasulja
 (22, 35);
 
 INSERT INTO biljka (kategorija, trenutna_faza, vreme_sadnje, tip_id, vlasnik_id) VALUES
-('VOĆE', 'LISTANJE', '2022-02-06', 1, 1),
-('VOĆE', 'LISTANJE', '2022-02-06', 2, 1),
-('VOĆE', 'FORMIRANJE_PLODA', '2022-02-10', 3, 1),
-('VOĆE', 'FORMIRANJE_PLODA', '2022-02-10', 2, 1),
-('VOĆE', 'LISTANJE', '2022-02-06', 2, 2),--5--
-('VOĆE', 'LISTANJE', '2022-02-06', 1, 2),
-('VOĆE', 'FORMIRANJE_PLODA', '2022-02-10', 1, 1);
+('VOCE', 'LISTANJE', '2022-02-06', 1, 1),
+('VOCE', 'LISTANJE', '2022-02-06', 2, 1),
+('VOCE', 'FORMIRANJE_PLODA', '2022-02-10', 3, 1),
+('VOCE', 'FORMIRANJE_PLODA', '2022-02-10', 2, 1),
+('VOCE', 'LISTANJE', '2022-02-06', 2, 2),--5--
+('VOCE', 'LISTANJE', '2022-02-06', 1, 2),
+('VOCE', 'FORMIRANJE_PLODA', '2022-02-10', 1, 1),
+
+('POVRCE', 'LISTANJE', '2022-02-06', 9, 1), --8-- lubenica -> plamenjaca -> dinja
+('POVRCE', 'LISTANJE', '2022-02-06', 10, 1); --9-- dinja
 
 INSERT INTO preporuka(naziv_preparata, opis_preparata, poruka, preporucena_doza, bolest_id, biljka_id) VALUES
 ('Blauvit', 'slab fungicid', '', 0.7, 1, 1),

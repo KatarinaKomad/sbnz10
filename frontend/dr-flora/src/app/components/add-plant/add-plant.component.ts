@@ -31,7 +31,7 @@ export class AddPlantComponent {
   })
 
   selectedDate : Date = new Date();
-  vrste : string[] = this.plantForm.controls.category.value === "VOĆE" ? Object.values(VrsteVoca) : Object.values(VrstePovrca);
+  vrste : string[] = this.plantForm.controls.category.value === "VOCE" ? Object.values(VrsteVoca) : Object.values(VrstePovrca);
   Object = Object;
 
   maxDate: Date = new Date();
@@ -55,7 +55,7 @@ export class AddPlantComponent {
 
   handleChangeCategory(value : string){
     this.plantForm.controls.subcatergory.setValue('');
-    this.vrste = value === "VOĆE" ? Object.values(VrsteVoca) : Object.values(VrstePovrca);
+    this.vrste = value === "VOCE" ? Object.values(VrsteVoca) : Object.values(VrstePovrca);
   }
 
   handleSave() : void {

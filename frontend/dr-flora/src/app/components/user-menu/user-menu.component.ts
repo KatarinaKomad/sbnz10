@@ -19,7 +19,7 @@ export class UserMenuComponent implements OnInit {
     {optionName:"Unos novih simptoma", optionRoute: "report-desease"},
     {optionName:"Istorija bolesti", optionRoute: "history"},
     {optionName:"Pregled biljaka", optionRoute: "plants"},
-    {optionName:"Izveštaji", optionRoute: "reports"}
+    {optionName:"Izvestaji", optionRoute: "reports"}
   ]
   objectKeys = Object.keys;
   ngOnInit(): void {
