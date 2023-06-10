@@ -6,6 +6,7 @@ import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ftn.sbnz.event.NeizlecenaBolestPovrca;
 import com.ftn.sbnz.event.NeizlecenaBolestVoca;
 import com.ftn.sbnz.event.UnosSimptoma;
 import com.ftn.sbnz.model.Biljka;
@@ -14,6 +15,7 @@ import com.ftn.sbnz.model.FinalnaDijagnoza;
 import com.ftn.sbnz.model.Preparat;
 import com.ftn.sbnz.model.Preporuka;
 import com.ftn.sbnz.respository.FinalnaDijagnozaRepositiry;
+import com.ftn.sbnz.respository.NeizlecenaBolestPovrcaRepository;
 import com.ftn.sbnz.respository.PreporukaRepository;
 import com.ftn.sbnz.respository.NeizlecenaBolestVocaRepository;
 
@@ -39,6 +41,9 @@ public class PreporukaService {
 
     @Autowired
     private NeizlecenaBolestVocaRepository neizlecenaBolestVocaRepository;
+
+    @Autowired
+    private NeizlecenaBolestPovrcaRepository neizlecenaBolestPovrcaRepository;
     
     
     public Preporuka createSugggestion(Bolest bolest, Biljka biljka, UnosSimptoma unosSimptomi){
@@ -86,6 +91,9 @@ public class PreporukaService {
             }
             if (obj.getClass() == NeizlecenaBolestVoca.class){
                 neizlecenaBolestVocaRepository.save((NeizlecenaBolestVoca) obj);
+            }
+             if (obj.getClass() == NeizlecenaBolestPovrca.class){
+                neizlecenaBolestPovrcaRepository.save((NeizlecenaBolestPovrca) obj);
             }
         }
         return preporuka;

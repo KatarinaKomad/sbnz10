@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.context.annotation.SessionScope;
 
+import com.ftn.sbnz.event.NeizlecenaBolestPovrca;
 import com.ftn.sbnz.event.NeizlecenaBolestVoca;
 import com.ftn.sbnz.model.Biljka;
 import com.ftn.sbnz.model.Doktor;
@@ -21,6 +22,7 @@ import com.ftn.sbnz.respository.BiljkaRepository;
 import com.ftn.sbnz.respository.DoktorRepository;
 import com.ftn.sbnz.respository.FinalnaDijagnozaRepositiry;
 import com.ftn.sbnz.respository.KorisnikRepository;
+import com.ftn.sbnz.respository.NeizlecenaBolestPovrcaRepository;
 import com.ftn.sbnz.respository.NeizlecenaBolestVocaRepository;
 import com.ftn.sbnz.respository.SimptomRepository;
 
@@ -48,6 +50,9 @@ public class DroolsConfig {
 
     @Autowired
     private NeizlecenaBolestVocaRepository neizlecenaBolestVocaRepository;
+
+    @Autowired
+    private NeizlecenaBolestPovrcaRepository neizlecenaBolestPovrcaRepository;
 
     @Autowired
     private SimptomRepository simptomRepository;
@@ -103,6 +108,11 @@ public class DroolsConfig {
                 List<NeizlecenaBolestVoca> neizleceneBolesti = neizlecenaBolestVocaRepository.findByBiljkaId(plant.getId());
                 for (NeizlecenaBolestVoca neizlecenaBolestVoca : neizleceneBolesti){
                     kieSession.insert(neizlecenaBolestVoca);
+                }
+
+                List<NeizlecenaBolestPovrca> neizleceneBolestPovrca = neizlecenaBolestPovrcaRepository.findByBiljkaId(plant.getId());
+                for (NeizlecenaBolestPovrca neizlecenaBolestPovrca : neizleceneBolestPovrca){
+                    kieSession.insert(neizlecenaBolestPovrca);
                 }
             }
         }

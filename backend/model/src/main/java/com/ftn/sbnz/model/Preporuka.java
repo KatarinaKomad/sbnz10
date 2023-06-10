@@ -1,5 +1,6 @@
 package com.ftn.sbnz.model;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +35,7 @@ public class Preporuka {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     private Biljka biljka;
 
+    @Column(columnDefinition = "text")
     private String poruka;
 
     private String nazivPreparata;

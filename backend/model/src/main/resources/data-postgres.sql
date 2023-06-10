@@ -516,7 +516,10 @@ INSERT INTO biljka (kategorija, trenutna_faza, vreme_sadnje, tip_id, vlasnik_id)
 ('VOCE', 'FORMIRANJE_PLODA', '2022-02-10', 1, 1),
 
 ('POVRCE', 'LISTANJE', '2022-02-06', 9, 1), --8-- lubenica -> plamenjaca -> dinja
-('POVRCE', 'LISTANJE', '2022-02-06', 10, 1); --9-- dinja
+('POVRCE', 'LISTANJE', '2022-02-06', 10, 1), --9-- dinja
+('POVRCE', 'LISTANJE', '2022-02-06', 7, 1), --10-- paprika - plamenjaca
+('POVRCE', 'FORMIRANJE_PLODA', '2022-02-06', 7, 1), --11-- paprika - zelena stenica
+('POVRCE', 'LISTANJE', '2022-02-06', 7, 1); --12-- paprika - siva trulez
 
 INSERT INTO preporuka(naziv_preparata, opis_preparata, poruka, preporucena_doza, bolest_id, biljka_id) VALUES
 ('Blauvit', 'slab fungicid', '', 0.7, 1, 1),

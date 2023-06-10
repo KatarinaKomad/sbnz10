@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.ftn.sbnz.config.DroolsConfig;
 import com.ftn.sbnz.config.KieSessionManager;
+import com.ftn.sbnz.event.NeizlecenaBolestPovrca;
 import com.ftn.sbnz.event.NeizlecenaBolestVoca;
 import com.ftn.sbnz.model.Biljka;
 import com.ftn.sbnz.model.Doktor;
@@ -22,6 +23,7 @@ import com.ftn.sbnz.respository.BiljkaRepository;
 import com.ftn.sbnz.respository.DoktorRepository;
 import com.ftn.sbnz.respository.FinalnaDijagnozaRepositiry;
 import com.ftn.sbnz.respository.KorisnikRepository;
+import com.ftn.sbnz.respository.NeizlecenaBolestPovrcaRepository;
 import com.ftn.sbnz.respository.NeizlecenaBolestVocaRepository;
 import com.ftn.sbnz.respository.SimptomRepository;
 import org.apache.logging.log4j.LogManager;
@@ -43,6 +45,8 @@ public class KieSessionService {
 
     @Autowired
     private NeizlecenaBolestVocaRepository neizlecenaBolestVocaRepository;
+    @Autowired
+    private NeizlecenaBolestPovrcaRepository neizlecenaBolestPovrcaRepository;
 
     @Autowired
     private SimptomRepository simptomRepository;
@@ -100,6 +104,10 @@ public class KieSessionService {
                     List<NeizlecenaBolestVoca> neizleceneBolesti = neizlecenaBolestVocaRepository.findByBiljkaId(plant.getId());
                     for (NeizlecenaBolestVoca neizlecenaBolestVoca : neizleceneBolesti){
                         kieSession.insert(neizlecenaBolestVoca);
+                    }
+                    List<NeizlecenaBolestPovrca> neizleceneBolestiPovrca = neizlecenaBolestPovrcaRepository.findByBiljkaId(plant.getId());
+                    for (NeizlecenaBolestPovrca neizlecenaBolestPovrca : neizleceneBolestiPovrca){
+                        kieSession.insert(neizlecenaBolestPovrca);
                     }
                 }
             }
