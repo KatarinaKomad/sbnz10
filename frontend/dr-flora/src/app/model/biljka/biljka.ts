@@ -22,7 +22,7 @@ export enum VrstePovrca{
     BORANIJA = "BORANIJA",
     LUBENICA = "LUBENICA",
     DINJA = "DINJA",
-    GRASAK = "GRASAK",
+    PASULJ = "PASULJ",
     PAPRIKA = "PAPRIKA",
     PARADAJZ = "PARADAJZ"
 }
@@ -37,7 +37,7 @@ export const plantTypeImageMapper = {
     [VrstePovrca.KROMPIR.toString()] : "potato.png",
     [VrstePovrca.PAPRIKA.toString()] : "papper.png",
     [VrstePovrca.PARADAJZ.toString()] : "tomato.png",
-    [VrstePovrca.GRASAK.toString()] : "peas.png",
+    [VrstePovrca.PASULJ.toString()] : "peas.png",
     [VrstePovrca.DINJA.toString()] : "melon.png",
     [VrstePovrca.LUBENICA.toString()] : "watermelon.png"
 }
