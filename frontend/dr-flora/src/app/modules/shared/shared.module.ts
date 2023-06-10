@@ -8,12 +8,19 @@ import { SelectDropdownComponent } from "src/app/components/base/select-dropdown
 import { DeseaseHistoryOverviewComponent } from "src/app/components/desease-history-overview/desease-history-overview.component";
 import { PlantCardComponent } from "src/app/components/base/plant-card/plant-card.component";
 import { RatePopupComponent } from "src/app/components/rate-popup/rate-popup.component";
+import { ReportsContentComponent } from "src/app/components/reports-content/reports-content.component";
+import { ReportsHeaderComponent } from "src/app/components/reports-header/reports-header.component";
+import { ReportsPageComponent } from "src/app/components/reports-page/reports-page.component";
+import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
 
 let declarations = [MultiselectDialogComponent, 
     SelectDropdownComponent, 
     DeseaseHistoryOverviewComponent,
     PlantCardComponent,
-    RatePopupComponent]
+    RatePopupComponent,
+    ReportsHeaderComponent,
+    ReportsContentComponent,
+    ReportsPageComponent]
 
 
 @NgModule({
@@ -23,6 +30,7 @@ let declarations = [MultiselectDialogComponent,
         MatInputModule,
         AngularMaterialModule,
         ReactiveFormsModule,
+        CanvasJSAngularChartsModule
 
     ],
     exports: [ReactiveFormsModule, 

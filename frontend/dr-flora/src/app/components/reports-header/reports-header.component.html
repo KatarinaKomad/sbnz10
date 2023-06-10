@@ -1,0 +1,58 @@
+<div class="header-container">
+    <div style="width: 90%;" [hidden]="isTitileHidden">
+        <p class="title">Izveštaji</p>
+        <label class="subtitle">Odaberite koji izveštaj želite da pogledate</label>
+    </div>    
+    <button *ngFor="let option of optionTitles; let i = index " 
+                [class.clicked]="optionClicked[i]" 
+                class="option-button" 
+                (click)="handleClick(i)" 
+                [hidden]="!displayOptions.includes(i)">
+       {{option}}
+    </button>
+    <form [formGroup]="reportForm" class="form" 
+            [ngClass]="{'active': displayForm}">
+        
+        <div class="input-container" *ngIf="displayOptions.includes(0)">
+            <input class="input-text" type="type" formControlName="nazivBolesti"
+            [style.color]="(this.reportForm.controls.nazivBolesti &&  this.reportForm.controls.nazivBolesti.value)? '#40513B' : '#A4B69F'"
+            [style.fontSize]="(this.reportForm.controls.nazivBolesti &&  this.reportForm.controls.nazivBolesti.value)? 'large' : 'medium'"/>
+            <p class="input-label">Naziv bolesti</p>
+        </div>
+        
+        <app-select-dropdown *ngIf="displayOptions.includes(1)" [options]="Object.values(vrste)" 
+                                                defaultOption="Odaberite vrstu..."
+                                                [selectOptionControl]="this.reportForm.controls.tipBiljke"
+                                                class="input-container"></app-select-dropdown>
+
+        <div class="input-container" *ngIf="displayOptions.includes(4)">
+            <input class="input-text" type="type" formControlName="nazivBolesti"
+            [style.color]="(this.reportForm.controls.nazivPreparata &&  this.reportForm.controls.nazivPreparata.value)? '#40513B' : '#A4B69F'"
+            [style.fontSize]="(this.reportForm.controls.nazivPreparata &&  this.reportForm.controls.nazivPreparata.value)? 'large' : 'medium'"/>
+            <p class="input-label">Naziv preparata</p>
+        </div>
+        
+        <div class="input-container" style="margin-top: -15px;">
+            <div class="calendar-container">
+                <input class="input" formControlName="startDate" [matDatepicker]="dp1"  required>
+                <mat-datepicker-toggle class="calendar-icon" matIconSuffix [for]="dp1"></mat-datepicker-toggle>
+                <mat-datepicker #dp1 color="warn" ></mat-datepicker>
+            </div>
+            <p class="input-label">Početni datum</p>
+        </div>
+        <div class="input-container" style="margin-top: -15px;">
+            <div class="calendar-container">
+                <input class="input" formControlName="endDate" [matDatepicker]="dp2"  required>
+                <mat-datepicker-toggle class="calendar-icon" matIconSuffix [for]="dp2"></mat-datepicker-toggle>
+                <mat-datepicker #dp2 color="warn" ></mat-datepicker>
+            </div>
+            <p class="input-label">krajnji datum</p>
+        </div>
+        <button class="search-button" (click)="search()">
+            <mat-icon>search</mat-icon>
+        </button>
+        <button class="search-button" (click)="reset()" style="margin-left: 3%;">
+            <mat-icon>autorenew</mat-icon>
+        </button>
+    </form>
+</div>

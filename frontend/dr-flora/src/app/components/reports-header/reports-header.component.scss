@@ -1,0 +1,131 @@
+@import 'src/app/style/styles';
+
+.header-container{
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+    justify-content: center;
+    align-items: center;   
+      
+}
+
+.title{
+    font-size: xx-large;
+    color: $dark-orange;
+    margin-bottom: 0;
+    margin-top: 0;
+    width: 90%;
+}
+
+.subtitle{
+    font-size: medium;
+    color: $dark-green-hover;
+    width: 90%;
+}
+
+.option-button{
+    @include greenButton();
+    padding: 0.5% 3%;
+    width: 25vw;
+    height: 8vh;
+    margin: 1vh;
+    font-size: medium;
+    background-color: #F4F7EF;
+    border-top: solid 2px $light-orange;
+    min-height: 65px;
+    min-width: 170px;
+    color: $dark-green;
+    font-weight: 500;
+}
+
+.clicked {
+    position: absolute;
+    top: 15%; /* Desired top position */
+    left: 50%; /* Desired left position */
+    transform: translate(-50%, -50%);
+    transition: transform 0.4s ease-in-out; /* Smooth transition */
+    box-shadow:  0px 10px 10px -15px #111;
+    font-weight: lighter;
+    width: fit-content;
+    justify-content: flex-start;
+    display: flex;
+    align-items: center;
+  }
+
+.input-container{
+    display: flex;
+    flex-direction: column;
+    margin-right: 5vw;
+}
+
+.calendar-container{
+    display: flex;
+    flex-direction: row;
+    padding-bottom: 0;
+
+    .calendar-icon{
+        border-bottom: solid thin $middle_green
+    }
+}
+
+.input{
+    @include inputField();
+    border: none;
+    border-bottom: solid thin $middle_green;
+    box-shadow: none;
+    height: auto;
+}
+
+.input:focus{
+    box-shadow: none;
+    outline: none;
+    border-bottom: solid thin $middle_green;
+}
+
+.input-label{
+    padding-right: 10%;
+    margin-top: 0;
+}
+.form{
+    display: flex;
+    flex-direction: row;
+    width: 80vw;
+    padding-top: 13vh;
+    justify-content: center;
+    position: relative;
+    flex-wrap: wrap;    
+    justify-content: center;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 1s ease, transform 0.5s ease;
+}
+
+.form.active{
+    opacity: 1;
+    transform: scale(1);
+}
+
+.input-text{
+    @include inputField();
+    border: none;
+    border-bottom: solid thin $middle_green;
+    box-shadow: none;
+    padding-bottom: 0;
+    width: 20vw;
+}
+
+
+.input-text:focus{
+    box-shadow: none;
+    outline: none;
+    border-bottom: solid thin $middle_green;
+}
+
+.search-button{
+    @include greenButton();
+    padding: 5px 10px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    height: fit-content;
+}

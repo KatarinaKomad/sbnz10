@@ -9,7 +9,6 @@ import { LottieModule } from "ngx-lottie";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgToastModule} from 'ng-angular-popup';
 import { HttpClientModule } from '@angular/common/http';
-import { RatePopupComponent } from './components/rate-popup/rate-popup.component';
 
 //Export this function
 export function playerFactory(): any {  

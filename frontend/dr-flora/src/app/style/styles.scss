@@ -12,7 +12,6 @@
 .input-field{
   border: solid thin $middle_green;
   border-radius: 10px;
-  background-color: transparent;
   font-size: medium;
   width: -webkit-fill-available;
   padding: 2%;
@@ -20,7 +19,7 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   min-width: 200px;
   min-height: 30px;
-  background-color: $background_color;
+  background: transparent;
 }
 
 .input-field:focus{
