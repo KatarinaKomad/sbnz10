@@ -53,4 +53,9 @@ public class FinalnaDijagnozaService {
         FinalnaDijagnoza dijagnoza = finalnaDijagnozaRepositiry.getLatesDiagnosisByPlantId(biljkaId);
         return dijagnoza != null ? FinalnaDijagnozaMapper.toDTO(dijagnoza) : null;
     }
+
+    public List<FinalnaDijagnozaDTO> findAll() {
+        List<FinalnaDijagnoza> all = finalnaDijagnozaRepositiry.findAll();
+        return all.stream().map(FinalnaDijagnozaMapper::toDTOWithKorisnik).collect(Collectors.toList());
+    }
 }

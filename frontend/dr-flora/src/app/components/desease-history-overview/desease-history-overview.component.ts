@@ -36,20 +36,28 @@ export class DeseaseHistoryOverviewComponent implements OnInit {
 
   vrste : string[] = [...Object.values(VrsteVoca) , ...Object.values(VrstePovrca)];
   Object = Object;
-
+  loggedRole: Role = Role.REGULAR
   ngOnInit(): void {
-    if (this.userRoles.includes(this.korisnikService.getCuurentuserRole())){
+    this.loggedRole = this.korisnikService.getCuurentuserRole();
+
+    if (this.userRoles.includes(this.loggedRole)){
       this.dijagnozaService.findAllByUser(this.korisnikService.getCurrentUserId() as unknown as number).subscribe({
-        next: response => {
-          this.dijagnoze = response
-          this.sveDijagnoze = response
-          this.dijagnoze.map((d) => d.strDate = formatDate(d.datumPreporuke, "dd.MM.YYYY",  'en-US'))
-          
-          console.log(this.dijagnoze)
-        },
+        next: response => this.setDijagnozeData(response),
         error: err => this.displayErrorMessage("Neuspešno dobavljanje finalnih dijagnoza", "")
       })
     }
+    else {
+      this.dijagnozaService.findAll().subscribe({
+        next: response => this.setDijagnozeData(response),
+        error: err => this.displayErrorMessage("Neuspešno dobavljanje finalnih dijagnoza", "")
+      })
+    }
+  }
+
+  setDijagnozeData(response: any) {
+    this.dijagnoze = response
+    this.sveDijagnoze = response
+    this.dijagnoze.map((d) => d.strDate = formatDate(d.datumPreporuke, "dd.MM.YYYY",  'en-US'))
   }
 
   displayErrorMessage(message: string, description: string){

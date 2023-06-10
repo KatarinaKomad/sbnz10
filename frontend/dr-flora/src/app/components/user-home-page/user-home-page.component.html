@@ -2,7 +2,8 @@
 flex-flow: row;
 height: 100%">
     <app-user-menu/>
-    <div style="flex: 10 1 auto;" class="page">
-        <router-outlet name="userPage"></router-outlet>
+    <div style="flex: 10 1 auto;" class="page" >
+        <router-outlet name="userPage" *ngIf="role === 'REGULAR'"></router-outlet>
+        <router-outlet name="doktorPage" *ngIf="role === 'DOKTOR'"></router-outlet>
     </div>
 </div>

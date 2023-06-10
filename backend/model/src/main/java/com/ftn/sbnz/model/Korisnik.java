@@ -42,4 +42,8 @@ public class Korisnik {
     public Long getId(){
         return id;
     }
+
+    public String getFullName() {
+        return ime + " " + prezime;
+    }
 }

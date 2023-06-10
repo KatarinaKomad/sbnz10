@@ -44,6 +44,7 @@
         <table>
             <thead>
                 <tr>
+                    <th *ngIf="loggedRole === 'DOKTOR'">VLASNIK</th>
                     <th>BOLEST</th>
                     <th>ID BILJKE</th>
                     <th>TIP BILJKE</th>
@@ -58,6 +59,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let dijagnoza of dijagnoze">
+                    <td *ngIf="loggedRole === 'DOKTOR'">{{dijagnoza.vlasnik}}</td>
                     <td>{{dijagnoza.nazivBolesti}}</td>
                     <td>{{dijagnoza.idBiljke}}</td>
                     <td>{{dijagnoza.nazivtipaBiljke}}</td>
