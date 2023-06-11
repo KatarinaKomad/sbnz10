@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ftn.sbnz.model.FinalnaDijagnoza;
+import com.ftn.sbnz.model.enums.PotkategorijaPreparata;
 
 @Repository
 public interface FinalnaDijagnozaRepositiry extends JpaRepository<FinalnaDijagnoza, Long> {
@@ -22,6 +23,18 @@ public interface FinalnaDijagnozaRepositiry extends JpaRepository<FinalnaDijagno
     
     @Query("SELECT fd FROM FinalnaDijagnoza fd JOIN fd.biljka b WHERE fd.datumPreporuke BETWEEN :startDate AND :endDate AND b.tip.naziv = :nazivTipa")
     List<FinalnaDijagnoza> findByTipBiljkeAndDate(String nazivTipa, LocalDate startDate, LocalDate endDate);
+
+    @Query("SELECT fd FROM FinalnaDijagnoza fd " +
+            "JOIN fd.preporuceniPreparat p " + 
+            "WHERE fd.datumPreporuke BETWEEN :startDate AND :endDate " +
+            "AND p.potkategorija = :tip")
+    List<FinalnaDijagnoza> findByTipPreparataAndDate(PotkategorijaPreparata tip,  LocalDate startDate, LocalDate endDate);
+
+    @Query("SELECT fd FROM FinalnaDijagnoza fd " +
+            "JOIN fd.preporuceniPreparat p " + 
+            "WHERE fd.datumPreporuke BETWEEN :startDate AND :endDate " +
+            "AND p.naziv = :preparat")
+    List<FinalnaDijagnoza> findByNazivPreparataAndDate(String preparat, LocalDate startDate, LocalDate endDate);
 
 
 }

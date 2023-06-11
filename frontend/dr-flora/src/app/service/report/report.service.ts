@@ -38,6 +38,44 @@ export class ReportService {
     return groupedData;
   }
 
+  groubByPreparat(dijagnoze: FinalnaDijagnoza[]) : {[key: string] : FinalnaDijagnoza[]}  {
+    let groupedData: {[key: string] : FinalnaDijagnoza[]} = {}
+    dijagnoze.forEach(dijagnoza => {
+      let list = groupedData[dijagnoza.nazivPreparata];
+      list? list.push(dijagnoza) : groupedData[dijagnoza.nazivPreparata] = [dijagnoza]
+    })
+    return groupedData;
+  }
+  groupByPreparatAndDate(dijagnoze: FinalnaDijagnoza[]) : ReportDataType {
+    let groupedDataByDiseaseName = this.groubByPreparat(dijagnoze);
+    let data: ReportDataType  = []
+    let colorIndex = 0;
+    Object.keys(groupedDataByDiseaseName).forEach(k => {
+      let gruopByDate : {[key: string]: FinalnaDijagnoza[]} = {}
+      groupedDataByDiseaseName[k].forEach(value => {
+        let date = formatDate(value.datumPreporuke, "dd.MM.YYYY",  'en-US')
+        let list = gruopByDate[date];
+        list? list.push(value) : gruopByDate[date] = [value]
+      })
+
+      let points : {y: number, label: string}[] = []
+      Object.keys(gruopByDate).forEach(date => {
+        points.push({y: gruopByDate[date].length, label: date})
+      })
+      data.push({
+          type: "stackedBar",
+          name: k,
+          showInLegend: "true",
+          color: this.colors[colorIndex],
+          dataPoints: points
+        }
+      )
+      colorIndex += 1;
+    })
+
+    return data;
+  }
+
   groupByDeseaseAndDate(dijagnoze: FinalnaDijagnoza[]) : ReportDataType {
     let groupedDataByDiseaseName = this.groubByDisease(dijagnoze);
     let data: ReportDataType  = []
