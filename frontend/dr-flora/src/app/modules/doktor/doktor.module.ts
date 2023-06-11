@@ -8,6 +8,7 @@ import { ConcentrationDialogComponent } from "src/app/components/preparati-view/
 import { AddPreparatComponent } from "src/app/components/add-preparat/add-preparat.component";
 import { DeseasesViewComponent } from "src/app/components/deseases-view/deseases-view.component";
 import { PreparatiMultiselectDialogComponent } from "src/app/components/deseases-view/preparati-multiselect-dialog/preparati-multiselect-dialog.component";
+import { SymptomsViewComponent } from "src/app/components/deseases-view/symptoms-view/symptoms-view.component";
 
 
 const declarations = [    
@@ -16,6 +17,7 @@ const declarations = [
     AddPreparatComponent,
     DeseasesViewComponent,
     PreparatiMultiselectDialogComponent,
+    SymptomsViewComponent,
 ];
 
 @NgModule({

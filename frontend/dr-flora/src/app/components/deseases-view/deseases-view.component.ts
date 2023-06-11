@@ -7,6 +7,7 @@ import { PotkategorijaPreparata, Preparat, PreparatiMultiselect } from 'src/app/
 import { BolestService } from 'src/app/service/bolest/bolest.service';
 import { PreparatiMultiselectDialogComponent } from './preparati-multiselect-dialog/preparati-multiselect-dialog.component';
 import { PreparatService } from 'src/app/service/preparat/preparat.service';
+import { SymptomsViewComponent } from './symptoms-view/symptoms-view.component';
 
 @Component({
   selector: 'app-deseases-view',
@@ -82,8 +83,11 @@ export class DeseasesViewComponent {
   }
 
 
-  showSimptomi(simptomi: String[]) {
-    console.log(simptomi)
+  showSimptomi(data: Bolest) {
+
+    this.dialog.open(SymptomsViewComponent,  {data} )
+      .afterClosed().subscribe( _ => {
+      })
   }
 
   displayErrorMessage(message: string, description: string){

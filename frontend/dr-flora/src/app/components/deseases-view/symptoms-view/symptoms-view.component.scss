@@ -1,0 +1,53 @@
+@import 'src/app/style/styles';
+
+.options-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: min-content;
+    overflow-y: auto;
+    max-width: 50vw;
+    padding: 5%;
+}
+
+.option-text{
+    font-family: $font;
+    color: $dark_green;
+    font-size: medium;
+    font-weight: lighter;
+    display: flex;
+}
+
+.container{
+    display: flex;
+    background-color: $background_color;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px;
+    overflow-x: hidden;
+    font-family: $font;
+    font-weight: lighter;
+}
+
+.container::-webkit-scrollbar {
+    width: 0;  /* Remove scrollbar space */
+    background: transparent;  /* Optional: just make scrollbar invisible */
+  }
+
+.dialog-title{
+    font-family: $font;
+    font-size: large;
+    color: $dark-orange;
+    font-weight: lighter;
+    display: flex;
+    justify-content: center;
+}
+
+.done-button{
+    @include greenButton();
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    font-size: medium;    
+}

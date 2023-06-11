@@ -5,7 +5,7 @@ export interface Bolest {
     id?: number;
     naziv: string;
     fazaJavljanja: FazaBiljke;
-    simptomi: String[];
+    simptomi: string[];
     slabiPreparati: Preparat[];
     jakiPreparati: Preparat[];
 }
