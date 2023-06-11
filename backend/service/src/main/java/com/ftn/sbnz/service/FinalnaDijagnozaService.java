@@ -61,6 +61,7 @@ public class FinalnaDijagnozaService {
         return dijagnoza != null ? FinalnaDijagnozaMapper.toDTO(dijagnoza) : null;
     }
 
+
     public boolean isAllowedToRequestDiagnosis(Long uderId){
         Optional<Korisnik> korisnik = this.korisnikRepository.findById(uderId);
         if(korisnik.isPresent() && korisnik.get().getKategorija() == KategorijaKorisnika.REGULAR){
@@ -68,5 +69,11 @@ public class FinalnaDijagnozaService {
             return numberOfDiagnosisiLastMonth <= 6;
         }
         return true;
+    }
+
+    public List<FinalnaDijagnozaDTO> findAll() {
+        List<FinalnaDijagnoza> all = finalnaDijagnozaRepositiry.findAll();
+        return all.stream().map(FinalnaDijagnozaMapper::toDTOWithKorisnik).collect(Collectors.toList());
+
     }
 }

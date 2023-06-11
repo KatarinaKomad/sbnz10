@@ -57,7 +57,7 @@ export class ReportService {
     return this.groupByDate(groupedDataByDiseaseName);
   }
 
-  groupByPreparaAndDate(dijagnoze: FinalnaDijagnoza[]) : ReportDataType {
+  groupByPreparatAndDate(dijagnoze: FinalnaDijagnoza[]) : ReportDataType {
     let groupedDataByPreparat = this.groubByPreparat(dijagnoze);
     return this.groupByDate(groupedDataByPreparat);
   }

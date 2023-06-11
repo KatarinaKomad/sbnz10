@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Role } from 'src/app/model/korisnik/korisnik';
+import { KorisnikService } from 'src/app/service/korisnik/korisnik.service';
 
 @Component({
   selector: 'app-user-home-page',
@@ -7,10 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserHomePageComponent implements OnInit{
 
-  
-  constructor() {}
+  role: Role = Role.REGULAR;
+
+  constructor(private korisnikService: KorisnikService) {}
   
   ngOnInit(): void {
-    console.log("sdafas")
+    this.role = this.korisnikService.getCuurentuserRole();
   }
 }

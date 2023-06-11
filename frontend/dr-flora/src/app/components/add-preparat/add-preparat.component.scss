@@ -1,0 +1,106 @@
+@import 'src/app/style/styles';
+
+select:focus > option:hover{ 
+    background: $light_orange !important;
+ }
+
+
+
+.title{
+    color: $dark-orange;
+    font-size: x-large;
+    padding-left: 3%;
+}
+
+.note{
+    color: $dark-green;
+    font-size: smaller;
+    padding-left: 3%;
+}
+
+.plant-form{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2%;
+    font-family: $font;
+    height: 80%;
+    justify-content: space-between;
+
+
+    .fields-container{
+        justify-self: center;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        height: 80%;
+        justify-content: space-between
+    }
+    
+    .input-container{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .calendar-container{
+        // width: 15vw;
+        display: flex;
+        flex-direction: row;
+        padding-bottom: 0;
+
+        .calendar-icon{
+            border-bottom: solid thin $middle_green
+        }
+    }
+
+    .input{
+        @include inputField();
+        border: none;
+        border-bottom: solid thin $middle_green;
+        box-shadow: none;
+        height: auto;
+    }
+
+    .input:focus{
+        box-shadow: none;
+        outline: none;
+        border-bottom: solid thin $middle_green;
+    }
+
+    .input-label{
+        padding-right: 10%;
+        margin-top: 0;
+    }
+
+    select{
+        background-color: transparent;
+    }
+
+    .option:hover{
+        background: $light_orange;
+    }
+}
+
+.button-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.submit{
+    @include greenButton();
+    font-size: medium;
+    width: 45%;
+    margin-top: 5%;
+    margin-left: 5%;
+}
+
+.cancel{
+    @include greenButton();
+    width: 45%;
+    margin-top: 5%;
+    margin-left: 5%;
+}

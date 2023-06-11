@@ -29,4 +29,8 @@ public class Simptom {
 
     // @Enumerated(EnumType.STRING)
     private String opis;
+
+    public String formatToString() {
+        return opis + " - " + lokacija.toString().toLowerCase(); 
+    }
 }

@@ -44,6 +44,7 @@
         <table>
             <thead>
                 <tr>
+                    <th *ngIf="loggedRole === 'DOKTOR'">VLASNIK</th>
                     <th>BOLEST</th>
                     <th>ID BILJKE</th>
                     <th>TIP BILJKE</th>
@@ -53,17 +54,18 @@
                     <th>DOZA</th>
                     <th>DATUM</th>
                     <th>NAPOMENA</th>
-                    <th>OCENJIVANJE</th>
+                    <th *ngIf="loggedRole !== 'DOKTOR'">OCENJIVANJE</th>
                 </tr>
             </thead>
             <tbody>
                 <tr *ngFor="let dijagnoza of dijagnoze">
+                    <td *ngIf="loggedRole === 'DOKTOR'">{{dijagnoza.vlasnik}}</td>
                     <td>{{dijagnoza.nazivBolesti}}</td>
                     <td>{{dijagnoza.idBiljke}}</td>
                     <td>{{dijagnoza.nazivtipaBiljke}}</td>
                     <td>{{dijagnoza.fazaBiljke}}</td>
                     <td>{{dijagnoza.nazivPreparata}}</td>
-                    <td class="rate"> {{dijagnoza.ocenaPreparata}}
+                    <td class="rate"> {{dijagnoza.ocenaPreparata| number : '.2-2'}}
                         <mat-icon class="icon-star">star 
                         </mat-icon> 
                     </td>
@@ -75,7 +77,7 @@
                             {{dijagnoza.poruka}}
                         </div>
                     </td>
-                    <td *ngIf="isWithinTwoMonths(dijagnoza.datumPreporuke)">
+                    <td *ngIf="isWithinTwoMonths(dijagnoza.datumPreporuke) && loggedRole !== 'DOKTOR'">
                         <button class="rate-button" (click)="openRateDialog(dijagnoza)">oceni preparat</button>
                     </td>    
                 </tr>

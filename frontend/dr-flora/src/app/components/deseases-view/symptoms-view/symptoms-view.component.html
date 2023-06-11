@@ -1,0 +1,9 @@
+<div class="container">
+    <p class="dialog-title">Pregled simptoma bolesti {{bolest.naziv | uppercase}}</p>
+    <div class="options-container">
+        <span *ngFor="let simptom of bolest.simptomi, let i = index" style="width: 50%;">
+            {{i + 1}}. {{simptom | uppercase}}
+        </span>
+    </div>
+    <button class="done-button" (click)="handleClose()">Gotovo</button>
+</div>

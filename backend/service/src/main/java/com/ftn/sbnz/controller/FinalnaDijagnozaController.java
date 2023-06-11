@@ -34,6 +34,17 @@ public class FinalnaDijagnozaController {
             return ResponseEntity.badRequest().build();
         }
     }
+    @GetMapping("/historyAll")
+    public ResponseEntity<?> getAll(){
+        try{
+            List<FinalnaDijagnozaDTO> all = this.finalnaDijagnozaService.findAll();
+            return new ResponseEntity<>(all, HttpStatus.OK);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
 
     
     @GetMapping("/last-desease/{biljkaId}")

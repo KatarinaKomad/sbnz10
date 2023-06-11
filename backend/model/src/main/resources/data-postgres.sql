@@ -1,6 +1,8 @@
 insert into KORISNIK(email, ime, prezime, kategorija, poeni, password) VALUES
 ('komad.katarina@gmail.com', 'Katarina', 'Komad', 'REGULAR', 0, '123'),
 ('natasha.lakovic@gmail.com', 'Natasa', 'Lakovic', 'REGULAR', 0, '123');
+insert into DOKTOR(email, ime, prezime, password) VALUES
+('doktor@gmail.com', 'Dr', 'Joca', '123');
 
 insert into SIMPTOM(lokacija, opis) VALUES
 ('LIST', 'svetlo-smede pege'), 
@@ -210,8 +212,8 @@ INSERT INTO preparat_ocene (preparat_id, ocene) VALUES
 
 
 INSERT INTO BOLEST (naziv, faza_javljanja) VALUES
-('cadava pegavost lista', 'LISTANJE'),
-('cadava krastavost ploda', 'FORMIRANJE_PLODA'),
+('cadjava pegavost lista', 'LISTANJE'),
+('cadjava krastavost ploda', 'FORMIRANJE_PLODA'),
 ('Kruskina buva', 'FORMIRANJE_PLODA'),
 ('Pepelnica', 'FORMIRANJE_PLODA'),
 ('Jabukin smotavac', 'FORMIRANJE_PLODA'),--5--

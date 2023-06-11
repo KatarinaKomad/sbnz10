@@ -41,13 +41,13 @@ export class ReportsContentComponent implements OnInit, OnChanges{
         this.chartData = this.reportService.groupByDeseaseAndDate(this.finalneDijagnoze);
         break;
       case ReportType.PREPARAT: 
-          this.chartData = this.reportService. groupByPreparaAndDate(this.finalneDijagnoze); 
+          this.chartData = this.reportService.groupByDeseaseAndDate(this.finalneDijagnoze);
           break;
       case ReportType.JAKI_PREPARATI: 
-        this.chartData = this.reportService. groupByPlantTypeAndDate(this.finalneDijagnoze); 
+        this.chartData = this.reportService.groupByPreparatAndDate(this.finalneDijagnoze);
         break;
       case ReportType.SLABI_PREPARATI: 
-        this.chartData = this.reportService. groupByPlantTypeAndDate(this.finalneDijagnoze); 
+        this.chartData = this.reportService.groupByPreparatAndDate(this.finalneDijagnoze); 
         break;
     }
   }

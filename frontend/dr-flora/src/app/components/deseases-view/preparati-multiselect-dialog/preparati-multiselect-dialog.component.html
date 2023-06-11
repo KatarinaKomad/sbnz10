@@ -1,0 +1,15 @@
+<div class="container">
+    <p class="dialog-title">Selektujte {{data.potkategorija}}E preparate za lecenje bolesti {{data.bolestNaziv | uppercase}}</p>
+    <div class="options-container">
+        <span *ngFor="let preparat of data['sve_opcije']" style="width: 50%;">
+            <mat-checkbox type="checkbox" id={{preparat.id}}
+                (change)="handleSelect(preparat.id)"
+                
+                color="warn"
+                [checked]="isSelected(preparat.id)">
+                {{preparat.naziv}}
+            </mat-checkbox>
+        </span>
+    </div>
+    <button class="done-button" (click)="handleClose()">Gotovo</button>
+</div>

@@ -13,6 +13,7 @@ export interface FinalnaDijagnoza{
     poruka: string;
     idPreparat: number;
     strDate?: string;
+    vlasnik?: string;
 }
 
 export interface DijagnozaFitlterData{

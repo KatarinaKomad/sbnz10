@@ -13,6 +13,7 @@ import com.ftn.sbnz.dto.FinalnaDijagnozaDTO;
 import com.ftn.sbnz.dto.ReportRequestDTO;
 import com.ftn.sbnz.mapper.FinalnaDijagnozaMapper;
 import com.ftn.sbnz.model.FinalnaDijagnoza;
+import com.ftn.sbnz.model.enums.PotkategorijaPreparata;
 import com.ftn.sbnz.respository.FinalnaDijagnozaRepositiry;
 
 @Service
@@ -28,18 +29,25 @@ public class ReportService {
 
 
         switch(requestDTO.getReportType()){
-            case BOLEST :  List<FinalnaDijagnoza> bolestList = finalnaDijagnozaRepositiry.findByBNazivBolestiAndDate(requestDTO.getNazivBolesti(), requestDTO.getStartDate(), requestDTO.getEndDate());
-                            return this.fileterAndConvertList(bolestList, requestDTO.isDoctor());
+            case BOLEST :  
+                List<FinalnaDijagnoza> bolestList = finalnaDijagnozaRepositiry.findByBNazivBolestiAndDate(requestDTO.getNazivBolesti(), requestDTO.getStartDate(), requestDTO.getEndDate());
+                return this.fileterAndConvertList(bolestList, requestDTO.isDoctor());
                     
-            case TIP_BILJKE: List<FinalnaDijagnoza> tipList = finalnaDijagnozaRepositiry.findByTipBiljkeAndDate(requestDTO.getTipBiljke(), requestDTO.getStartDate(), requestDTO.getEndDate());
-                            return this.fileterAndConvertList(tipList, requestDTO.isDoctor());
+            case TIP_BILJKE: 
+                List<FinalnaDijagnoza> tipList = finalnaDijagnozaRepositiry.findByTipBiljkeAndDate(requestDTO.getTipBiljke(), requestDTO.getStartDate(), requestDTO.getEndDate());
+                return this.fileterAndConvertList(tipList, requestDTO.isDoctor());
                             
             case JAKI_PREPARATI :
-                        return null;
+                List<FinalnaDijagnoza> jakiList = finalnaDijagnozaRepositiry.findByTipPreparataAndDate(PotkategorijaPreparata.JAK, requestDTO.getStartDate(), requestDTO.getEndDate());
+                return this.fileterAndConvertList(jakiList, requestDTO.isDoctor());
+
             case SLABI_PREPARATI: 
-                        return null;
+                List<FinalnaDijagnoza> slabiList = finalnaDijagnozaRepositiry.findByTipPreparataAndDate(PotkategorijaPreparata.SLAB, requestDTO.getStartDate(), requestDTO.getEndDate());
+                return this.fileterAndConvertList(slabiList, requestDTO.isDoctor());
+
             case PREPARAT:
-                        return null;
+                List<FinalnaDijagnoza> byPreparat = finalnaDijagnozaRepositiry.findByNazivPreparataAndDate(requestDTO.getNazivPreparata(), requestDTO.getStartDate(), requestDTO.getEndDate());
+                return this.fileterAndConvertList(byPreparat, requestDTO.isDoctor());
         }
 
         return null;

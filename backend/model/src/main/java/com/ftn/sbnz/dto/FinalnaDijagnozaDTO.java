@@ -29,4 +29,5 @@ public class FinalnaDijagnozaDTO {
     private Long idBiljke;
     private FazaBiljke fazaBiljke;
     private String poruka;
+    private String vlasnik;
 }

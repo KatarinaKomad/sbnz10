@@ -1,0 +1,13 @@
+<div class="dialog">
+    <label class="title">Koncentracija: {{data.naziv}}</label>
+    <form [formGroup]="concentrationForm" class="form">
+        <div class="input-container"> 
+            <input class="id-input" type="number" placeholder="Koncentracija u %" formControlName="koncentracija"
+                [style.color]="(this.concentrationForm.controls.koncentracija &&  this.concentrationForm.controls.koncentracija.value)? '#40513B' : '#A4B69F'"
+                [style.fontSize]="(this.concentrationForm.controls.koncentracija &&  this.concentrationForm.controls.koncentracija.value)? 'large' : 'medium'"/>
+        </div>
+        <button class="submit" (click)="changeConcentration()">Izmeni</button>
+
+        <button class="cancel" (click)="close()">Odustani</button>
+    </form>
+</div>

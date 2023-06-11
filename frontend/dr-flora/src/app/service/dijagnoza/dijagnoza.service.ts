@@ -14,6 +14,9 @@ export class DijagnozaService {
   findAllByUser(vlasnikId: number): Observable<FinalnaDijagnoza[]>{
     return this.http.getT<FinalnaDijagnoza[]>(environment.apiUrl + `dijagnoza/history/${vlasnikId}`);
   }
+  findAll(): Observable<FinalnaDijagnoza[]>{
+    return this.http.getT<FinalnaDijagnoza[]>(environment.apiUrl + `dijagnoza/historyAll`);
+  }
 
   filter(dijagnoze: FinalnaDijagnoza[], filterDTO: DijagnozaFitlterData){
     return dijagnoze.filter(dijagnoza =>(filterDTO.nazivBolesti ? dijagnoza.nazivBolesti.toLowerCase().includes(filterDTO.nazivBolesti.toLowerCase()) : true)

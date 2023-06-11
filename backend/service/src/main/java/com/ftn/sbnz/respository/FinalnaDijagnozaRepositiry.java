@@ -8,10 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.ftn.sbnz.model.FinalnaDijagnoza;
+import com.ftn.sbnz.model.enums.PotkategorijaPreparata;
 
 @Repository
 public interface FinalnaDijagnozaRepositiry extends JpaRepository<FinalnaDijagnoza, Long> {
-;
+
     List<FinalnaDijagnoza> findByBiljkaId(Long biljkaId);
 
     @Query(value= "SELECT * FROM finalna_dijagnoza where biljka_id = ?1 ORDER BY datum_preporuke DESC LIMIT 1", nativeQuery = true)
@@ -26,5 +27,16 @@ public interface FinalnaDijagnozaRepositiry extends JpaRepository<FinalnaDijagno
     @Query("SELECT COUNT(fd) FROM FinalnaDijagnoza fd JOIN fd.biljka b WHERE fd.datumPreporuke > :lastMonth AND b.vlasnik.id = :userId")
     Integer countByUserInLastMonth(Long userId, LocalDate lastMonth);
 
+    @Query("SELECT fd FROM FinalnaDijagnoza fd " +
+            "JOIN fd.preporuceniPreparat p " + 
+            "WHERE fd.datumPreporuke BETWEEN :startDate AND :endDate " +
+            "AND p.potkategorija = :tip")
+    List<FinalnaDijagnoza> findByTipPreparataAndDate(PotkategorijaPreparata tip,  LocalDate startDate, LocalDate endDate);
+
+    @Query("SELECT fd FROM FinalnaDijagnoza fd " +
+            "JOIN fd.preporuceniPreparat p " + 
+            "WHERE fd.datumPreporuke BETWEEN :startDate AND :endDate " +
+            "AND p.naziv = :preparat")
+    List<FinalnaDijagnoza> findByNazivPreparataAndDate(String preparat, LocalDate startDate, LocalDate endDate);
 
 }

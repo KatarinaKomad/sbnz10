@@ -1,0 +1,52 @@
+<div class="container">
+    <div style="display: flex; flex-direction: row; width: 90%;">
+        <div  style="   display: flex;
+                        flex-direction: column;
+                        flex-grow: 4;
+                        max-width: 30vw;">
+            <p class="title">Pregled preparata</p>
+            <label class="subtitle">Mogućnost izmene koncentracije preparata</label>
+        </div>
+        <div style="   display: flex;
+        flex-direction: column;
+        flex-grow: 4;
+        max-width: 20vw;
+        align-self: flex-end;">
+            <button class="rate-button" (click)="addNewPreparat()"> Dodaj novi preparat</button>
+        </div>
+    </div>
+    
+    
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>NAZIV</th>
+                    <th>PRIM. KATEGORIJA</th>
+                    <th>POTKATEGORIJA</th>
+                    <th>KONCENTRACIJA</th>
+                    <th>OCENA</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr *ngFor="let preaparat of preparati">
+                    <td>{{preaparat.naziv}}</td>
+                    <td>{{preaparat.primarnaKategorija}}</td>
+                    <td>{{preaparat.potkategorija}}</td>
+                    <td>{{preaparat.koncentracija}}</td>
+                    <td class="rate"> {{preaparat.ocena | number : '.2-2'}}
+                        <mat-icon class="icon-star">star 
+                        </mat-icon> 
+                    </td>
+                    <td>
+                        <button class="rate-button" (click)="openChangeKoncentracija(preaparat)">izmeni koncentraciju</button>
+                    </td>   
+                    <td>
+                        <button class="rate-button" (click)="openRateDialog(preaparat)">oceni preparat</button>
+                    </td> 
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

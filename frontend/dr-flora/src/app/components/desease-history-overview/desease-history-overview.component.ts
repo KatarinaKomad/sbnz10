@@ -36,20 +36,28 @@ export class DeseaseHistoryOverviewComponent implements OnInit {
 
   vrste : string[] = [...Object.values(VrsteVoca) , ...Object.values(VrstePovrca)];
   Object = Object;
-
+  loggedRole: Role = Role.REGULAR
   ngOnInit(): void {
-    if (this.userRoles.includes(this.korisnikService.getCuurentuserRole())){
+    this.loggedRole = this.korisnikService.getCuurentuserRole();
+
+    if (this.userRoles.includes(this.loggedRole)){
       this.dijagnozaService.findAllByUser(this.korisnikService.getCurrentUserId() as unknown as number).subscribe({
-        next: response => {
-          this.dijagnoze = response
-          this.sveDijagnoze = response
-          this.dijagnoze.map((d) => d.strDate = formatDate(d.datumPreporuke, "dd.MM.YYYY",  'en-US'))
-          
-          console.log(this.dijagnoze)
-        },
+        next: response => this.setDijagnozeData(response),
         error: err => this.displayErrorMessage("Neuspešno dobavljanje finalnih dijagnoza", "")
       })
     }
+    else {
+      this.dijagnozaService.findAll().subscribe({
+        next: response => this.setDijagnozeData(response),
+        error: err => this.displayErrorMessage("Neuspešno dobavljanje finalnih dijagnoza", "")
+      })
+    }
+  }
+
+  setDijagnozeData(response: any) {
+    this.dijagnoze = response
+    this.sveDijagnoze = response
+    this.dijagnoze.map((d) => d.strDate = formatDate(d.datumPreporuke, "dd.MM.YYYY",  'en-US'))
   }
 
   displayErrorMessage(message: string, description: string){
@@ -57,13 +65,13 @@ export class DeseaseHistoryOverviewComponent implements OnInit {
   }
 
   openRateDialog(dijagnoza: FinalnaDijagnoza){
-    this.dialog.open(RatePopupComponent, {
-      data: dijagnoza
-    }).afterClosed().subscribe(data => {
-      if (data) {
-        console.log(data) 
-      }
-  })
+    let data = {id: dijagnoza.idPreparat, ocena: dijagnoza.ocenaPreparata, naziv: dijagnoza.nazivPreparata}
+    this.dialog.open(RatePopupComponent, {data})
+      .afterClosed().subscribe(_ => {
+        const index = this.dijagnoze.findIndex(x => x.idPreparat == data.id);
+        this.dijagnoze[index].ocenaPreparata = data.ocena;
+        this.dijagnoze = [...this.dijagnoze];
+      })
   }
 
   showTooltip(dijagnoza: FinalnaDijagnoza){
@@ -72,13 +80,10 @@ export class DeseaseHistoryOverviewComponent implements OnInit {
   }
 
   isWithinTwoMonths(date: Date){
-    if (this.korisnikService.getCuurentuserRole() !== Role.DOKTOR){
-      let p = date as any as  number[];
-      let dateToCompare = new Date(p[0], p[1] - 1, p[2])
-      let today = new Date();
-      return dateToCompare <= today && dateToCompare >= this.subtractMonths(today, 2)
-    }
-    return true;
+    let p = date as any as  number[];
+    let dateToCompare = new Date(p[0], p[1] - 1, p[2])
+    let today = new Date();
+    return dateToCompare <= today && dateToCompare >= this.subtractMonths(today, 2)
   }
 
   subtractMonths(date: Date, months: number) : Date{
