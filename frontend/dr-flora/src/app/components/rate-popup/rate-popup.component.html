@@ -1,5 +1,5 @@
 <div class="dialog">
-    <label class="title">Ocenite proizvod</label>
+    <label class="title">Ocenite {{data.naziv}} </label>
     <div class="rate-container">
         <button *ngFor="let grade of grades" mat-icon-button (click)="onSelectedRate(grade)">
             <mat-icon *ngIf="!(grade > selectedRate) || grade === selectedRate" class="icon-star">star

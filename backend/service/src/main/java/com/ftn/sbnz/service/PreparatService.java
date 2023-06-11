@@ -1,14 +1,18 @@
 package com.ftn.sbnz.service;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ftn.sbnz.dto.PreparatDTO;
 import com.ftn.sbnz.dto.PreparatRateDTO;
+import com.ftn.sbnz.mapper.PreparatMapper;
 import com.ftn.sbnz.model.Bolest;
 import com.ftn.sbnz.model.Preparat;
 import com.ftn.sbnz.respository.PreparatRepository;
@@ -44,6 +48,23 @@ public class PreparatService {
             preparatRepository.save(preparat);
             return preparat.getAverageRate();
         }
-    return rateDTO.getRate();
+        return rateDTO.getRate();
+    }
+
+    public List<PreparatDTO> findAll() {
+       List<Preparat> all = preparatRepository.findAll();
+       all.sort(Comparator.comparing(Preparat::getId));
+       return all.stream().map(PreparatMapper::toDTO).collect(Collectors.toList());
+    }
+
+    public Double changeKoncentracija(Long preparatId, Double koncentracija) {
+        Optional<Preparat> p = preparatRepository.findById(preparatId);
+        if( p.isPresent()){
+            Preparat preparat = p.get();
+            preparat.setKoncentracija(koncentracija);
+            preparatRepository.save(preparat);
+            return preparat.getKoncentracija();
+        }
+        return null;
     }
 }

@@ -3,6 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { NgToastService } from 'ng-angular-popup';
 import { FinalnaDijagnoza } from 'src/app/model/dijagnoza/dijagnoza';
 import { Role } from 'src/app/model/korisnik/korisnik';
+import { RatePreparat } from 'src/app/model/preparat/preparat';
 import { KorisnikService } from 'src/app/service/korisnik/korisnik.service';
 import { PreparatService } from 'src/app/service/preparat/preparat.service';
 
@@ -13,7 +14,7 @@ import { PreparatService } from 'src/app/service/preparat/preparat.service';
 })
 export class RatePopupComponent {
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: FinalnaDijagnoza,
+  constructor(@Inject(MAT_DIALOG_DATA) public data: RatePreparat,
         private dialogRef: MatDialogRef<RatePopupComponent>,
         private preparatService: PreparatService,
         private korisnikService: KorisnikService,
@@ -30,13 +31,13 @@ export class RatePopupComponent {
 
   onSubmit(){
     this.dialogRef.close();
-    let preparatId = this.data.idPreparat;
+    let preparatId = this.data.id;
     this.preparatService.ratePreparat({
       preparatId: preparatId,
       rate: this.selectedRate,
       isDoctor: this.korisnikService.getCuurentuserRole() === Role.DOKTOR
     }).subscribe({
-      next: (response) => this.data.ocenaPreparata = response,
+      next: (response) => this.data.ocena = response,
       error: () => this.openError("Došlo je do greške, molimo pokušajte ponovo", "")
     })
   }

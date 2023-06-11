@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClientService } from '../custom-http/http-client.service';
-import { RateData } from 'src/app/model/preparat/preparat';
+import { Preparat, RateData } from 'src/app/model/preparat/preparat';
 import { environment } from 'src/app/enviroments/enviroment';
 import { Observable } from 'rxjs';
 
@@ -14,4 +14,13 @@ export class PreparatService {
   ratePreparat(rate: RateData) : Observable<number>{
     return this.http.postT<number>(environment.apiUrl + "preparat/rate", rate);
   }
+  changeConcentration(preparatId: number, koncentracija: number):  Observable<number|null> {
+    return this.http.postT<number>(environment.apiUrl + `preparat/koncentracija/${preparatId}`, koncentracija);
+  }
+
+    
+  getAll(): Observable<Preparat[]>{
+    return this.http.getT<Preparat[]>(environment.apiUrl + "preparat/all");
+  }
+
 }

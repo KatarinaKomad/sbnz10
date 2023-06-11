@@ -65,13 +65,13 @@ export class DeseaseHistoryOverviewComponent implements OnInit {
   }
 
   openRateDialog(dijagnoza: FinalnaDijagnoza){
-    this.dialog.open(RatePopupComponent, {
-      data: dijagnoza
-    }).afterClosed().subscribe(data => {
-      if (data) {
-        console.log(data) 
-      }
-  })
+    let data = {id: dijagnoza.idPreparat, ocena: dijagnoza.ocenaPreparata, naziv: dijagnoza.nazivPreparata}
+    this.dialog.open(RatePopupComponent, {data})
+      .afterClosed().subscribe(_ => {
+        const index = this.dijagnoze.findIndex(x => x.idPreparat == data.id);
+        this.dijagnoze[index].ocenaPreparata = data.ocena;
+        this.dijagnoze = [...this.dijagnoze];
+      })
   }
 
   showTooltip(dijagnoza: FinalnaDijagnoza){
@@ -80,13 +80,10 @@ export class DeseaseHistoryOverviewComponent implements OnInit {
   }
 
   isWithinTwoMonths(date: Date){
-    if (this.korisnikService.getCuurentuserRole() !== Role.DOKTOR){
-      let p = date as any as  number[];
-      let dateToCompare = new Date(p[0], p[1] - 1, p[2])
-      let today = new Date();
-      return dateToCompare <= today && dateToCompare >= this.subtractMonths(today, 2)
-    }
-    return true;
+    let p = date as any as  number[];
+    let dateToCompare = new Date(p[0], p[1] - 1, p[2])
+    let today = new Date();
+    return dateToCompare <= today && dateToCompare >= this.subtractMonths(today, 2)
   }
 
   subtractMonths(date: Date, months: number) : Date{
