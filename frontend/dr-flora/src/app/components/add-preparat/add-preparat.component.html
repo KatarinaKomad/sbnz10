@@ -1,0 +1,34 @@
+<div style="display: flex; flex-direction: column">
+    <p class="title">Dodavanje preparata</p>
+    <form class="plant-form" [formGroup]="newPreparatForm">
+        <div class="fields-container">
+            <div class="input-container">
+                <input class="input" formControlName="naziv"
+                    [style.color]="(this.newPreparatForm.controls.naziv &&  this.newPreparatForm.controls.naziv.value)? '#40513B' : '#A4B69F'"/>
+                <p class="input-label">Naziv</p>
+            </div>
+            <div class="input-container">
+                <input class="input" type="number" placeholder="Koncentracija u %" formControlName="koncentracija"
+                    [style.color]="(this.newPreparatForm.controls.koncentracija &&  this.newPreparatForm.controls.koncentracija.value)? '#40513B' : '#A4B69F'"/>
+                <p class="input-label">Koncentracija</p>
+            </div>
+
+            <div class="input-container">
+                <app-select-dropdown [options]="Object.keys(KategorijaPreparata)" 
+                                    defaultOption="Odaberite kategoriju..."
+                                    [selectOptionControl]="this.newPreparatForm.controls.primarnaKategorija"></app-select-dropdown>
+                <p class="input-label">Kategorija</p>
+            </div>
+            <div class="input-container">
+                <app-select-dropdown [options]="Object.values(PotkategorijaPreparata)" 
+                                        defaultOption="Odaberite potkategoriju.."
+                                        [selectOptionControl]="this.newPreparatForm.controls.potkategorija"></app-select-dropdown>
+                <p class="input-label">Vrsta</p>
+            </div>
+            <div class="button-container"> 
+                <button class="submit" (click)="save()">Sačuvaj</button>
+                <button class="cancel" (click)="close()">Odustani</button>
+            </div>
+        </div>
+    </form>
+</div>

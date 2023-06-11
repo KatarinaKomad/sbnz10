@@ -5,11 +5,13 @@ import { RouterModule } from "@angular/router";
 import { DoktorRoutinModule } from "./doktor-routing.module";
 import { PreparatiViewComponent } from "src/app/components/preparati-view/preparati-view.component";
 import { ConcentrationDialogComponent } from "src/app/components/preparati-view/concentration-dialog/concentration-dialog.component";
+import { AddPreparatComponent } from "src/app/components/add-preparat/add-preparat.component";
 
 
 const declarations = [    
     PreparatiViewComponent,
-    ConcentrationDialogComponent
+    ConcentrationDialogComponent,
+    AddPreparatComponent
 ];
 
 @NgModule({

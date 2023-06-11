@@ -10,6 +10,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ftn.sbnz.dto.NewPreparatDTO;
 import com.ftn.sbnz.dto.PreparatDTO;
 import com.ftn.sbnz.dto.PreparatRateDTO;
 import com.ftn.sbnz.mapper.PreparatMapper;
@@ -66,5 +67,11 @@ public class PreparatService {
             return preparat.getKoncentracija();
         }
         return null;
+    }
+
+    public PreparatDTO addPreparat(NewPreparatDTO dto) {
+        Preparat preparat = PreparatMapper.fromDTO(dto);
+        Preparat saved = preparatRepository.save(preparat);
+        return PreparatMapper.toDTO(saved);
     }
 }

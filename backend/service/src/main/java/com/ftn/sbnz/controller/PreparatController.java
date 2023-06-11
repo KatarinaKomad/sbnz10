@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ftn.sbnz.dto.NewPreparatDTO;
 import com.ftn.sbnz.dto.PreparatDTO;
 import com.ftn.sbnz.dto.PreparatRateDTO;
 import com.ftn.sbnz.service.PreparatService;
@@ -42,6 +43,17 @@ public class PreparatController {
         try{
             koncentracija = preparatService.changeKoncentracija(preparatId, koncentracija);
             return new ResponseEntity<>(koncentracija, HttpStatus.OK);
+        }catch(Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+
+    }
+    @PostMapping("/add")
+    public ResponseEntity<?> addPreparat( @RequestBody NewPreparatDTO dto){
+        try{
+            PreparatDTO preparat = preparatService.addPreparat(dto);
+            return new ResponseEntity<>(preparat, HttpStatus.OK);
         }catch(Exception e) {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();

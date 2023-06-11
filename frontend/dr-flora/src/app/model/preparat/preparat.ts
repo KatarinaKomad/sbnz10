@@ -18,6 +18,13 @@ export interface Preparat {
     ocena: number;
     koncentracija: number;
 }
+export interface NewPreparat {
+    naziv: String;
+    primarnaKategorija: KategorijaPreparata
+    potkategorija: PotkategorijaPreparata;
+    ocena?: number;
+    koncentracija: number;
+}
 
 export enum KategorijaPreparata{
     FUNGICID = "FUNGICID",
