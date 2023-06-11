@@ -1,4 +1,5 @@
 package com.ftn.sbnz.model;
+import java.util.ArrayList;
 import java.util.IntSummaryStatistics;
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class Preparat {
     private PotkategorijaPreparata potkategorija;
     
     @ElementCollection
-    private List<Integer> ocene;
+    private List<Integer> ocene = new ArrayList<Integer>();
 
     private double koncentracija;
 

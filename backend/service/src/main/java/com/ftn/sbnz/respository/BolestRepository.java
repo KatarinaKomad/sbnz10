@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.ftn.sbnz.model.Bolest;
 
 @Repository
-public interface BolestRepository extends JpaRepository<Bolest, Integer>{
+public interface BolestRepository extends JpaRepository<Bolest, Long>{
     
 }

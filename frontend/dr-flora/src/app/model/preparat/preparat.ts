@@ -36,3 +36,10 @@ export enum PotkategorijaPreparata {
     JAK = "JAK",
     SLAB = "SLAB"
 }
+
+export interface PreparatiMultiselect {
+    sve_opcije: Preparat[], 
+    odabrane_opcije: number[],
+    potkategorija: PotkategorijaPreparata,
+    bolestNaziv: string
+}

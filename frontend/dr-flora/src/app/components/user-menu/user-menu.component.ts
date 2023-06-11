@@ -24,6 +24,7 @@ export class UserMenuComponent implements OnInit {
     {optionName:"Izvestaji", optionRoute: "reports"}
   ]
   doktorOptionsRouting: IMenuOption[]  = [
+    {optionName:"Pregled bolesti", optionRoute: "bolesti"},
     {optionName:"Pregled preparata", optionRoute: "preparati"},
     {optionName:"Istorija bolesti", optionRoute: "history"},
     {optionName:"Izvestaji", optionRoute: "reports"}

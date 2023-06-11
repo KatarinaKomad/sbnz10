@@ -1,0 +1,175 @@
+@import 'src/app/style/styles';
+
+table{
+    background-color: $background_secondary;
+    font-family: $font;
+    height: 100px;
+    width: 100%;
+    overflow: auto;
+    margin: auto;
+    border: none;
+
+    td{
+        text-align: center;
+        justify-content: center;
+        align-items: center;
+        padding: 1.5%;
+
+    }
+    .note{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        max-width: 150px;
+    }
+
+
+
+    
+    tbody{
+        tr{
+            box-shadow:  0 4px 6px -4px #A8B497;
+            color: $dark-green;
+            font-size: medium;
+        }
+
+    }
+    
+    thead{
+        box-shadow:  0 4px 4px -4px $dark-orange;
+    }
+    
+    th{
+        font-weight: lighter;
+        color: $dark-orange;
+        font-size: medium;
+        padding-bottom: 1%;
+        text-align: center;
+        padding-top: 1%;
+        outline: none;
+    }
+
+    progress{
+        accent-color: $light_green;
+        // border-color: white;
+        // color
+        // box-shadow:  0 4px 4px -4px $dark-orange;
+    }
+}
+
+.container{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+    height: 100%;
+    padding-top: 2%;
+    font-family: $font;
+    overflow: auto;
+
+
+    .title{
+        font-size: xx-large;
+        color: $dark-orange;
+        margin-bottom: 0;
+        margin-top: 0;
+        width: 90%;
+    }
+
+    .subtitle{
+        font-size: medium;
+        color: $dark-green-hover;
+        width: 90%;
+    }
+
+    .id-input{
+        @include inputField();
+        border: none;
+        border-bottom: solid thin $middle_green;
+        box-shadow: none;
+        padding-bottom: 0;
+    }
+    
+    .id-input:focus{
+        outline: none;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    }
+
+    .search-title{
+        color: $dark-green;
+        font-size: large;
+        width: 90%;
+    }
+
+    .form{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        width: 100%;
+    }
+
+    .input-container{
+        width: fit-content; 
+        margin-right: 4%;
+    }
+
+    ::placeholder {
+        color: $dark-green-hover;
+        font-size: medium
+      }
+
+    .search-button{
+        @include greenButton();
+        padding: 0;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+    }
+}
+
+.rate-button{
+    @include greenButton();
+    font-size: 14px;
+    padding: 5% 10%;
+}
+
+.tooltip{
+    display: flex;
+    background-color: #F4F7EF;
+    border: solid 2px $middle-green;
+    color: $dark-green;
+    position: absolute;
+    max-width: 200px;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 4px;
+    white-space: normal;
+    word-wrap: break-word;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    
+}
+
+.icon-star{
+    color: $light-orange;
+}
+
+.rate{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    height: 100%;
+    width: fit-content;
+    justify-content: center;
+    width: 100%;
+}
+
+.table-container{
+    max-height: 60%; 
+    overflow: auto; 
+    min-width: 90%; 
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; 
+    margin-top: 2%;
+}
+

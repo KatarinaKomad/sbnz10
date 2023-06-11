@@ -1,0 +1,41 @@
+<div class="container">
+    <div style="display: flex; flex-direction: row; width: 90%;">
+        <div  style="   display: flex;
+                        flex-direction: column;
+                        flex-grow: 4;
+                        max-width: 30vw;">
+            <p class="title">Pregled bolesti</p>
+            <label class="subtitle">Mogućnost izmene preparata za bolesti</label>
+        </div>
+    </div>
+    
+    <app-select-dropdown></app-select-dropdown>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>NAZIV</th>
+                    <th>FAZA JAVLJANJA</th>
+                    <th>SIMPTOMI</th>
+                    <th>SLABI PREPARATI</th>
+                    <th>JAKI PREPARATI</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let bolest of bolesti">
+                    <td>{{bolest.naziv}}</td>
+                    <td>{{bolest.fazaJavljanja}}</td>
+                    <td>
+                        <button class="rate-button" (click)="showSimptomi(bolest.simptomi)">Pregled</button>
+                    </td> 
+                    <td>
+                        <button class="rate-button" (click)="showPreparati(PotkategorijaPreparata.SLAB, bolest)">Pregled</button>
+                    </td>  
+                    <td>
+                        <button class="rate-button" (click)="showPreparati(PotkategorijaPreparata.JAK, bolest)">Pregled</button>
+                    </td>    
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
