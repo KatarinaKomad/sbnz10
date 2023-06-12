@@ -88,7 +88,16 @@ insert into SIMPTOM(lokacija, opis) VALUES
 ('PLOD', 'sitne mrke pege nepravilnog oblika'),
 
 ('LIST', 'crvene pege'), --70--
-('PLOD', 'okruglaste masne pege');
+('PLOD', 'okruglaste masne pege'),
+
+('LIST', 'supljikavost'),
+('PLOD', 'sugavost'),
+
+('PLOD', 'smolast'),
+
+('PLOD', 'Pasuljast oblik'), --75--
+('PLOD', 'belosiva navlaka'),
+('PLOD', 'opadanje');
 
 INSERT INTO PREPARAT (naziv, primarna_kategorija, potkategorija, koncentracija) VALUES
 ('Akord plus', 'FUNGICID', 'JAK', 0.2),
@@ -152,9 +161,15 @@ INSERT INTO PREPARAT (naziv, primarna_kategorija, potkategorija, koncentracija) 
 
 ('Manosan', 'FUNGICID', 'SLAB', 0.25),
 
-('Flux', 'FUNGICID', 'SLAB', 0.2);
+('Flux', 'FUNGICID', 'SLAB', 0.2),
 
+('Ciram', 'FUNGICID', 'SLAB', 0.25),
+('Propineb', 'FUNGICID', 'SLAB', 0.45), --55--
 
+('Alcoban', 'FUNGICID', 'JAK', 0.8),
+('Galileo', 'FUNGICID', 'JAK', 0.075),
+
+('Cuproxat', 'FUNGICID', 'JAK', 0.35);
 
 INSERT INTO preparat_ocene (preparat_id, ocene) VALUES
 (1, 4),
@@ -208,8 +223,12 @@ INSERT INTO preparat_ocene (preparat_id, ocene) VALUES
 (50, 5),
 (51, 4),
 (52, 5),
-(52, 3);
-
+(52, 3),
+(54, 5),
+(55, 3),
+(56, 5),
+(57, 4),
+(58, 5);
 
 INSERT INTO BOLEST (naziv, faza_javljanja) VALUES
 ('cadjava pegavost lista', 'LISTANJE'),
@@ -233,7 +252,12 @@ INSERT INTO BOLEST (naziv, faza_javljanja) VALUES
 ('Moljac', 'FORMIRANJE_PLODA'),
 ('Krompirova zlatica', 'FORMIRANJE_PLODA'), --20--
 ('Antraknoza', 'LISTANJE'),
-('Rda pasulja', 'LISTANJE');
+('Rda pasulja', 'LISTANJE'),
+('Kovrdzavost lista', 'CETANJE'),
+('Supljikavost lista', 'FORMIRANJE_PLODA'),
+('Breskvin smotavac', 'FORMIRANJE_PLODA'), --25--
+('Rogac sljive', 'FORMIRANJE_PLODA'),
+('Sljivina osa', 'FORMIRANJE_PLODA');
 
 
 INSERT INTO TIP_BILJKE (naziv) VALUES
@@ -299,7 +323,17 @@ INSERT INTO tip_biljke_moguce_bolesti (tip_biljke_id, moguce_bolesti_id) VALUES
 -- boranija
 (12, 21), -- antraknoza
 (12, 15), -- siva trulez
-(12, 12); -- plamenjaca
+(12, 12), -- plamenjaca
+
+--breskva--
+(4, 23), --Kovrdzavost lista--
+(4, 24), --supljikavost lista--
+(4, 25), --breskvin smotavac--
+
+--sljiva--
+(5, 12), --plamenjaca--
+(5, 26), --rogac--
+(5, 27); --sljivina osa--
 
 INSERT INTO bolest_simptomi (bolest_id, simptomi_id) VALUES
 (1, 1),
@@ -407,7 +441,28 @@ INSERT INTO bolest_simptomi (bolest_id, simptomi_id) VALUES
 (21, 42),
 (21, 69),
 -- rda pasulja
-(22, 70);
+(22, 70),
+
+--kovrdzavost lista breskve--
+(23, 30),
+(23, 16),
+(23, 17),
+--supljikavost list breskve--
+(24, 14),
+(24, 72),
+(24, 73),
+--breskvin smotavac--
+(25, 74),
+(25, 22),
+
+--rogac sljive--
+(26, 75),
+(26, 60),
+(26, 76),
+(26, 77),
+--sljivina osa--
+(27, 25),
+(27, 77);
 
 INSERT INTO bolest_jaki_preparati(bolest_id, jaki_preparati_id) VALUES
 (1, 1),
@@ -461,7 +516,14 @@ INSERT INTO bolest_jaki_preparati(bolest_id, jaki_preparati_id) VALUES
 (21, 43),
 -- rda pasulja
 (22, 43),
-(22, 38);
+(22, 38),
+--kovrdyavost lista breskve--
+(23, 7),
+(23, 56),
+(23, 57),
+--rogac sljive--
+(26, 58);
+
 
 INSERT INTO bolest_slabi_preparati(bolest_id, slabi_preparati_id) VALUES
 (1, 2),
@@ -506,7 +568,22 @@ INSERT INTO bolest_slabi_preparati(bolest_id, slabi_preparati_id) VALUES
 -- antraknoza
 (21, 53),
 -- rda pasulja
-(22, 35);
+(22, 35),
+
+--supljikavost lista breskve--
+(24, 31),
+(24, 54),
+(24, 4),
+
+--breskvin smotavac--
+(25, 14),
+(25, 32),
+(25, 20),
+
+--sljivina osa--
+(27, 32),
+(27, 14);
+
 
 INSERT INTO biljka (kategorija, trenutna_faza, vreme_sadnje, tip_id, vlasnik_id) VALUES
 ('VOCE', 'LISTANJE', '2022-02-06', 1, 1),
@@ -521,7 +598,11 @@ INSERT INTO biljka (kategorija, trenutna_faza, vreme_sadnje, tip_id, vlasnik_id)
 ('POVRCE', 'LISTANJE', '2022-02-06', 10, 1), --9-- dinja
 ('POVRCE', 'LISTANJE', '2022-02-06', 7, 1), --10-- paprika - plamenjaca
 ('POVRCE', 'FORMIRANJE_PLODA', '2022-02-06', 7, 1), --11-- paprika - zelena stenica
-('POVRCE', 'LISTANJE', '2022-02-06', 7, 1); --12-- paprika - siva trulez
+('POVRCE', 'LISTANJE', '2022-02-06', 7, 1), --12-- paprika - siva trulez
+
+('VOCE', 'FORMIRANJE_PLODA', '2023-02-10', 4, 2), --breskva--
+('VOCE', 'FORMIRANJE_PLODA', '2022-03-22', 5, 2), --sljiva--
+('VOCE', 'FORMIRANJE_PLODA', '2023-03-10', 5, 1); --sljiva--
 
 INSERT INTO preporuka(naziv_preparata, opis_preparata, poruka, preporucena_doza, bolest_id, biljka_id) VALUES
 ('Blauvit', 'slab fungicid', '', 0.7, 1, 1),
