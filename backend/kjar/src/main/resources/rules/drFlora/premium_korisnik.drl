@@ -1,0 +1,106 @@
+import com.ftn.sbnz.model.enums.KategorijaKorisnika;
+import com.ftn.sbnz.model.Korisnik;
+import com.ftn.sbnz.model.FinalnaDijagnoza;
+import com.ftn.sbnz.model.Trimester;
+
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+rule "Korisnik ocenio > 70% preporucenih preparata u ovom trimesecju -> prelazi u premium kategoriju" 
+    no-loop
+    when
+        $currentTrimester: Trimester($startDate: startDate,  
+                              $endDate: endDate, 
+                              endDate.equals(LocalDate.now())
+                            )
+
+        $korisnik: Korisnik($sveOcenjeneDijagnozeKorisnika: ocenjeneDijagnoze,
+                            ocenjeneDijagnoze.size() > 0)
+
+
+        $ocenjeneUTromesecju: Number(intValue > 0) from accumulate(
+            $d : FinalnaDijagnoza(
+                    biljka.vlasnik == $korisnik,
+                    $sveOcenjeneDijagnozeKorisnika contains preporuceniPreparat.id,
+                    eval($startDate.isBefore(datumPreporuke)),
+                    eval($endDate.isAfter(datumPreporuke))
+                ), 
+            count($d)
+        )
+
+        Number(0.7 * intValue >= $ocenjeneUTromesecju) from accumulate(
+            $d : FinalnaDijagnoza(
+                    biljka.vlasnik == $korisnik,
+                    eval($startDate.isBefore(datumPreporuke)),
+                    eval($endDate.isAfter(datumPreporuke))
+                ), 
+            count($d)
+        )
+    then
+        System.out.println("Dodati poeni");
+        modify($korisnik){setPoeni($korisnik.getPoeni() + 10)}
+end
+
+
+rule "Korisnik ima > 40 poena -> prelazi u premium kategoriju" 
+    no-loop
+    when
+        $korisnik: Korisnik( poeni > 40,
+                            kategorija == KategorijaKorisnika.REGULAR
+                            )
+        
+    then
+        System.out.println("U premium");
+        modify($korisnik){setKategorija(KategorijaKorisnika.PREMIUM)}
+end
+
+
+
+
+rule "First Trimester"
+    salience 10
+    when
+        eval(LocalDate.now().getMonthValue() >= 1 && LocalDate.now().getMonthValue() <= 3)
+    then
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate currentTrimesterStart = LocalDate.parse(String.valueOf(LocalDate.now().getYear()) + "-01-01", formatter);
+        LocalDate currentTrimesterEnd = LocalDate.parse(String.valueOf(LocalDate.now().getYear()) + "-03-31", formatter);
+        insert(new Trimester(currentTrimesterStart, currentTrimesterEnd));
+end
+
+rule "Second Trimester"
+    salience 10
+    when
+        eval(LocalDate.now().getMonthValue() >= 4 && LocalDate.now().getMonthValue() <= 6)
+        
+    then
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate currentTrimesterStart = LocalDate.parse(String.valueOf(LocalDate.now().getYear()) + "-04-01", formatter);
+        LocalDate currentTrimesterEnd = LocalDate.parse(String.valueOf(LocalDate.now().getYear()) + "-06-31", formatter); ///ISPRAVITIIIIIIII
+        insert(new Trimester(currentTrimesterStart, currentTrimesterEnd));
+end
+
+rule "Third Trimester"
+    salience 10
+    when
+        eval(LocalDate.now().getMonthValue() >= 7 && LocalDate.now().getMonthValue() <= 9)
+    then
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate currentTrimesterStart = LocalDate.parse(String.valueOf(LocalDate.now().getYear()) + "-07-01", formatter);
+        LocalDate currentTrimesterEnd = LocalDate.parse(String.valueOf(LocalDate.now().getYear()) + "-09-30", formatter);
+        insert(new Trimester(currentTrimesterStart, currentTrimesterEnd));
+end
+
+
+rule "Fourth Trimester"
+    salience 10
+    when
+        eval(LocalDate.now().getMonthValue() >= 10 && LocalDate.now().getMonthValue() <= 12)
+    then
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate currentTrimesterStart = LocalDate.parse(String.valueOf(LocalDate.now().getYear()) + "-10-01", formatter);
+        LocalDate currentTrimesterEnd = LocalDate.parse(String.valueOf(LocalDate.now().getYear()) + "-12-31", formatter);
+        insert(new Trimester(currentTrimesterStart, currentTrimesterEnd));
+end

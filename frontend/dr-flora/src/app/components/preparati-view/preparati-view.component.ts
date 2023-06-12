@@ -48,15 +48,15 @@ export class PreparatiViewComponent implements OnInit {
     })    
   }
 
-  openRateDialog(preparat: Preparat){
-    let data: RatePreparat = {id: preparat.id, ocena: preparat.ocena, naziv: preparat.naziv};
-    this.dialog.open(RatePopupComponent, {data}).afterClosed()
-      .subscribe(_ => {
-        const index = this.preparati.findIndex(x => x.id == preparat.id);
-        this.preparati[index].ocena = data.ocena;
-        this.preparati = [...this.preparati];
-    })
-  }
+  // openRateDialog(preparat: Preparat){
+  //   let data: RatePreparat = {id: preparat.id, ocena: preparat.ocena, naziv: preparat.naziv};
+  //   this.dialog.open(RatePopupComponent, {data}).afterClosed()
+  //     .subscribe(_ => {
+  //       const index = this.preparati.findIndex(x => x.id == preparat.id);
+  //       this.preparati[index].ocena = data.ocena;
+  //       this.preparati = [...this.preparati];
+  //   })
+  // }
 
   addNewPreparat() {
     this.dialog.open(AddPreparatComponent, {

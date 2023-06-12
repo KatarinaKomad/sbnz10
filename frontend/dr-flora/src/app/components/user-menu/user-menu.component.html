@@ -1,4 +1,4 @@
-<div class="user-menu-container" *ngIf="role === 'REGULAR'">
+<div class="user-menu-container" *ngIf="role === 'REGULAR' || role === 'PREMIUM'">
     <div *ngFor="let option of userOptionsRouting" class="menu-option">
         <a class="option-button" [routerLink]="[{ outlets: { userPage: [option.optionRoute] } }]">{{option.optionName}}</a>
     </div>

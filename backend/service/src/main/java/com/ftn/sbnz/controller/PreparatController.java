@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -27,9 +28,9 @@ public class PreparatController {
     private PreparatService preparatService;
     
     @PostMapping("/rate")
-    public ResponseEntity<?> addPreparatRate(@RequestBody PreparatRateDTO rateDTO){
+    public ResponseEntity<?> addPreparatRate(@RequestHeader("currentUser") String userId, @RequestBody PreparatRateDTO rateDTO){
         try{
-            double rate = preparatService.ratePreparat(rateDTO);
+            double rate = preparatService.ratePreparat(userId, rateDTO);
             return new ResponseEntity<>(rate, HttpStatus.OK);
         }catch(Exception e) {
             e.printStackTrace();

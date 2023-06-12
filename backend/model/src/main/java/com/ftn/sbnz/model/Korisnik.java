@@ -1,6 +1,10 @@
 package com.ftn.sbnz.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -38,6 +42,10 @@ public class Korisnik {
     private String email;
     @Column(nullable = false)
     private String password;
+
+    @ElementCollection
+    @Builder.Default
+    private List<Long> ocenjeneDijagnoze = new ArrayList<>();
 
     public Long getId(){
         return id;

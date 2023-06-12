@@ -15,4 +15,5 @@ public class PreparatRateDTO {
     private boolean isDoctor;
     private int rate;
     private Long preparatId;
+    private Long finalnaDijagnozaId;
 }

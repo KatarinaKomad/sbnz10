@@ -8,6 +8,7 @@ export interface RatePreparat{
     id: number,
     naziv: String;
     ocena: number;
+    finalnaDijagnozaId?: number;
 }
 
 export interface Preparat {

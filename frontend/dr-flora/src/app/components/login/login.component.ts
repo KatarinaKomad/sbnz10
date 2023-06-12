@@ -46,10 +46,10 @@ export class LoginComponent{
                                     next: (response) => {
                                       this.loginService.addToSessionStorage(response);
                                       if (response.role !== Role.DOKTOR){
-                                        this.router.navigateByUrl('/user')
+                                        this.router.navigateByUrl('/user/(userPage:plants)')
                                       }
                                       else{
-                                        this.router.navigateByUrl('/doktor')
+                                        this.router.navigateByUrl('/doktor/(doktorPage:bolesti)')
                                       }
                                     },
                                     error: (err) => this.openError("Neuspešno logovanje", "Neispravni username ili password")

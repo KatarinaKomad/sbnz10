@@ -541,3 +541,8 @@ INSERT INTO neizlecena_bolest_voca (datum_dijagnoze, faza_javljanja, biljka_id, 
 ('2023-05-06', 'CVETANJE', 1, 2, 2),
 ('2023-02-06', 'LISTANJE', 1, 3, 2);
 
+INSERT INtO korisnik_ocenjene_dijagnoze(korisnik_id, ocenjene_dijagnoze) VALUES
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 5);

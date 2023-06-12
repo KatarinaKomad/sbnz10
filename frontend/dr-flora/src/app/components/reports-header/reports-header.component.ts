@@ -42,7 +42,7 @@ export class ReportsHeaderComponent implements OnInit{
     selectedReportType : ReportType = ReportType.TIP_BILJKE;
 
     ngOnInit(): void {
-      if (this.korisnikService.getCuurentuserRole() !== Role.REGULAR){
+      if (this.korisnikService.getCuurentuserRole() === Role.DOKTOR){
         this.optionTitles.push( 'Statistika primene jakih preparata','Statistika primene slabih preparata', 'Statistika primene odabranog preparata',);
       }
     }

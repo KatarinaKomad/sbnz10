@@ -15,7 +15,11 @@ import com.ftn.sbnz.dto.PreparatDTO;
 import com.ftn.sbnz.dto.PreparatRateDTO;
 import com.ftn.sbnz.mapper.PreparatMapper;
 import com.ftn.sbnz.model.Bolest;
+import com.ftn.sbnz.model.Doktor;
+import com.ftn.sbnz.model.Korisnik;
 import com.ftn.sbnz.model.Preparat;
+import com.ftn.sbnz.respository.DoktorRepository;
+import com.ftn.sbnz.respository.KorisnikRepository;
 import com.ftn.sbnz.respository.PreparatRepository;
 
 @Service
@@ -23,6 +27,12 @@ public class PreparatService {
 
     @Autowired
     private PreparatRepository preparatRepository;
+
+    @Autowired
+    private KorisnikRepository korisnikRepository;
+
+    @Autowired 
+    private DoktorRepository doktorRepository;
     
     public Preparat getTopPrearatForDesease(Bolest bolest){
         if (bolest.getSlabiPreparati().size() > 0){
@@ -40,7 +50,17 @@ public class PreparatService {
         return sumOcene.getAverage();
     }
 
-    public double ratePreparat(PreparatRateDTO rateDTO){
+    public double ratePreparat(String userId, PreparatRateDTO rateDTO){
+
+        if(rateDTO.isDoctor()){
+            Doktor doktor = doktorRepository.findById(Long.valueOf(userId)).get();
+            doktor.getOcenjeneDijagnoze().add(rateDTO.getFinalnaDijagnozaId());
+        } else {
+            Korisnik korisnik = korisnikRepository.findById(Long.valueOf(userId)).get();
+            korisnik.getOcenjeneDijagnoze().add(rateDTO.getFinalnaDijagnozaId());
+        }
+
+
         Optional<Preparat> p = preparatRepository.findById(rateDTO.getPreparatId());
         if( p.isPresent()){
             Preparat preparat = p.get();

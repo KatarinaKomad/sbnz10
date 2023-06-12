@@ -6,6 +6,7 @@ import org.kie.api.KieServices;
 import org.kie.api.builder.KieScanner;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.kie.api.runtime.rule.FactHandle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +18,9 @@ import com.ftn.sbnz.model.Biljka;
 import com.ftn.sbnz.model.Doktor;
 import com.ftn.sbnz.model.FinalnaDijagnoza;
 import com.ftn.sbnz.model.Korisnik;
+import com.ftn.sbnz.model.Preporuka;
 import com.ftn.sbnz.model.Simptom;
+import com.ftn.sbnz.model.Trimester;
 import com.ftn.sbnz.respository.BiljkaRepository;
 import com.ftn.sbnz.respository.DoktorRepository;
 import com.ftn.sbnz.respository.FinalnaDijagnozaRepositiry;
@@ -26,6 +29,9 @@ import com.ftn.sbnz.respository.NeizlecenaBolestPovrcaRepository;
 import com.ftn.sbnz.respository.NeizlecenaBolestVocaRepository;
 import com.ftn.sbnz.respository.SimptomRepository;
 
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -85,10 +91,6 @@ public class DroolsConfig {
         KieSession kieSession = kieContainer.newKieSession("rulesSession");
         logger.info("Creating new Kie Session.");
 
-        List<Korisnik> allUsers = korisnikRepository.findAll();
-        for (Korisnik user : allUsers) {
-            kieSession.insert(user);
-        }
 
         List<Simptom> all = simptomRepository.findAll();
         for (Simptom s: all){
@@ -115,6 +117,7 @@ public class DroolsConfig {
                     kieSession.insert(neizlecenaBolestPovrca);
                 }
             }
+            insertKorisnik(kieSession);
         }
         else{
             Doktor doktor = doktorRepository.findById(userid).get();
@@ -127,4 +130,20 @@ public class DroolsConfig {
         return kieSession;
     }
 
+    private void insertKorisnik(KieSession kieSession) {
+        List<Korisnik> allUsers = korisnikRepository.findAll();
+        for (Korisnik user : allUsers) {
+            kieSession.insert(user);
+        }
+        kieSession.fireAllRules();
+
+        Collection<FactHandle> handlers = kieSession.getFactHandles();
+        for (FactHandle handle: handlers) {
+            Object obj = kieSession.getObject(handle);
+            if (obj.getClass() == Korisnik.class){
+                Korisnik k = (Korisnik) obj;
+                korisnikRepository.save(k);
+            }
+        }
+    }
 }

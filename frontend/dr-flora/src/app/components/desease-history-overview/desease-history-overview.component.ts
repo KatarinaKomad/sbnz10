@@ -9,6 +9,7 @@ import { RatePopupComponent } from '../rate-popup/rate-popup.component';
 import { formatDate } from '@angular/common';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { VrsteVoca, VrstePovrca } from 'src/app/model/biljka/biljka';
+import { RatePreparat } from 'src/app/model/preparat/preparat';
 
 @Component({
   selector: 'app-desease-history-overview',
@@ -65,7 +66,12 @@ export class DeseaseHistoryOverviewComponent implements OnInit {
   }
 
   openRateDialog(dijagnoza: FinalnaDijagnoza){
-    let data = {id: dijagnoza.idPreparat, ocena: dijagnoza.ocenaPreparata, naziv: dijagnoza.nazivPreparata}
+    let data: RatePreparat = {
+      id: dijagnoza.idPreparat, 
+      ocena: dijagnoza.ocenaPreparata, 
+      naziv: dijagnoza.nazivPreparata,
+      finalnaDijagnozaId: dijagnoza.id
+    }
     this.dialog.open(RatePopupComponent, {data})
       .afterClosed().subscribe(_ => {
         const index = this.dijagnoze.findIndex(x => x.idPreparat == data.id);
@@ -79,11 +85,14 @@ export class DeseaseHistoryOverviewComponent implements OnInit {
     this.tooltioToShow = dijagnoza.id;
   }
 
-  isWithinTwoMonths(date: Date){
-    let p = date as any as  number[];
-    let dateToCompare = new Date(p[0], p[1] - 1, p[2])
-    let today = new Date();
-    return dateToCompare <= today && dateToCompare >= this.subtractMonths(today, 2)
+  isWithinTwoMonths(date: Date): boolean{
+    if (this.korisnikService.getCuurentuserRole() !== Role.DOKTOR){
+      let p = date as any as  number[];
+      let dateToCompare = new Date(p[0], p[1] - 1, p[2])
+      let today = new Date();
+      return dateToCompare <= today && dateToCompare >= this.subtractMonths(today, 2)
+    }
+    return true;
   }
 
   subtractMonths(date: Date, months: number) : Date{
