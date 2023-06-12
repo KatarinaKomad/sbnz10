@@ -1,4 +1,4 @@
 <div class="report-page-container">
     <app-reports-header (reportDataEmiter)="handleEvent($event)" (reportTypeEmiter)="handleReportTypeEvent($event)"></app-reports-header>
-    <app-reports-content *ngIf="reportData.length > 0" [finalneDijagnoze]="reportData" [reportType]="reportType"></app-reports-content>
+    <app-reports-content *ngIf="reportData && reportData.length > 0" [finalneDijagnoze]="reportData" [reportType]="reportType"></app-reports-content>
 </div>
