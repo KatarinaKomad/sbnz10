@@ -20,8 +20,8 @@ export class ReportService {
     return this.http.postT<FinalnaDijagnoza[]>(environment.apiUrl + "report/get-report", request);
   }
 
-  groubByDisease(dijagnoze: FinalnaDijagnoza[]) : {[key: string] : FinalnaDijagnoza[]}  {
-    let groupedData: {[key: string] : FinalnaDijagnoza[]} = {}
+  groubByDisease(dijagnoze: FinalnaDijagnoza[]) : DijagnozePoParametru  {
+    let groupedData: DijagnozePoParametru = {}
     dijagnoze.forEach(dijagnoza => {
       let list = groupedData[dijagnoza.nazivBolesti];
       list? list.push(dijagnoza) : groupedData[dijagnoza.nazivBolesti] = [dijagnoza]
@@ -29,8 +29,8 @@ export class ReportService {
     return groupedData;
   }
 
-  groubByPlantType(dijagnoze: FinalnaDijagnoza[]) : {[key: string] : FinalnaDijagnoza[]}  {
-    let groupedData: {[key: string] : FinalnaDijagnoza[]} = {}
+  groubByPlantType(dijagnoze: FinalnaDijagnoza[]) : DijagnozePoParametru  {
+    let groupedData: DijagnozePoParametru = {}
     dijagnoze.forEach(dijagnoza => {
       let list = groupedData[dijagnoza.nazivtipaBiljke];
       list? list.push(dijagnoza) : groupedData[dijagnoza.nazivtipaBiljke] = [dijagnoza]
@@ -38,8 +38,8 @@ export class ReportService {
     return groupedData;
   }
 
-  groubByPreparat(dijagnoze: FinalnaDijagnoza[]) : {[key: string] : FinalnaDijagnoza[]}  {
-    let groupedData: {[key: string] : FinalnaDijagnoza[]} = {}
+  groubByPreparat(dijagnoze: FinalnaDijagnoza[]) : DijagnozePoParametru  {
+    let groupedData: DijagnozePoParametru = {}
     dijagnoze.forEach(dijagnoza => {
       let list = groupedData[dijagnoza.nazivPreparata];
       list? list.push(dijagnoza) : groupedData[dijagnoza.nazivPreparata] = [dijagnoza]
@@ -49,48 +49,70 @@ export class ReportService {
 
   groupByDeseaseAndDate(dijagnoze: FinalnaDijagnoza[]) : ReportDataType {
     let groupedDataByDiseaseName = this.groubByDisease(dijagnoze);
-    return this.groupByDate(groupedDataByDiseaseName);
+    return this.groupAll(groupedDataByDiseaseName, dijagnoze);
   }
 
   groupByPlantTypeAndDate(dijagnoze: FinalnaDijagnoza[]) : ReportDataType {
     let groupedDataByDiseaseName = this.groubByPlantType(dijagnoze);
-    return this.groupByDate(groupedDataByDiseaseName);
+    return this.groupAll(groupedDataByDiseaseName, dijagnoze);
   }
 
   groupByPreparatAndDate(dijagnoze: FinalnaDijagnoza[]) : ReportDataType {
     let groupedDataByPreparat = this.groubByPreparat(dijagnoze);
-    return this.groupByDate(groupedDataByPreparat);
+    return this.groupAll(groupedDataByPreparat, dijagnoze);
   }
 
-  groupByDate(groupedByParam: {[key: string] : FinalnaDijagnoza[]}) {
+
+  groupAll(groupedByParam: DijagnozePoParametru, dijagnoze: FinalnaDijagnoza[]) {
     let data: ReportDataType  = []
     let colorIndex = 0;
-    Object.keys(groupedByParam).forEach(k => {
-      let gruopByDate : {[key: string]: FinalnaDijagnoza[]} = {}
-      groupedByParam[k].forEach(value => {
-        let date = formatDate(value.datumPreporuke, "dd.MM.YYYY",  'en-US')
-        let list = gruopByDate[date];
-        list? list.push(value) : gruopByDate[date] = [value]
-      })
+    const sviDatumi = dijagnoze
+        .map(d => formatDate(d.datumPreporuke, "dd.MM.YYYY",  'en-US'))
+        .filter((value, index, array) => array.indexOf(value) === index);
 
-      let points : {y: number, label: string}[] = []
-      Object.keys(gruopByDate).forEach(date => {
-        points.push({y: gruopByDate[date].length, label: date})
+    Object.keys(groupedByParam).forEach( param=> {
+      const listaDijagnoza = groupedByParam[param];
+      const groupByDate = this.getGroupedByDate(listaDijagnoza);
+
+      let points : Point[] = []
+      sviDatumi.forEach( date => {
+        Object.keys(groupByDate).includes(date) ? 
+          points.push({y: groupByDate[date].length, label: date}) :
+          points.push({y: 0, label: date})  
       })
       data.push({
-          type: "stackedBar",
-          name: k,
-          showInLegend: "true",
-          color: this.colors[colorIndex],
-          dataPoints: points
-        }
-      )
+        type: "column",
+        name: param,
+        showInLegend: "true",
+        color: this.colors[colorIndex],
+        dataPoints: points
+      })
       colorIndex += 1;
+    
     })
     
     return data;
   }
 
+  
+  getGroupedByDate(listaDijagnoza: FinalnaDijagnoza[]): DijagnozePoParametru {
+    let groupByDate: DijagnozePoParametru = {}
 
+    for(let dijagnoza of listaDijagnoza){
+      let date = formatDate(dijagnoza.datumPreporuke, "dd.MM.YYYY",  'en-US')      
+      Object.keys(groupByDate).includes(date) ? 
+        groupByDate[date].push(dijagnoza):
+        groupByDate[date] = [dijagnoza]
+    }
+    return groupByDate;
+  }
+}
 
+interface Point {
+  y: number, 
+  label: string
+}
+
+interface DijagnozePoParametru {
+  [key: string] : FinalnaDijagnoza[]
 }
