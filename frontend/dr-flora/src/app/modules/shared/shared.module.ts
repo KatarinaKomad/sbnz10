@@ -12,6 +12,7 @@ import { ReportsContentComponent } from "src/app/components/reports-content/repo
 import { ReportsHeaderComponent } from "src/app/components/reports-header/reports-header.component";
 import { ReportsPageComponent } from "src/app/components/reports-page/reports-page.component";
 import { CanvasJSAngularChartsModule } from '@canvasjs/angular-charts';
+import { ProfileViewComponent } from "src/app/components/profile-view/profile-view.component";
 
 let declarations = [MultiselectDialogComponent, 
     SelectDropdownComponent, 
@@ -20,6 +21,7 @@ let declarations = [MultiselectDialogComponent,
     RatePopupComponent,
     ReportsHeaderComponent,
     ReportsContentComponent,
+    ProfileViewComponent,
     ReportsPageComponent]
 
 
