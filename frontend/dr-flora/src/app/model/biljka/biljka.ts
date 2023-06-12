@@ -32,7 +32,7 @@ export const plantTypeImageMapper = {
     [VrsteVoca.JABUKA.toString()] : "apple.png",
     [VrsteVoca.VISNJA.toString()] : "cherry.png",
     [VrsteVoca.BRESKVA.toString()] : "peach.png",
-    [VrsteVoca.BRESKVA.toString()] : "plum.png",
+    [VrsteVoca.SLJIVA.toString()] : "plum.png",
     [VrstePovrca.BORANIJA.toString()] : "green beans.jpg",
     [VrstePovrca.KROMPIR.toString()] : "potato.png",
     [VrstePovrca.PAPRIKA.toString()] : "pepper.jpg",

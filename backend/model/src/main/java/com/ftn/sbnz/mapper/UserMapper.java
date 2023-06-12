@@ -3,6 +3,7 @@ package com.ftn.sbnz.mapper;
 import com.ftn.sbnz.dto.UserInfoDTO;
 import com.ftn.sbnz.model.Doktor;
 import com.ftn.sbnz.model.Korisnik;
+import com.ftn.sbnz.model.enums.KategorijaKorisnika;
 import com.ftn.sbnz.model.enums.Role;
 
 public class UserMapper {
@@ -16,11 +17,15 @@ public class UserMapper {
     }
 
     public static UserInfoDTO toDto(Korisnik korisnik) {
+        Role role = Role.REGULAR;
+        if(korisnik.getKategorija() == KategorijaKorisnika.PREMIUM){
+            role = Role.PREMIUM;
+        }
         return UserInfoDTO.builder()
                 .firstName(korisnik.getIme())
                 .lastName(korisnik.getPrezime())
                 .username(korisnik.getEmail())
-                .role(Role.DOKTOR)
+                .role(role)
             .build();
     }
 }
