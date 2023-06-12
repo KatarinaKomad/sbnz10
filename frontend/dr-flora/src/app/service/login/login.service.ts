@@ -20,4 +20,9 @@ export class LoginService {
     sessionStorage.setItem('user', korisnik.id.toString());
     sessionStorage.setItem('role', korisnik.role.toString());
   }
+
+  removeFromSessionStorage() {
+    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('role');
+  }
 }

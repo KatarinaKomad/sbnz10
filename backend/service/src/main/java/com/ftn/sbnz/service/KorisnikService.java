@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.ftn.sbnz.dto.KorisnikDTO;
 import com.ftn.sbnz.dto.LoginDTO;
+import com.ftn.sbnz.dto.UserInfoDTO;
+import com.ftn.sbnz.mapper.UserMapper;
 import com.ftn.sbnz.model.Doktor;
 import com.ftn.sbnz.model.Korisnik;
 import com.ftn.sbnz.model.enums.KategorijaKorisnika;
@@ -49,5 +51,15 @@ public class KorisnikService {
             return dto;
         }
         return null;
+    }
+
+    public UserInfoDTO getLoggedUserInfo(Long userId, String role) {
+        
+        if(role.equals("DOKTOR")) {
+            Doktor doktor = doktorRepository.findById(userId).get();
+            return UserMapper.toDto(doktor);
+        }
+        Korisnik korisnik = korisnikRepository.findById(userId).get();
+        return UserMapper.toDto(korisnik);
     }
 }

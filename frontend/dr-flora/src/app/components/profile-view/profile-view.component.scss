@@ -1,0 +1,45 @@
+@import 'src/app/style/styles';
+
+.report-page-container{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 90%;
+}
+
+
+.header-container{
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+    justify-content: center;
+    align-items: center;   
+      
+}
+
+.title{
+    font-size: xx-large;
+    color: $dark-orange;
+    margin-bottom: 0;
+    margin-top: 0;
+    width: 90%;
+}
+.subtitle{
+    font-size: medium;
+    color: $dark-green-hover;
+    width: 90%;
+}
+
+.option-button{
+    padding: 0.5% 3%;
+    width: 20vw;
+    height: 5vh;
+    margin: 1vh;
+    font-size: medium;
+    background-color: #F4F7EF;
+    border-bottom: solid 2px $light-orange;
+    min-height: 65px;
+    min-width: 170px;
+    color: $dark-green;
+    font-weight: 500;
+}

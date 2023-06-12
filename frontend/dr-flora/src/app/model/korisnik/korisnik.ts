@@ -14,3 +14,11 @@ export interface Korisnik{
     id: number,
     role: Role
 }
+
+export interface UserInfo{
+    username: string,
+    id: number,
+    role: Role,
+    firstName: string,
+    lastName: string,
+}

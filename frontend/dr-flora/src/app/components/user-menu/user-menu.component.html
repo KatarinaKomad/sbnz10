@@ -2,9 +2,15 @@
     <div *ngFor="let option of userOptionsRouting" class="menu-option">
         <a class="option-button" [routerLink]="[{ outlets: { userPage: [option.optionRoute] } }]">{{option.optionName}}</a>
     </div>
+    <div class="menu-option">
+        <a class="option-button" [routerLink]="['']">Logout</a>
+    </div>
 </div>
 <div class="user-menu-container" *ngIf="role === 'DOKTOR'">
     <div *ngFor="let option of doktorOptionsRouting" class="menu-option">
         <a class="option-button" [routerLink]="[{ outlets: { doktorPage: [option.optionRoute] } }]">{{option.optionName}}</a>
+    </div>
+    <div class="menu-option">
+        <a class="option-button" (click)="logout()" >Logout</a>
     </div>
 </div>
