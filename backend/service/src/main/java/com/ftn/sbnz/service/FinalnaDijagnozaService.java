@@ -66,14 +66,14 @@ public class FinalnaDijagnozaService {
         Optional<Korisnik> korisnik = this.korisnikRepository.findById(uderId);
         if(korisnik.isPresent() && korisnik.get().getKategorija() == KategorijaKorisnika.REGULAR){
             Integer numberOfDiagnosisiLastMonth = this.finalnaDijagnozaRepositiry.countByUserInLastMonth(uderId, LocalDate.now().minusMonths(1));
-            return numberOfDiagnosisiLastMonth <= 6;
+            return numberOfDiagnosisiLastMonth <= 15;
         }
         return true;
     }
 
     public List<FinalnaDijagnozaDTO> findAll() {
         List<FinalnaDijagnoza> all = finalnaDijagnozaRepositiry.findAll();
-        return all.stream().map(FinalnaDijagnozaMapper::toDTOWithKorisnik).collect(Collectors.toList());
+    return all.stream().map(FinalnaDijagnozaMapper::toDTOWithKorisnik).collect(Collectors.toList());
 
     }
 }

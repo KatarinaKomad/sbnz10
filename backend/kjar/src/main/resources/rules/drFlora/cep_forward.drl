@@ -66,7 +66,7 @@ rule "Dijagnoza iste bolesti 2 ili vise puta kod istog voce u istoj fazi u mesec
         )
         not (NeizlecenaBolestVoca(biljka == $biljka, bolest == $bolest, fazaJavljanja == $fazaBiljke))
     then
-        System.out.println("Neizlecena bolest voca za " + $biljka.getId() + ", bolest " + $bolest.getNaziv());
+        // System.out.println("Neizlecena bolest voca za " + $biljka.getId() + ", bolest " + $bolest.getNaziv());
         insert(new NeizlecenaBolestVoca($biljka, $bolest, $preparat, $fazaBiljke));
 end
 
@@ -90,10 +90,10 @@ rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju ne pos
                                     // datumPreporuke == LocalDate.now()
         
         not(DuplaDozaSlabogPreparataAlarm(biljka == $biljka, bolest == $bolest))
-        
+        $pr: Preporuka(this == $preporuka)
     then
         // System.out.println("Dupla doza " + $biljka.getId() + ", bolest " + $bolest.getNaziv());
-        modify($preporuka) {setPreporucenaDoza($preporuka.getPreporucenaDoza() * 2),
+        modify($pr) {setPreporucenaDoza($pr.getPreporucenaDoza() * 2),
                             modifyMessage("Preporucena je dupla doza preparata jer se bolest javila dva puta u mesec dana.")}
         insert(new DuplaDozaSlabogPreparataAlarm($biljka, $bolest));
 end
@@ -118,16 +118,17 @@ rule "NeizlecenaBolestVoca i preporuceni slabi preparat za bolest za koju postoj
         
 
         not(PromenaSlabogUJakPreparatAlarm(biljka == $biljka, bolest == $bolest))
+        $pr: Preporuka(this == $preporuka)
         
     then
+        // System.out.println("Neizlecena bolest alarm jak preparat " + $alarm.getPreparat().getNaziv());
         modify($dijagnoza) {setPreparat($bolest.getTopJakPreparat())}
-        modify($preporuka) {setPreporucenaDoza($bolest.getTopJakPreparat().getKoncentracija()), 
+        modify($pr) {setPreporucenaDoza($bolest.getTopJakPreparat().getKoncentracija()), 
                                     setNazivPreparata($bolest.getTopJakPreparat().getNaziv()),
                                     setOpisPreparata($bolest.getTopJakPreparat().getPotkategorijaPreparata() + " " + $bolest.getTopJakPreparat().getKategorijaPreparata()),
                                     setPoruka("Preporucen je jaci preparat umesto slabijeg jer je ista bolest dijagnostikovana dva puta u mesec dana.") }
         modify($alarm) {setPreparat($bolest.getTopJakPreparat())}
         insert(new PromenaSlabogUJakPreparatAlarm($biljka, $bolest));
-        // System.out.println("Neizlecena bolest alarm jak preparat " + $alarm.getPreparat().getNaziv());
 end
 
 rule "NeizlecenaBolestVoca i preporuceni jak preparat insekticid -> napomena za upotrebu u ishrani" 
@@ -203,12 +204,13 @@ rule "NeizlecenaBolestPovrca paprike i preporuceni slabi preparat za bolest za k
         
 
         not(PromenaSlabogUJakPreparatAlarm(biljka == $biljka, bolest == $bolest))
+        $pr: Preporuka(this == $preporuka)
         
     then
         // System.out.println("SLAB, ima jak -> novi_JAK");
         Preparat novJak = $bolest.getTopJakPreparat();
         modify($dijagnoza) {setPreparat(novJak)}
-        modify($preporuka) {setPreporucenaDoza(novJak.getKoncentracija()), 
+        modify($pr) {setPreporucenaDoza(novJak.getKoncentracija()), 
                             setNazivPreparata(novJak.getNaziv()),
                             setOpisPreparata(novJak.getPotkategorijaPreparata() + " " + novJak.getKategorijaPreparata()),
                             modifyMessage("Preporucen je jaci preparat umesto slabijeg jer je ista bolest dijagnostikovana dva puta u mesec dana.") }
@@ -237,12 +239,13 @@ rule "NeizlecenaBolestPovrca paprike i preporuceni slabi preparat za bolest za k
                                     this meets[5m] $alarm)
         
         not(PreporucenJosJedanPreparat(biljka == $biljka, bolest == $bolest))
+        $pr: Preporuka(this == $preporuka)
         
     then
         Preparat topSlabPreparat = $bolest.getTopSlabPreparat($preparat);
         // System.out.println("SLAB, nema JAK -> + 2*novi_slab");
         if (topSlabPreparat != null) {
-            modify($preporuka) {
+            modify($pr) {
                 setPoruka("Preporucena upotreba i " +  topSlabPreparat.getNaziv() + " koncentracije: "  +  topSlabPreparat.getKoncentracija() * 2) 
             }
             insert(new PreporucenJosJedanPreparat($biljka, $bolest));
@@ -271,9 +274,10 @@ rule "NeizlecenaBolestPovrca paprike i preporuceni jaki preparat za bolest za ko
         
         not(PovecanaDozaJakogPreparataAlarm(biljka == $biljka, bolest == $bolest))
         not(UgrozenaBiljka(biljka == $biljka))
+        $pr: Preporuka(this == $preporuka)
     then
         // System.out.println("JAK, nema slab ->  1.5 * isti_JAK");
-        modify($preporuka) {setPreporucenaDoza($preporuka.getPreporucenaDoza() * 1.5),
+        modify($pr) {setPreporucenaDoza($preporuka.getPreporucenaDoza() * 1.5),
                             setPoruka("Preporucena je veca doza preparata jer se bolest javila dva puta u mesec dana.")}
         insert(new PovecanaDozaJakogPreparataAlarm($biljka, $bolest));
 end

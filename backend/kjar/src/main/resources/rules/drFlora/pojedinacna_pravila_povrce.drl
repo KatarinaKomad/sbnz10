@@ -23,9 +23,10 @@ rule "Lubenica ima plamenjacu i korisnik ima i dinje -> napomena da se prskaju i
                                     datumPreporuke == LocalDate.now())
         Biljka(vlasnik == $vlasnik,
                 tip.naziv == "dinja")
+        $pr: Preporuka(this == $preporuka)
     then
-        System.out.println("Preporuka za dinju");
-        modify($preporuka){setPoruka("Zbog posedovanje sorte dinje koja je podlezna istoj bolesti, tretirajte je preparatom na isti nacin.")}
+        // System.out.println("Preporuka za dinju");
+        modify($pr){setPoruka("Zbog posedovanje sorte dinje koja je podlezna istoj bolesti, tretirajte je preparatom na isti nacin.")}
 end
 
 
@@ -44,7 +45,8 @@ rule "Dinja ima plamenjacu i korisnik ima i lubenice -> napomena da se prskaju i
                                     datumPreporuke == LocalDate.now())
         Biljka(vlasnik == $vlasnik,
                 tip.naziv == "lubenica")
+        $pr: Preporuka(this == $preporuka)
     then
-        System.out.println("Preporuka za lubenicu");
-        modify($preporuka){setPoruka("Zbog posedovanje sorte lubenice koja je podlezna istoj bolesti, tretirajte je preparatom na isti nacin.")}
+        // System.out.println("Preporuka za lubenicu");
+        modify($pr){setPoruka("Zbog posedovanje sorte lubenice koja je podlezna istoj bolesti, tretirajte je preparatom na isti nacin.")}
 end

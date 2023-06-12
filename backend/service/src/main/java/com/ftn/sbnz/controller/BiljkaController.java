@@ -2,6 +2,9 @@ package com.ftn.sbnz.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,10 +26,14 @@ public class BiljkaController {
 
     @Autowired
     private BiljkaService biljkaService;
+    @Autowired
+    private HttpServletRequest request;
     
     @PostMapping("/save-new")
     public ResponseEntity<?> saveNewPlant(@RequestBody BiljkaDTO biljkaDTO){
         try{
+            HttpSession session = request.getSession();
+            session.setAttribute("currentUser", biljkaDTO.getVlasnikId());
             BiljkaDTO biljka = this.biljkaService.saveNewPlant(biljkaDTO);
             return new ResponseEntity<>(biljka, HttpStatus.OK);
         }

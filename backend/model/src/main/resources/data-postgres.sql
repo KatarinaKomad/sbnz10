@@ -253,7 +253,7 @@ INSERT INTO BOLEST (naziv, faza_javljanja) VALUES
 ('Krompirova zlatica', 'FORMIRANJE_PLODA'), --20--
 ('Antraknoza', 'LISTANJE'),
 ('Rda pasulja', 'LISTANJE'),
-('Kovrdzavost lista', 'CETANJE'),
+('Kovrdzavost lista', 'CVETANJE'),
 ('Supljikavost lista', 'FORMIRANJE_PLODA'),
 ('Breskvin smotavac', 'FORMIRANJE_PLODA'), --25--
 ('Rogac sljive', 'FORMIRANJE_PLODA'),

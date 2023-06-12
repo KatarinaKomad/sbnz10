@@ -16,5 +16,9 @@
         [style.backgroundColor]="this.symptomsForm[LokacijaSimptoma.GRANA].length > 0 ? '#E9EDC9' : '#FEFCF7'">Simptomi grane
             <mat-icon aria-hidden="false" class="icon" fontIcon="keyboard_arrow_right"></mat-icon>
         </button>
+        <button class="dropdown-button" (click)="openDialog(LokacijaSimptoma.STABLO)" 
+        [style.backgroundColor]="this.symptomsForm[LokacijaSimptoma.STABLO].length > 0 ? '#E9EDC9' : '#FEFCF7'">Simptomi stabla
+            <mat-icon aria-hidden="false" class="icon" fontIcon="keyboard_arrow_right"></mat-icon>
+        </button>
     </div>
 </div>

@@ -12,9 +12,11 @@ import com.ftn.sbnz.event.UnosSimptoma;
 import com.ftn.sbnz.model.Biljka;
 import com.ftn.sbnz.model.Bolest;
 import com.ftn.sbnz.model.FinalnaDijagnoza;
+import com.ftn.sbnz.model.Korisnik;
 import com.ftn.sbnz.model.Preparat;
 import com.ftn.sbnz.model.Preporuka;
 import com.ftn.sbnz.respository.FinalnaDijagnozaRepositiry;
+import com.ftn.sbnz.respository.KorisnikRepository;
 import com.ftn.sbnz.respository.NeizlecenaBolestPovrcaRepository;
 import com.ftn.sbnz.respository.PreporukaRepository;
 import com.ftn.sbnz.respository.NeizlecenaBolestVocaRepository;
@@ -29,6 +31,9 @@ public class PreporukaService {
 
     @Autowired
     private PreporukaRepository preporukaRepository;
+
+    @Autowired
+    private KorisnikRepository korisnikRepository;
 
     @Autowired
     KieSession kieSession;
@@ -70,32 +75,50 @@ public class PreporukaService {
     }
 
     private Preporuka handleSessionChanges(Preporuka preporuka, FinalnaDijagnoza finalnaDijagnoza){
+        Preporuka saved = null;
         Collection<FactHandle> handlers = kieSession.getFactHandles();
         for (FactHandle handle: handlers) {
             Object obj = kieSession.getObject(handle);
             if (obj.getClass() == Preporuka.class){
                 Preporuka p = (Preporuka) obj;
                 if (p.getBiljka().getId() == preporuka.getBiljka().getId()){
-                    preporuka = preporukaRepository.save(p);
+                    saved = preporukaRepository.save(p);
+                    break;
                 }
             }
-            if (obj.getClass() == FinalnaDijagnoza.class){
+        }
+        if(saved == null) {
+            saved = preporukaRepository.save(preporuka);
+        }
+
+        FinalnaDijagnoza dijagnozaSaved = null;
+        for (FactHandle handle: handlers) {
+            Object obj = kieSession.getObject(handle);
+             if (obj.getClass() == FinalnaDijagnoza.class){
                 FinalnaDijagnoza dijagnoza = (FinalnaDijagnoza) obj;
                 if (dijagnoza.getBiljka().getId() == finalnaDijagnoza.getBiljka().getId() &&
                     dijagnoza.getBolest().getId() == finalnaDijagnoza.getBolest().getId()){
-                        finalnaDijagnozaRepositiry.save(dijagnoza);
+                        dijagnoza.setPreporuka(saved);
+                        dijagnozaSaved = finalnaDijagnozaRepositiry.save(dijagnoza);
                 }
             }
-            else{
-                finalnaDijagnozaRepositiry.save(finalnaDijagnoza);
-            }
+        }
+        if(dijagnozaSaved == null) {
+            finalnaDijagnoza.setPreporuka(saved);
+            dijagnozaSaved = finalnaDijagnozaRepositiry.save(finalnaDijagnoza);
+        }
+        for (FactHandle handle: handlers) {
+            Object obj = kieSession.getObject(handle);
             if (obj.getClass() == NeizlecenaBolestVoca.class){
                 neizlecenaBolestVocaRepository.save((NeizlecenaBolestVoca) obj);
             }
-             if (obj.getClass() == NeizlecenaBolestPovrca.class){
+            if (obj.getClass() == NeizlecenaBolestPovrca.class){
                 neizlecenaBolestPovrcaRepository.save((NeizlecenaBolestPovrca) obj);
             }
+            if (obj.getClass() == Korisnik.class){
+                korisnikRepository.save((Korisnik) obj);
+            }
         }
-        return preporuka;
+        return saved;
     }
 }
